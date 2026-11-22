@@ -98,7 +98,8 @@ def verify(agent_short: str, window: dict, reply_text: str, enums: dict) -> dict
                 if len(best) < len(labels):
                     labels = list(best.values())
                     rec[kind] = labels
-                    if not isinstance(lab.get("salience"), int) or not 0 <= lab["salience"] <= 3:
+                for lab in labels:
+                    if not isinstance(lab.get("salience"), int) or not 1 <= lab["salience"] <= 3:
                         problems.append(f"salience out of range: {lab.get('salience')!r}")
                     check_span(lab.get("span"), kind[:-1])
             prop = rec.get("proposal") or {}

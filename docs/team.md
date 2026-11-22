@@ -7,7 +7,7 @@ The maintainer approves anything that changes what the system believes: labels, 
 | Role | GitHub | Google Drive | Argilla |
 | --- | --- | --- | --- |
 | Maintainer | Admin | Owner of the Wisdom Graph folder | Owner |
-| Developer | Write (branches and PRs; `main` is protected) | Viewer on 00–02, 04 | None |
+| Developer | Write (branches and PRs; `main` accepts pull requests only) | Viewer on 00–02, 04 | None |
 | Tradition reviewer | Triage (issues, discussions) | Viewer on 00, 01, 05 | Annotator, own workspace |
 | Compute runner | Triage | Viewer on 00–02; contributor on 03 Outputs/incoming | None |
 

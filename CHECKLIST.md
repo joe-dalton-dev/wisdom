@@ -22,8 +22,8 @@ The live copy is the Claude sheet [Wisdom Graph — Phase 0 status](https://clau
     - Done when: Decision recorded in docs/decisions.md · Local PC in Docker; Tailscale for reviewers (2026-11-22)
 - [x] **P0-09** Set the starting theme list · Joseph
     - Done when: Starting list agreed · Codebook has 72 themes and 46 topics; well beyond the 20 quote-project themes; the learning loop adds more (2026-11-22)
-- [ ] **P0-10** Merge taxonomy into codebook v1 · Claude *(Skipped)*
-    - Done when: codebook/*.yaml merged and reviewed · Not needed: the draft codebook is the starting list
+- [x] **P0-10** Merge the theme list into the codebook · Claude
+    - Done when: codebook/*.yaml merged and reviewed · 72 themes and 46 topics approved and merged in PRs #8 and #9 (2026-11-22)
 - [ ] **P0-11** Write definitions and 3+3 examples per label · Joseph + Claude *(In progress)*
     - Done when: Every core label has a definition and examples · Definitions and include/exclude rules approved 2026-11-22; examples need the .txt corpus
 - [x] **P0-12** Upload the corpus to Drive · Joseph

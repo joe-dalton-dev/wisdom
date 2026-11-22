@@ -18,8 +18,8 @@ The live copy is the "Project checklist" sheet in Google Drive → Wisdom Graph 
     - Done when: Every row in Decisions needed has an answer · All 8 answered 2026-11-22; see docs/decisions.md
 - [x] **P0-07** Decide licensing for code and data · Joseph
     - Done when: LICENSE in repo; data policy in README · Code Apache 2.0; data unpublished, all rights reserved (2026-11-22)
-- [ ] **P0-08** Decide where Argilla runs · Joseph
-    - Done when: Argilla reachable by reviewers · Options: your PC or a Hugging Face Space
+- [x] **P0-08** Decide where Argilla runs · Joseph
+    - Done when: Decision recorded in docs/decisions.md · Local PC in Docker; Tailscale for reviewers (2026-11-22)
 - [ ] **P0-09** Share classification_taxonomy.json and the 20 quote-project themes · Joseph
     - Done when: Both files attached in chat or in Drive 01
 - [ ] **P0-10** Merge taxonomy into codebook v1 · Claude
@@ -32,6 +32,8 @@ The live copy is the "Project checklist" sheet in Google Drive → Wisdom Graph 
     - Done when: Restricted folder holds every non-PD edition
 - [ ] **P0-14** Upload manifest with SHA-256 per book · Joseph + Claude
     - Done when: 02 Corpus/manifests has books.csv with hashes
+- [ ] **P0-15** Install Argilla on your PC (Docker) · Joseph
+    - Done when: http://localhost:6900 login works with your own password · Steps in the Maintainer guide; about 30 min
 
 ## 1 Gold set
 

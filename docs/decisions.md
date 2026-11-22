@@ -15,6 +15,10 @@ A record of decisions that shape the system. Change one only by adding a new dat
 | 7 | Learning loop | A cycle after each tier or every ~100 books; promote a label at 20+ sentences across 3 books and 2 traditions; at most 10 promotions per cycle; reject any change that lowers a label's test F1 by more than 0.02 |
 | 8 | Chunks and catch-up | One book per chunk; improvements apply forward only; finished chunks get one catch-up pass after the last tier, with maintainer approval |
 
+## 2026-11-22 · Review tool
+
+- Argilla runs locally on the maintainer's PC in Docker. Reviewers connect over a private Tailscale network when they join. Move to a small EU cloud server only if reviewers need access while the PC is off. A Hugging Face Space was rejected because Spaces restart and new Spaces no longer get persistent storage.
+
 ## 2026-11-22 · Repository
 
 - Method is public by choice: code, agent cards, prompts, codebook, schemas and docs, under Apache 2.0.

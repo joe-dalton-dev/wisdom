@@ -6,13 +6,14 @@ P0-04,0 Setup,Push skeleton to github.com/joe-dalton-dev/wisdom,Claude,Done,Repo
 P0-05,0 Setup,Protect main branch and enable Discussions,Joseph,Done,PRs required on main; Discussions categories Introductions and Codebook exist,Repo public; Protect main ruleset active; Discussions on (2026-11-22)
 P0-06,0 Setup,Answer the 8 open decisions in the plan,Joseph,Done,Every row in Decisions needed has an answer,All 8 answered 2026-11-22; see docs/decisions.md
 P0-07,0 Setup,Decide licensing for code and data,Joseph,Done,LICENSE in repo; data policy in README,"Code Apache 2.0; data unpublished, all rights reserved (2026-11-22)"
-P0-08,0 Setup,Decide where Argilla runs,Joseph,Not started,Argilla reachable by reviewers,Options: your PC or a Hugging Face Space
+P0-08,0 Setup,Decide where Argilla runs,Joseph,Done,Decision recorded in docs/decisions.md,Local PC in Docker; Tailscale for reviewers (2026-11-22)
 P0-09,0 Setup,Share classification_taxonomy.json and the 20 quote-project themes,Joseph,Not started,Both files attached in chat or in Drive 01,
 P0-10,0 Setup,Merge taxonomy into codebook v1,Claude,Not started,codebook/*.yaml merged and reviewed,Needs P0-09
 P0-11,0 Setup,Write definitions and 3+3 examples per label,Joseph + Claude,Not started,Every core label has a definition and examples,2–3 h of your time
 P0-12,0 Setup,Upload public-domain corpus-books to Drive,Joseph,Not started,One folder per tradition in 02 Corpus/public-domain,Use Google Drive desktop app
 P0-13,0 Setup,Move non-public-domain editions to restricted,Joseph,Not started,Restricted folder holds every non-PD edition,
 P0-14,0 Setup,Upload manifest with SHA-256 per book,Joseph + Claude,Not started,02 Corpus/manifests has books.csv with hashes,
+P0-15,0 Setup,Install Argilla on your PC (Docker),Joseph,Not started,http://localhost:6900 login works with your own password,Steps in the Maintainer guide; about 30 min
 P1-01,1 Gold set,Select 600 stratified windows,Claude,Not started,600 windows across ~12 traditions and 5 genres,
 P1-02,1 Gold set,Draft gold labels with Claude Batch API,Claude,Not started,Draft labels loaded into Argilla,Within the €50 cap
 P1-03,1 Gold set,Review the 600 gold items,Joseph + reviewers,Not started,All 600 reviewed,6–8 h

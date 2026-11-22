@@ -1,5 +1,5 @@
-# Theme registry v0.1.0 (DRAFT). To be merged with classification_taxonomy.json (12 domains / 84 themes)
-# and the 20 quote-project themes before phase 0 closes. IDs are placeholders until then.
+# Theme registry v0.1.0 (DRAFT). This 72-theme draft is the starting list (decided 2026-11-22);
+# the learning loop adds themes later. IDs are fixed once P0-11 is done.
 # Each entry gains include/exclude rules and 3+3 examples during phase 0.
 version: 0.1.0
 status: draft

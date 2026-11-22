@@ -1,0 +1,15 @@
+# Copy to config/corpus.yaml (gitignored) and adjust local paths.
+corpus:
+  source: google_drive
+  drive:
+    root_folder_id: 1oiwXROvCzq_lBBsuXpMhEj6tru_nF2CV         # Wisdom Graph
+    public_domain_folder_id: 16UKRIdwN3DlHBl86HHlnCU6pYw4DOrbC  # 02 Corpus/public-domain
+    manifests_folder_id: 1tWbCpk3rP2INo4Jso-fntVG4oF0pHY9q      # 02 Corpus/manifests
+    outputs_incoming_folder_id: 1T_sNBwT_pMzWL4VFsHa_vnyO-psqAhod  # 03 Outputs/incoming
+  local_cache: ./data/corpus        # downloaded archives land here
+  verify_sha256: true               # refuse any book whose hash doesn't match the manifest
+
+runtime:
+  ledger: ./data/ledger.sqlite
+  outputs: ./data/outputs
+  server_url: http://127.0.0.1:8080  # llama-server

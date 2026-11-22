@@ -1,0 +1,51 @@
+# Topic registry v0.1.0 (DRAFT). Topics are concrete subjects that norms act on.
+version: 0.1.0
+status: draft
+
+topics:
+  - {id: P01, group: Body & food, label: Dietary law & forbidden foods, actions: [eat, abstain]}
+  - {id: P02, group: Body & food, label: Fasting, actions: [fast, abstain]}
+  - {id: P03, group: Body & food, label: Alcohol & intoxicants, actions: [drink, abstain]}
+  - {id: P04, group: Body & food, label: Dress & modesty, actions: [wear, cover]}
+  - {id: P05, group: Body & food, label: Washing & bodily purity, actions: [wash, purify]}
+  - {id: P06, group: Body & food, label: Healing & illness, actions: [heal, visit, isolate]}
+  - {id: P07, group: Life events, label: Birth & naming, actions: [name, circumcise, bless]}
+  - {id: P08, group: Life events, label: Coming of age, actions: [initiate]}
+  - {id: P09, group: Life events, label: Weddings, actions: [marry, give in marriage]}
+  - {id: P10, group: Life events, label: Divorce, actions: [divorce, put away]}
+  - {id: P11, group: Life events, label: Death & burial, actions: [bury, burn, mourn]}
+  - {id: P12, group: Sex & family, label: Adultery, actions: [lie with, commit adultery]}
+  - {id: P13, group: Sex & family, label: Same-sex relations, actions: [lie with]}
+  - {id: P14, group: Sex & family, label: Prohibited unions, actions: [marry, lie with]}
+  - {id: P15, group: Sex & family, label: Polygamy, actions: [take wives]}
+  - {id: P16, group: Sex & family, label: Celibacy, actions: [abstain, renounce]}
+  - {id: P17, group: Sex & family, label: Inheritance, actions: [inherit, bequeath]}
+  - {id: P18, group: Economy, label: Property & ownership, actions: [own, take, return]}
+  - {id: P19, group: Economy, label: Debt & interest, actions: [lend, charge interest, release]}
+  - {id: P20, group: Economy, label: Trade & fair measures, actions: [sell, weigh]}
+  - {id: P21, group: Economy, label: Labor & wages, actions: [work, pay, rest]}
+  - {id: P22, group: Economy, label: Almsgiving, actions: [give]}
+  - {id: P23, group: Economy, label: Slavery & manumission, actions: [buy, own, free]}
+  - {id: P24, group: Justice & violence, label: Killing, actions: [kill, slay]}
+  - {id: P25, group: Justice & violence, label: Rules of war, actions: [fight, spare, plunder]}
+  - {id: P26, group: Justice & violence, label: Punishment, actions: [stone, beat, exile, fine]}
+  - {id: P27, group: Justice & violence, label: Theft, actions: [steal, restore]}
+  - {id: P28, group: Justice & violence, label: Testimony & oaths, actions: [testify, swear]}
+  - {id: P29, group: Justice & violence, label: Judges & courts, actions: [judge, bribe]}
+  - {id: P30, group: Religious practice, label: Sacrifice & offerings, actions: [offer, sacrifice]}
+  - {id: P31, group: Religious practice, label: Holy days & sabbath, actions: [keep, rest, celebrate]}
+  - {id: P32, group: Religious practice, label: Sacred places, actions: [enter, build, defile]}
+  - {id: P33, group: Religious practice, label: Priesthood, actions: [serve, ordain]}
+  - {id: P34, group: Religious practice, label: Images & idols, actions: [make, worship, destroy]}
+  - {id: P35, group: Religious practice, label: Conversion & apostasy, actions: [convert, leave, punish]}
+  - {id: P36, group: Religious practice, label: Forms of prayer, actions: [pray, chant, recite]}
+  - {id: P37, group: Animals, label: Animals as food, actions: [eat, slaughter]}
+  - {id: P38, group: Animals, label: Animal sacrifice, actions: [sacrifice]}
+  - {id: P39, group: Animals, label: Animals at work, actions: [yoke, muzzle, rest]}
+  - {id: P40, group: Animals, label: Harm to animals, actions: [kill, harm, spare]}
+  - {id: P41, group: Animals, label: Sacred animals, actions: [revere, protect]}
+  - {id: P42, group: Animals, label: Hunting, actions: [hunt]}
+  - {id: P43, group: Speech, label: Lying & deceit, actions: [lie, deceive]}
+  - {id: P44, group: Speech, label: Blasphemy & cursing, actions: [curse, blaspheme]}
+  - {id: P45, group: Speech, label: Vows, actions: [vow, fulfil]}
+  - {id: P46, group: Speech, label: Gossip & slander, actions: [slander, bear tales]}

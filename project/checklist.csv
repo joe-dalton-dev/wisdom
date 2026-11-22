@@ -1,0 +1,43 @@
+ID,Phase,Task,Owner,Status,Done when,Notes
+0.01,0 Setup,Create Google Drive folder structure,Claude,Done,Wisdom Graph folder with 00–05 and 99 exists,Created 2026-11-22
+0.02,0 Setup,Write onboarding guides and architecture summary,Claude,Done,START HERE + 4 role guides in Drive and repo,Created 2026-11-22
+0.03,0 Setup,Connect GitHub to Claude,Joseph,Not started,Claude can create repos in your account,claude.ai Settings > Connectors > GitHub
+0.04,0 Setup,Create private wisdom-graph repo and push skeleton,Claude,Blocked,Repo exists with the skeleton on main,Waits for 0.03
+0.05,0 Setup,Protect main branch and enable Discussions,Joseph,Not started,PRs required on main; Discussions categories Introductions and Codebook exist,
+0.06,0 Setup,Answer the 8 open decisions in the plan,Joseph,Not started,Every row in Decisions needed has an answer,
+0.07,0 Setup,Choose licenses for code and output data,Joseph,Not started,LICENSE files in repo,Suggested: MIT for code; CC BY 4.0 for data
+0.08,0 Setup,Decide where Argilla runs,Joseph,Not started,Argilla reachable by reviewers,Options: your PC or a Hugging Face Space
+0.09,0 Setup,Share classification_taxonomy.json and the 20 quote-project themes,Joseph,Not started,Both files attached in chat or in Drive 01,
+0.10,0 Setup,Merge taxonomy into codebook v1,Claude,Not started,codebook/*.yaml merged and reviewed,Needs 0.09
+0.11,0 Setup,Write definitions and 3+3 examples per label,Joseph + Claude,Not started,Every core label has a definition and examples,2–3 h of your time
+0.12,0 Setup,Upload public-domain corpus-books to Drive,Joseph,Not started,One folder per tradition in 02 Corpus/public-domain,Use Google Drive desktop app
+0.13,0 Setup,Move non-public-domain editions to restricted,Joseph,Not started,Restricted folder holds every non-PD edition,
+0.14,0 Setup,Upload manifest with SHA-256 per book,Joseph + Claude,Not started,02 Corpus/manifests has books.csv with hashes,
+1.01,1 Gold set,Select 600 stratified windows,Claude,Not started,600 windows across ~12 traditions and 5 genres,
+1.02,1 Gold set,Draft gold labels with Claude Batch API,Claude,Not started,Draft labels loaded into Argilla,Within the €50 cap
+1.03,1 Gold set,Review the 600 gold items,Joseph + reviewers,Not started,All 600 reviewed,6–8 h
+1.04,1 Gold set,Freeze 400 dev / 200 test split,Claude,Not started,Split committed; test set locked,
+2.01,2 Pilot,Build ledger and chunk runner,Developer,Not started,Runner resumes after Ctrl+C without redoing jobs,
+2.02,2 Pilot,Build prompt assembler and verifier V1,Developer,Not started,Same card + input gives identical prompt hash; V1 rejects bad spans,
+2.03,2 Pilot,Install llama-server and pin 2 candidate models,Joseph,Not started,models.lock has hashes; wg doctor passes,
+2.04,2 Pilot,Run bake-off on 6 pilot books,Joseph,Not started,Scores for 2 models x K=1/5/10,2–3 nights
+2.05,2 Pilot,Tune prompts with DSPy GEPA,Developer,Not started,Tuned cards beat baseline on dev set,
+2.06,2 Pilot,Gate review: targets met and 36 records spot-checked,Joseph,Not started,Ship targets met on test set,Tag cards-v1.0
+2.07,2 Pilot,Set up nightly Task Scheduler run,Joseph,Not started,Run starts at 23:00 unattended,
+2.08,2 Pilot,Set up morning report scheduled task,Claude,Not started,Report appears in 04 Reports each morning,
+2.09,2 Pilot,Invite first 1–2 tradition reviewers,Joseph,Not started,Reviewers have access and have introduced themselves,
+3.01,3 Encoder pass,Run embeddings and triage on whole corpus,Joseph,Not started,All sentences have T1/T2 records,1 night
+3.02,3 Encoder pass,Check triage recall on gold,Claude,Not started,Recall at least 0.90,
+4.01,4 Level 1,Run tier 1 (canon),Runners,Not started,All tier 1 chunks accepted,
+4.02,4 Level 1,Learning cycle after tier 1,Joseph + reviewers,Not started,Packet reviewed; next release tagged,30–60 min
+4.03,4 Level 1,Run remaining tiers with a cycle after each,Runners,Not started,All tiers accepted,~6 nights total
+5.01,5 Chapters and books,Run chapter and book synthesis,Runners,Not started,Citation checks pass,~1 night
+5.02,5 Chapters and books,Spot-check 20 chapter and book records,Joseph,Not started,20 records reviewed,
+6.01,6 Cross-tradition,Run parallels and comparator,Runners,Not started,Convergence table built,~1 night
+6.02,6 Cross-tradition,Review 50 convergence claims,Joseph + reviewers,Not started,50 claims reviewed,
+7.01,7 Load,Decide on and run the catch-up pass,Joseph,Not started,Catch-up done or explicitly skipped,
+7.02,7 Load,Load Neo4j and LanceDB,Developer,Not started,Graph and vectors queryable,
+R.01,Recurring,Read the morning report,Joseph,Ongoing,Daily,5 min
+R.02,Recurring,Accept or reject submitted bundles,Joseph,Ongoing,No bundle waits more than 3 days,
+R.03,Recurring,Check Claude spend and monitoring sample,Joseph,Ongoing,Weekly,15 min
+R.04,Recurring,Back up ledger and accepted outputs; review access,Joseph,Ongoing,Monthly,15 min

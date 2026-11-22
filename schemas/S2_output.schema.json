@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "wisdom-graph/S2_output/0.1.0",
+  "title": "S2 theme and topic tagger output (draft)",
+  "type": "object",
+  "required": ["records"],
+  "additionalProperties": false,
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["unit_id", "themes", "topics", "confidence"],
+        "additionalProperties": false,
+        "properties": {
+          "unit_id": { "type": "string" },
+          "themes": {
+            "type": "array",
+            "maxItems": 3,
+            "items": { "$ref": "#/$defs/label" }
+          },
+          "topics": {
+            "type": "array",
+            "maxItems": 3,
+            "items": { "$ref": "#/$defs/label" }
+          },
+          "proposal": {
+            "type": ["object", "null"],
+            "required": ["label", "reason", "span"],
+            "additionalProperties": false,
+            "properties": {
+              "label": { "type": "string", "maxLength": 60 },
+              "reason": { "type": "string", "maxLength": 200 },
+              "span": { "type": "string" }
+            }
+          },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "label": {
+      "type": "object",
+      "required": ["id", "salience", "span"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "salience": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "span": { "type": "string" }
+      }
+    }
+  }
+}

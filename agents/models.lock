@@ -1,0 +1,4 @@
+# Pinned model files. Filled after the phase 2 bake-off.
+# format: name  file  sha256  source
+# gemma-4-12b   TBD   TBD     TBD
+# qwen-3.6-35b-a3b  TBD   TBD   TBD

@@ -1,0 +1,35 @@
+# Facet registry v0.1.0 (DRAFT). Closed value lists, each assigned at one level.
+version: 0.1.0
+status: draft
+
+facets:
+  speech_act:
+    level: 1
+    set_by: S1
+    values: [narration, command, teaching, prayer_hymn, dialogue, parable, list_genealogy, law, prophecy]
+  force:
+    level: 1
+    set_by: S1
+    values: [prescriptive, descriptive, condemned, hypothetical]
+  norm_modality:
+    level: 1
+    set_by: S3
+    values: [obligation, prohibition, permission, recommendation, exemption]
+  social_category:
+    level: 1
+    set_by: [T2, S4]
+    roles: [agent, target, subject]
+    values: [women, men, children, slaves_servants, foreigners_outsiders, nonbelievers_apostates,
+             priests_clergy, rulers, the_poor, same_sex_relations_lgbt, sick_disabled, animals]
+  salience:
+    level: 1
+    set_by: S2
+    values: {0: mentioned, 1: present, 2: central, 3: the point of the passage}
+  chapter_function:
+    level: 2
+    set_by: C1
+    values: [law_code, narrative, hymn_poetry, dialogue, teaching, genealogy, prophecy, ritual_instruction]
+  stance:
+    level: 3
+    set_by: B1
+    values: [affirms, qualifies, rejects, silent]

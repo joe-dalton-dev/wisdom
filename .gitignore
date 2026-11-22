@@ -1,0 +1,20 @@
+# Data, models and outputs never go in git
+data/
+models/
+outputs/
+*.gguf
+*.safetensors
+*.parquet
+*.sqlite
+*.zip
+
+# Local config and secrets
+config/*.yaml
+!config/*.example.yaml
+.env
+*.key
+
+# Python
+__pycache__/
+*.pyc
+.venv/

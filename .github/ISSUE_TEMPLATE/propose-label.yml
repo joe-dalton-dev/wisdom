@@ -1,0 +1,38 @@
+name: Propose a label
+description: Suggest a new theme, topic or tradition term for the codebook
+title: "[label] "
+labels: ["label-proposal"]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options: [Theme, Topic, Tradition term for an existing theme, Change to an existing label]
+    validations: {required: true}
+  - type: input
+    id: label
+    attributes:
+      label: Proposed label
+      placeholder: e.g. Salvation
+    validations: {required: true}
+  - type: input
+    id: definition
+    attributes:
+      label: One-line definition
+    validations: {required: true}
+  - type: textarea
+    id: examples
+    attributes:
+      label: Three example passages
+      description: Book, chapter and the sentence for each.
+    validations: {required: true}
+  - type: input
+    id: nearest
+    attributes:
+      label: Nearest existing label and why it doesn't fit
+      placeholder: e.g. T0302 Liberation & salvation is too broad because…
+    validations: {required: true}
+  - type: input
+    id: terms
+    attributes:
+      label: Terms other traditions use for this (optional)

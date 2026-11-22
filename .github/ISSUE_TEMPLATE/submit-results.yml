@@ -1,0 +1,33 @@
+name: Submit results
+description: Register a finished chunk you uploaded to Drive 03 Outputs/incoming
+title: "[results] chunk "
+labels: ["results"]
+body:
+  - type: input
+    id: chunk
+    attributes:
+      label: Chunk ID
+    validations: {required: true}
+  - type: input
+    id: release
+    attributes:
+      label: Release tag you ran
+      placeholder: cards-v1.0
+    validations: {required: true}
+  - type: input
+    id: drive_path
+    attributes:
+      label: Drive path of the uploaded zip
+      placeholder: 03 Outputs/incoming/<your-name>/<chunk>.zip
+    validations: {required: true}
+  - type: textarea
+    id: manifest
+    attributes:
+      label: manifest.json
+      description: Paste it unchanged.
+      render: json
+    validations: {required: true}
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything unusual during the run (optional)

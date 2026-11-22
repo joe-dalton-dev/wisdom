@@ -12,7 +12,7 @@ P0-10,0 Setup,Merge taxonomy into codebook v1,Claude,Not started,codebook/*.yaml
 P0-11,0 Setup,Write definitions and 3+3 examples per label,Joseph + Claude,Not started,Every core label has a definition and examples,2–3 h of your time
 P0-12,0 Setup,Upload public-domain corpus-books to Drive,Joseph,Not started,One folder per tradition in 02 Corpus/public-domain,Use Google Drive desktop app
 P0-13,0 Setup,Move non-public-domain editions to restricted,Joseph,Not started,Restricted folder holds every non-PD edition,
-P0-14,0 Setup,Upload manifest with SHA-256 per book,Joseph + Claude,Not started,02 Corpus/manifests has books.csv with hashes,
+P0-14,0 Setup,Upload manifest with SHA-256 per book,Joseph + Claude,Deferred,02 Corpus/manifests has books.csv with hashes,Deferred until the first runner joins; script ready in tools/make_manifest.py
 P0-15,0 Setup,Install Argilla on your PC (Docker),Joseph,Not started,http://localhost:6900 login works with your own password,Steps in the Maintainer guide; about 30 min
 P1-01,1 Gold set,Select 600 stratified windows,Claude,Not started,600 windows across ~12 traditions and 5 genres,
 P1-02,1 Gold set,Draft gold labels with Claude Batch API,Claude,Not started,Draft labels loaded into Argilla,Within the €50 cap

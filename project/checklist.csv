@@ -14,10 +14,10 @@ P0-12,0 Setup,Upload public-domain corpus-books to Drive,Joseph,Not started,One 
 P0-13,0 Setup,Move non-public-domain editions to restricted,Joseph,Not started,Restricted folder holds every non-PD edition,
 P0-14,0 Setup,Upload manifest with SHA-256 per book,Joseph + Claude,Deferred,02 Corpus/manifests has books.csv with hashes,Deferred until the first runner joins; script ready in tools/make_manifest.py
 P0-15,0 Setup,Install Argilla on your PC (Docker),Joseph,Done,http://localhost:6900 login works with your own password,Installed and login validated 2026-11-22
-P1-01,1 Gold set,Select 300 stratified windows,Claude,Not started,50 windows from each of the 6 pilot books (about 1400 sentences),Code ready: python -m pipeline gold-select
-P1-02,1 Gold set,Label with Opus 5.5 and Sonnet 5.5; Opus adjudicates disagreements,Joseph,Not started,gold_S2 and gold_S3 written for all 6 books,About $10-12 of the $20 Phase 2 limit; gold-label then gold-adjudicate then gold-finalize
+P1-01,1 Gold set,Select 300 stratified windows,Claude,Done,50 windows from each of the 6 pilot books (about 1400 sentences),1371 sentences selected (2026-11-22)
+P1-02,1 Gold set,Label with Opus 5.5 and Sonnet 5.5; Opus adjudicates disagreements,Joseph,Done,gold_S2 and gold_S3 written for all 6 books,Agreement 56% themes / 86% norms; 387 windows adjudicated; $9.59
 P1-03,1 Gold set,Sanity-check 50 gold items,Joseph,Not started,sanity_sample.csv marked and sent back,About 30 min; tradition experts review samples later (stage 2)
-P1-04,1 Gold set,Score Haiku against the gold set and freeze a dev/test split,Claude,Not started,Scores for S2 and S3 recorded; test windows locked,python -m pipeline score
+P1-04,1 Gold set,Score Haiku against the gold set and freeze a dev/test split,Claude,In progress,Scores for S2 and S3 recorded; test windows locked,Haiku themes F1 0.54 / norms F1 0.69 (Leviticus 0.87); split not yet frozen
 P2-01,2 Pilot,Build ledger and chunk runner,Claude,Done,Runner resumes after Ctrl+C without redoing jobs,Live on Haiku 5.5: 6 pilot books, 4 agents, 97-100% of sentences labelled, $0.80 total (2026-11-22)
 P2-02,2 Pilot,Build prompt assembler and verifier V1,Claude,Done,Same card + input gives identical prompt hash; V1 rejects bad spans,S1 0.2.1, S2 0.3.0, S3 0.2.0, S4 0.2.0 after two review rounds; see docs/reviews
 P2-03,2 Pilot,Install llama-server and pin 2 candidate models,Joseph,Not started,models.lock has hashes; wg doctor passes,

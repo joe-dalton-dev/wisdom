@@ -26,8 +26,8 @@ The live copy is the "Project checklist" sheet in Google Drive → Wisdom Graph 
     - Done when: codebook/*.yaml merged and reviewed · Not needed: the draft codebook is the starting list
 - [ ] **P0-11** Write definitions and 3+3 examples per label · Joseph + Claude *(In progress)*
     - Done when: Every core label has a definition and examples · Definitions and include/exclude rules approved 2026-11-22; examples need the .txt corpus
-- [ ] **P0-12** Upload public-domain corpus-books to Drive · Joseph
-    - Done when: One folder per tradition in 02 Corpus/public-domain · Use Google Drive desktop app
+- [x] **P0-12** Upload the corpus to Drive · Joseph
+    - Done when: Corpus is in Drive · corpus-clean.zip (plain .txt) in the Wisdom Corpus folder; chosen over the HTML mirror because it is easier to read (2026-11-22)
 - [ ] **P0-13** Move non-public-domain editions to restricted · Joseph
     - Done when: Restricted folder holds every non-PD edition
 - [ ] **P0-14** Upload manifest with SHA-256 per book · Joseph + Claude *(Deferred)*

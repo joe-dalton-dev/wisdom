@@ -20,7 +20,7 @@ Wisdom Graph reads about 1,900 public-domain religious and philosophical books, 
 | Code, agent cards, codebook, schemas, these guides, [decisions](docs/decisions.md) | GitHub repo [joe-dalton-dev/wisdom](https://github.com/joe-dalton-dev/wisdom) (public; anyone can read it, contributors work through pull requests) |
 | Questions and discussion | GitHub Discussions in the repo |
 | Proposing a new theme, topic or tradition term | GitHub issue → "Propose a label" form |
-| Corpus texts (one file per book) | Google Drive → Wisdom Graph → 02 Corpus → public-domain |
+| Corpus (plain text, zipped) | [Google Drive → Wisdom Corpus → corpus-clean.zip](https://drive.google.com/drive/folders/1NgoZKQOwmgWHijhpxnSQ1Cakp3o0zajo) |
 | Submitting results | Google Drive → 03 Outputs → incoming, plus a GitHub issue "Submit results" |
 | Daily progress reports | Google Drive → 04 Reports |
 | Project checklist | Google Drive → 00 Start here → Project checklist (also `CHECKLIST.md` here) |

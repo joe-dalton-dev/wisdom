@@ -27,7 +27,7 @@ A bundle is accepted when CI passes (schema, hashes, verbatim spans), its card v
 
 ## Corpus upload (phase 0)
 
-1. Upload `SacredTexts/corpus-books` public-domain files to `02 Corpus/public-domain`, one folder per tradition, using the Google Drive desktop app.
+1. The corpus is in Drive as `corpus-clean.zip` (plain .txt) in the [Wisdom Corpus](https://drive.google.com/drive/folders/1NgoZKQOwmgWHijhpxnSQ1Cakp3o0zajo) folder, uploaded 2026-11-22. `FullSacredTextHTML.zip` next to it is the original HTML mirror; it keeps some translator and date metadata the .txt files lack. Replace the zip when the corpus changes.
 2. Put non-public-domain editions in `02 Corpus/restricted (do not share)`.
 3. Build the manifest on your PC and upload it to `02 Corpus/manifests`:
    `python tools/make_manifest.py build "C:/Users/joseph dalton/Documents/ClaudeMemory/SacredTexts/corpus-books" books_manifest.csv`

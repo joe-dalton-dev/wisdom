@@ -1,51 +1,328 @@
 # Topic registry v0.1.0 (DRAFT). Topics are concrete subjects that norms act on.
+# Definitions and include/exclude rules drafted for review (P0-11); 3+3 examples come later.
 version: 0.1.0
 status: draft
 
 topics:
-  - {id: P01, group: Body & food, label: Dietary law & forbidden foods, actions: [eat, abstain]}
-  - {id: P02, group: Body & food, label: Fasting, actions: [fast, abstain]}
-  - {id: P03, group: Body & food, label: Alcohol & intoxicants, actions: [drink, abstain]}
-  - {id: P04, group: Body & food, label: Dress & modesty, actions: [wear, cover]}
-  - {id: P05, group: Body & food, label: Washing & bodily purity, actions: [wash, purify]}
-  - {id: P06, group: Body & food, label: Healing & illness, actions: [heal, visit, isolate]}
-  - {id: P07, group: Life events, label: Birth & naming, actions: [name, circumcise, bless]}
-  - {id: P08, group: Life events, label: Coming of age, actions: [initiate]}
-  - {id: P09, group: Life events, label: Weddings, actions: [marry, give in marriage]}
-  - {id: P10, group: Life events, label: Divorce, actions: [divorce, put away]}
-  - {id: P11, group: Life events, label: Death & burial, actions: [bury, burn, mourn]}
-  - {id: P12, group: Sex & family, label: Adultery, actions: [lie with, commit adultery]}
-  - {id: P13, group: Sex & family, label: Same-sex relations, actions: [lie with]}
-  - {id: P14, group: Sex & family, label: Prohibited unions, actions: [marry, lie with]}
-  - {id: P15, group: Sex & family, label: Polygamy, actions: [take wives]}
-  - {id: P16, group: Sex & family, label: Celibacy, actions: [abstain, renounce]}
-  - {id: P17, group: Sex & family, label: Inheritance, actions: [inherit, bequeath]}
-  - {id: P18, group: Economy, label: Property & ownership, actions: [own, take, return]}
-  - {id: P19, group: Economy, label: Debt & interest, actions: [lend, charge interest, release]}
-  - {id: P20, group: Economy, label: Trade & fair measures, actions: [sell, weigh]}
-  - {id: P21, group: Economy, label: Labor & wages, actions: [work, pay, rest]}
-  - {id: P22, group: Economy, label: Almsgiving, actions: [give]}
-  - {id: P23, group: Economy, label: Slavery & manumission, actions: [buy, own, free]}
-  - {id: P24, group: Justice & violence, label: Killing, actions: [kill, slay]}
-  - {id: P25, group: Justice & violence, label: Rules of war, actions: [fight, spare, plunder]}
-  - {id: P26, group: Justice & violence, label: Punishment, actions: [stone, beat, exile, fine]}
-  - {id: P27, group: Justice & violence, label: Theft, actions: [steal, restore]}
-  - {id: P28, group: Justice & violence, label: Testimony & oaths, actions: [testify, swear]}
-  - {id: P29, group: Justice & violence, label: Judges & courts, actions: [judge, bribe]}
-  - {id: P30, group: Religious practice, label: Sacrifice & offerings, actions: [offer, sacrifice]}
-  - {id: P31, group: Religious practice, label: Holy days & sabbath, actions: [keep, rest, celebrate]}
-  - {id: P32, group: Religious practice, label: Sacred places, actions: [enter, build, defile]}
-  - {id: P33, group: Religious practice, label: Priesthood, actions: [serve, ordain]}
-  - {id: P34, group: Religious practice, label: Images & idols, actions: [make, worship, destroy]}
-  - {id: P35, group: Religious practice, label: Conversion & apostasy, actions: [convert, leave, punish]}
-  - {id: P36, group: Religious practice, label: Forms of prayer, actions: [pray, chant, recite]}
-  - {id: P37, group: Animals, label: Animals as food, actions: [eat, slaughter]}
-  - {id: P38, group: Animals, label: Animal sacrifice, actions: [sacrifice]}
-  - {id: P39, group: Animals, label: Animals at work, actions: [yoke, muzzle, rest]}
-  - {id: P40, group: Animals, label: Harm to animals, actions: [kill, harm, spare]}
-  - {id: P41, group: Animals, label: Sacred animals, actions: [revere, protect]}
-  - {id: P42, group: Animals, label: Hunting, actions: [hunt]}
-  - {id: P43, group: Speech, label: Lying & deceit, actions: [lie, deceive]}
-  - {id: P44, group: Speech, label: Blasphemy & cursing, actions: [curse, blaspheme]}
-  - {id: P45, group: Speech, label: Vows, actions: [vow, fulfil]}
-  - {id: P46, group: Speech, label: Gossip & slander, actions: [slander, bear tales]}
+  - id: P01
+    group: "Body & food"
+    label: "Dietary law & forbidden foods"
+    definition: "Rules on which foods may or may not be eaten."
+    include: "Clean and unclean foods, forbidden meats, food prohibitions."
+    exclude: "Fasting (P02); animals as food in general (P37)."
+    actions: [eat, abstain]
+  - id: P02
+    group: "Body & food"
+    label: "Fasting"
+    definition: "Going without food for a time."
+    include: "Fasts, fast days, how and when to fast."
+    exclude: "Permanent food rules (P01); asceticism in general (theme T1101)."
+    actions: [fast, abstain]
+  - id: P03
+    group: "Body & food"
+    label: "Alcohol & intoxicants"
+    definition: "Wine, strong drink and other intoxicants."
+    include: "Drinking permitted or forbidden, drunkenness, intoxicants in rites."
+    exclude: "Food rules (P01)."
+    actions: [drink, abstain]
+  - id: P04
+    group: "Body & food"
+    label: "Dress & modesty"
+    definition: "Clothing and covering the body."
+    include: "Dress codes, veiling, nakedness, garments of priests."
+    exclude: "Ritual washing (P05)."
+    actions: [wear, cover]
+  - id: P05
+    group: "Body & food"
+    label: "Washing & bodily purity"
+    definition: "Washing and cleansing the body."
+    include: "Ablutions, bathing rules, cleansing after impurity."
+    exclude: "Moral purity (theme T0406) without a washing act."
+    actions: [wash, purify]
+  - id: P06
+    group: "Body & food"
+    label: "Healing & illness"
+    definition: "Illness and its treatment."
+    include: "Healing, medicine, visiting the sick, isolation of the sick."
+    exclude: "Miracle stories of healing that give no rule or teaching."
+    actions: [heal, visit, isolate]
+  - id: P07
+    group: "Life events"
+    label: "Birth & naming"
+    definition: "Rites around birth and naming."
+    include: "Naming, circumcision, birth blessings, purification after birth."
+    exclude: "Raising children (theme T0706)."
+    actions: [name, circumcise, bless]
+  - id: P08
+    group: "Life events"
+    label: "Coming of age"
+    definition: "Rites marking entry into adulthood."
+    include: "Thread ceremony, bar mitzvah, initiation at puberty."
+    exclude: "Religious initiation not tied to age (theme T1104)."
+    actions: [initiate]
+  - id: P09
+    group: "Life events"
+    label: "Weddings"
+    definition: "Getting married."
+    include: "Wedding rites, giving in marriage, bride price, consent."
+    exclude: "Marriage as a bond (theme T0701); forbidden unions (P14)."
+    actions: [marry, give in marriage]
+  - id: P10
+    group: "Life events"
+    label: "Divorce"
+    definition: "Ending a marriage."
+    include: "Divorce, putting away a wife, grounds and procedure."
+    exclude: "Adultery (P12) unless divorce is the act."
+    actions: [divorce, put away]
+  - id: P11
+    group: "Life events"
+    label: "Death & burial"
+    definition: "Death rites and disposal of the dead."
+    include: "Burial, cremation, mourning customs."
+    exclude: "Afterlife beliefs (theme T0902)."
+    actions: [bury, burn, mourn]
+  - id: P12
+    group: "Sex & family"
+    label: "Adultery"
+    definition: "Sex with someone else's spouse, or while married."
+    include: "Adultery, its prohibition and punishment."
+    exclude: "Other forbidden unions (P14)."
+    actions: [lie with, commit adultery]
+  - id: P13
+    group: "Sex & family"
+    label: "Same-sex relations"
+    definition: "Sexual relations between people of the same sex."
+    include: "Prohibitions, permissions, punishments, praise or condemnation."
+    exclude: "Friendship between men or women with no sexual content (theme T1204)."
+    actions: [lie with]
+  - id: P14
+    group: "Sex & family"
+    label: "Prohibited unions"
+    definition: "Unions forbidden by kinship, status or faith."
+    include: "Incest rules, marrying outsiders or unbelievers, unions across caste."
+    exclude: "Adultery (P12); same-sex relations (P13)."
+    actions: [marry, lie with]
+  - id: P15
+    group: "Sex & family"
+    label: "Polygamy"
+    definition: "Having more than one spouse."
+    include: "Taking several wives, concubines, limits on the number."
+    exclude: "Weddings (P09)."
+    actions: [take wives]
+  - id: P16
+    group: "Sex & family"
+    label: "Celibacy"
+    definition: "Abstaining from sex and marriage."
+    include: "Celibate life, vows of chastity, virginity praised."
+    exclude: "Sexual restraint within marriage (theme T0102)."
+    actions: [abstain, renounce]
+  - id: P17
+    group: "Sex & family"
+    label: "Inheritance"
+    definition: "Passing on property at death."
+    include: "Heirs, shares, the firstborn, daughters' inheritance."
+    exclude: "Property in general (P18)."
+    actions: [inherit, bequeath]
+  - id: P18
+    group: "Economy"
+    label: "Property & ownership"
+    definition: "Owning, taking and returning property."
+    include: "Ownership, land rights, boundary stones, lost property."
+    exclude: "Theft (P27); inheritance (P17)."
+    actions: [own, take, return]
+  - id: P19
+    group: "Economy"
+    label: "Debt & interest"
+    definition: "Lending, interest and release of debts."
+    include: "Usury, pledges, debt release years."
+    exclude: "Forgiveness as mercy (theme T0405)."
+    actions: [lend, charge interest, release]
+  - id: P20
+    group: "Economy"
+    label: "Trade & fair measures"
+    definition: "Buying, selling and honest measures."
+    include: "Fair weights, markets, cheating in trade."
+    exclude: "Wages (P21)."
+    actions: [sell, weigh]
+  - id: P21
+    group: "Economy"
+    label: "Labor & wages"
+    definition: "Work, wages and rest from work."
+    include: "Paying workers on time, idleness condemned, days of rest from labor."
+    exclude: "Holy days as worship (P31)."
+    actions: [work, pay, rest]
+  - id: P22
+    group: "Economy"
+    label: "Almsgiving"
+    definition: "Required or recommended alms."
+    include: "Tithes for the poor, zakāt, gleaning, leaving the field corners."
+    exclude: "Generosity as a virtue (theme T0403)."
+    actions: [give]
+  - id: P23
+    group: "Economy"
+    label: "Slavery & manumission"
+    definition: "Acquiring, holding and freeing slaves."
+    include: "Purchase, treatment rules, manumission, runaway slaves."
+    exclude: "The status of slaves in general (theme T0605)."
+    actions: [buy, own, free]
+  - id: P24
+    group: "Justice & violence"
+    label: "Killing"
+    definition: "Taking a human life."
+    include: "Murder, manslaughter, cities of refuge, blood revenge."
+    exclude: "Killing in war (P25); killing animals (P40); executions (P26)."
+    actions: [kill, slay]
+  - id: P25
+    group: "Justice & violence"
+    label: "Rules of war"
+    definition: "Conduct in war."
+    include: "Who may be killed, sparing women and trees, spoils, captives, truce."
+    exclude: "Whether war is justified (theme T0603)."
+    actions: [fight, spare, plunder]
+  - id: P26
+    group: "Justice & violence"
+    label: "Punishment"
+    definition: "Penalties imposed for wrongdoing."
+    include: "Stoning, flogging, exile, fines, execution."
+    exclude: "Karma or divine payback (theme T0505)."
+    actions: [stone, beat, exile, fine]
+  - id: P27
+    group: "Justice & violence"
+    label: "Theft"
+    definition: "Stealing and restitution."
+    include: "Theft, robbery, kidnapping, restoring what was taken."
+    exclude: "Disputes over ownership (P18)."
+    actions: [steal, restore]
+  - id: P28
+    group: "Justice & violence"
+    label: "Testimony & oaths"
+    definition: "Witnesses and sworn statements."
+    include: "False witness, number of witnesses, oaths in court."
+    exclude: "Covenants (theme T1205); vows (P45)."
+    actions: [testify, swear]
+  - id: P29
+    group: "Justice & violence"
+    label: "Judges & courts"
+    definition: "Courts and the conduct of judges."
+    include: "Appointing judges, bribery, procedure, appeals."
+    exclude: "Justice as a value (theme T0607)."
+    actions: [judge, bribe]
+  - id: P30
+    group: "Religious practice"
+    label: "Sacrifice & offerings"
+    definition: "Offerings to gods or temples other than animals."
+    include: "Offerings of grain, incense, first fruits, temple gifts."
+    exclude: "Animal sacrifice (P38)."
+    actions: [offer, sacrifice]
+  - id: P31
+    group: "Religious practice"
+    label: "Holy days & sabbath"
+    definition: "Sacred days and their observance."
+    include: "Sabbath, festivals, new moons, holy seasons."
+    exclude: "Rest for workers as a labor rule (P21)."
+    actions: [keep, rest, celebrate]
+  - id: P32
+    group: "Religious practice"
+    label: "Sacred places"
+    definition: "Holy places and their rules."
+    include: "Temples, shrines, who may enter, defiling a sanctuary, pilgrimage sites."
+    exclude: "The priesthood (P33)."
+    actions: [enter, build, defile]
+  - id: P33
+    group: "Religious practice"
+    label: "Priesthood"
+    definition: "Priests and religious officials."
+    include: "Ordination, priestly duties, qualifications, priestly dues."
+    exclude: "Teachers and disciples (theme T1002)."
+    actions: [serve, ordain]
+  - id: P34
+    group: "Religious practice"
+    label: "Images & idols"
+    definition: "Images, idols and their worship."
+    include: "Making or destroying idols, image worship, aniconism."
+    exclude: "Magic (theme T1106)."
+    actions: [make, worship, destroy]
+  - id: P35
+    group: "Religious practice"
+    label: "Conversion & apostasy"
+    definition: "Joining or leaving a faith."
+    include: "Conversion, apostasy, how converts and apostates are treated."
+    exclude: "Initiation into a path (theme T1104)."
+    actions: [convert, leave, punish]
+  - id: P36
+    group: "Religious practice"
+    label: "Forms of prayer"
+    definition: "How prayer is done."
+    include: "Times, postures, words and direction of prayer, chanting, recitation."
+    exclude: "Devotion as an attitude (theme T0304)."
+    actions: [pray, chant, recite]
+  - id: P37
+    group: "Animals"
+    label: "Animals as food"
+    definition: "Animals eaten by people."
+    include: "Which animals may be eaten, slaughter methods, hunting for food."
+    exclude: "Food rules not about animals (P01); sacrifice (P38)."
+    actions: [eat, slaughter]
+  - id: P38
+    group: "Animals"
+    label: "Animal sacrifice"
+    definition: "Animals killed as offerings."
+    include: "Which animals, how they are offered, substitutes for animal sacrifice."
+    exclude: "Other offerings (P30)."
+    actions: [sacrifice]
+  - id: P39
+    group: "Animals"
+    label: "Animals at work"
+    definition: "Animals used for labor."
+    include: "Yoking, muzzling, rest for working animals, beasts of burden."
+    exclude: "Harm to animals in general (P40)."
+    actions: [yoke, muzzle, rest]
+  - id: P40
+    group: "Animals"
+    label: "Harm to animals"
+    definition: "Killing or harming animals outside food and sacrifice."
+    include: "Cruelty, mercy to animals, killing pests, sparing life."
+    exclude: "Hunting (P42); eating (P37); sacrifice (P38)."
+    actions: [kill, harm, spare]
+  - id: P41
+    group: "Animals"
+    label: "Sacred animals"
+    definition: "Animals held sacred or protected."
+    include: "Sacred cows, temple animals, animals that may not be killed."
+    exclude: "Animal symbolism with no rule or reverence (theme T0804)."
+    actions: [revere, protect]
+  - id: P42
+    group: "Animals"
+    label: "Hunting"
+    definition: "Hunting and trapping."
+    include: "Whether and how one may hunt, hunting as sport or sin."
+    exclude: "Eating the meat (P37)."
+    actions: [hunt]
+  - id: P43
+    group: "Speech"
+    label: "Lying & deceit"
+    definition: "Lying and deception."
+    include: "Lies, deceit, permitted lies, trickery."
+    exclude: "False witness in court (P28); honesty as a virtue (theme T0103)."
+    actions: [lie, deceive]
+  - id: P44
+    group: "Speech"
+    label: "Blasphemy & cursing"
+    definition: "Cursing and blasphemy."
+    include: "Cursing God, parents or rulers; blasphemy and its punishment."
+    exclude: "Magic curses as rites (theme T1106)."
+    actions: [curse, blaspheme]
+  - id: P45
+    group: "Speech"
+    label: "Vows"
+    definition: "Vows and their fulfilment."
+    include: "Making and keeping vows to God, annulling vows."
+    exclude: "Covenants (theme T1205); oaths in court (P28)."
+    actions: [vow, fulfil]
+  - id: P46
+    group: "Speech"
+    label: "Gossip & slander"
+    definition: "Gossip, slander and talebearing."
+    include: "Speaking ill of others, spreading tales, backbiting."
+    exclude: "Lying in general (P43)."
+    actions: [slander, bear tales]

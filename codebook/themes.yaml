@@ -1,6 +1,6 @@
 # Theme registry v0.1.0 (DRAFT). This 72-theme draft is the starting list (decided 2026-11-22);
 # the learning loop adds themes later. IDs are fixed once P0-11 is done.
-# Each entry gains include/exclude rules and 3+3 examples during phase 0.
+# Definitions and include/exclude rules drafted for review (P0-11); 3+3 examples come later.
 version: 0.1.0
 status: draft
 
@@ -19,75 +19,507 @@ domains:
   - {id: D12, label: Community & Belonging}
 
 themes:
-  - {id: T0101, domain: D01, label: Courage, definition: "Facing danger, pain or loss for what is right", terms: [andreia, yūki]}
-  - {id: T0102, domain: D01, label: Self-discipline, definition: "Governing appetite and impulse", terms: [sōphrosynē, dama]}
-  - {id: T0103, domain: D01, label: Truthfulness, definition: "Honest speech and acting as one speaks", terms: [satya, xin]}
-  - {id: T0104, domain: D01, label: Humility, definition: "Absence of pride; a modest view of self", terms: [tawāḍuʿ, qian]}
-  - {id: T0105, domain: D01, label: Perseverance, definition: "Enduring hardship toward a goal", terms: [ṣabr, vīrya]}
-  - {id: T0106, domain: D01, label: Honor, definition: "Living up to one's name and word", terms: [meiyo, timē]}
-  - {id: T0201, domain: D02, label: Attention & mindfulness, definition: "Watching one's own mind and acts", terms: [sati, murāqaba]}
-  - {id: T0202, domain: D02, label: Desire & attachment, definition: "Craving and clinging as a problem", terms: [taṇhā, nafs]}
-  - {id: T0203, domain: D02, label: Mastery of emotion, definition: "Handling anger, fear and grief", terms: [apatheia, krodha]}
-  - {id: T0204, domain: D02, label: Knowledge & ignorance, definition: "Seeing truly versus delusion", terms: [avidyā, gnōsis]}
-  - {id: T0205, domain: D02, label: Self & ego, definition: "What the self is, or is not", terms: [ātman, anattā]}
-  - {id: T0206, domain: D02, label: Inner peace, definition: "Settled, untroubled mind", terms: [ataraxia, śānti]}
-  - {id: T0301, domain: D03, label: Ultimate reality, definition: "The divine or absolute ground of things", terms: [Brahman, Tao, Ein Sof]}
-  - {id: T0302, domain: D03, label: Liberation & salvation, definition: "Release from bondage or sin", terms: [mokṣa, nirvāṇa, sōtēria]}
-  - {id: T0303, domain: D03, label: Faith & grace, definition: "Trust in, and unearned gift from, the divine", terms: [pistis, īmān, prasāda]}
-  - {id: T0304, domain: D03, label: Devotion & prayer, definition: "Loving address to the divine", terms: [bhakti, ṣalāt, dhikr]}
-  - {id: T0305, domain: D03, label: Mystical union, definition: "Merging with or dissolving into the divine", terms: [fanāʾ, samādhi]}
-  - {id: T0306, domain: D03, label: Providence, definition: "Divine will governing events", terms: [qadar, pronoia]}
-  - {id: T0401, domain: D04, label: Compassion & mercy, definition: "Care for the suffering of others", terms: [karuṇā, raḥma, ren]}
-  - {id: T0402, domain: D04, label: Non-harm, definition: "Refraining from injuring living beings", terms: [ahiṃsā]}
-  - {id: T0403, domain: D04, label: Generosity & charity, definition: "Giving to those in need", terms: [dāna, zakāt, tzedakah]}
-  - {id: T0404, domain: D04, label: Reciprocity, definition: "Treat others as you would be treated", terms: [shu, golden rule]}
-  - {id: T0405, domain: D04, label: Forgiveness, definition: "Releasing a claim against a wrongdoer", terms: [kṣamā, maghfira]}
-  - {id: T0406, domain: D04, label: Purity & pollution, definition: "Ritual and moral cleanness", terms: [ṭahāra, śauca, tohorah]}
-  - {id: T0501, domain: D05, label: Divine command, definition: "Law issued by a deity", terms: [mitzvah, sharīʿa]}
-  - {id: T0502, domain: D05, label: Duty & role, definition: "Obligations of one's station", terms: [dharma, li]}
-  - {id: T0503, domain: D05, label: Authority & obedience, definition: "Who may command whom", terms: []}
-  - {id: T0504, domain: D05, label: Sin & transgression, definition: "Breaking divine or cosmic law", terms: [ḥeṭ, pāpa, hamartia]}
-  - {id: T0505, domain: D05, label: Retribution & consequence, definition: "Deeds returning to the doer", terms: [karma, lex talionis]}
-  - {id: T0506, domain: D05, label: Repentance & atonement, definition: "Turning back and making amends", terms: [teshuvah, tawba, prāyaścitta]}
-  - {id: T0601, domain: D06, label: Good rulership, definition: "The virtues and duties of rulers", terms: [rājadharma, de]}
-  - {id: T0602, domain: D06, label: Hierarchy & rank, definition: "Fixed social orders and their basis", terms: [varṇa]}
-  - {id: T0603, domain: D06, label: War & violence, definition: "When force is right or wrong", terms: [jihād, just war]}
-  - {id: T0604, domain: D06, label: Wealth & poverty, definition: "The moral weight of having and lacking", terms: [artha]}
-  - {id: T0605, domain: D06, label: Servitude, definition: "Slavery and bonded status", terms: []}
-  - {id: T0606, domain: D06, label: The outsider, definition: "Stranger, foreigner, enemy", terms: [ger, mleccha, barbaros]}
-  - {id: T0607, domain: D06, label: Justice & fairness, definition: "Giving each their due", terms: [ṣedeq, ʿadl, dikaiosynē]}
-  - {id: T0701, domain: D07, label: Marriage, definition: "The bond, its purpose and its terms", terms: []}
-  - {id: T0702, domain: D07, label: Filial duty, definition: "Children's obligations to parents", terms: [xiao]}
-  - {id: T0703, domain: D07, label: Gender roles, definition: "What men and women should be and do", terms: [strīdharma]}
-  - {id: T0704, domain: D07, label: Sexuality, definition: "The place of sexual desire", terms: [kāma]}
-  - {id: T0705, domain: D07, label: Ancestors & lineage, definition: "Duties to forebears and descent", terms: [pitṛ]}
-  - {id: T0706, domain: D07, label: Children & upbringing, definition: "Raising and teaching the young", terms: []}
-  - {id: T0801, domain: D08, label: Creation, definition: "How the world came to be", terms: [cosmogony]}
-  - {id: T0802, domain: D08, label: Cosmic order, definition: "A law or pattern running through all things", terms: [Tao, Logos, ṛta, maʿat]}
-  - {id: T0803, domain: D08, label: Impermanence & cycles, definition: "All things change and return", terms: [anicca, wuchang]}
-  - {id: T0804, domain: D08, label: Animals & creatures, definition: "The standing and kinship of animals", terms: []}
-  - {id: T0805, domain: D08, label: Stewardship, definition: "Dominion over, or care for, the world", terms: []}
-  - {id: T0806, domain: D08, label: Balance & harmony, definition: "Opposites held in proportion", terms: [yin-yang, he]}
-  - {id: T0901, domain: D09, label: Mortality, definition: "Awareness of death", terms: [memento mori]}
-  - {id: T0902, domain: D09, label: Afterlife & rebirth, definition: "What follows death", terms: [saṃsāra, Duat, olam ha-ba]}
-  - {id: T0903, domain: D09, label: Fate & free will, definition: "What is fixed and what is chosen", terms: [moira, wyrd, qadar]}
-  - {id: T0904, domain: D09, label: Suffering, definition: "Its cause, purpose or end", terms: [dukkha, theodicy]}
-  - {id: T0905, domain: D09, label: Time & the ages, definition: "World ages, endings, renewal", terms: [yuga, eschaton]}
-  - {id: T0906, domain: D09, label: Purpose of life, definition: "What a human life is for", terms: [puruṣārtha, telos]}
-  - {id: T1001, domain: D10, label: Wisdom, definition: "Practical and deep understanding", terms: [prajñā, sophia, ḥokhmah]}
-  - {id: T1002, domain: D10, label: Teacher & disciple, definition: "Passing on a way", terms: [guru, rabbi, shaykh]}
-  - {id: T1003, domain: D10, label: Revelation & scripture, definition: "Truth given from beyond", terms: [śruti, waḥy]}
-  - {id: T1004, domain: D10, label: Paradox & the ineffable, definition: "What words cannot hold", terms: [apophasis]}
-  - {id: T1005, domain: D10, label: Speech & silence, definition: "Right use of words", terms: [mauna, right speech]}
-  - {id: T1006, domain: D10, label: Simplicity & non-striving, definition: "Acting without forcing", terms: [pu, wu wei]}
-  - {id: T1101, domain: D11, label: Renunciation, definition: "Leaving worldly goods and ties", terms: [sannyāsa, zuhd]}
-  - {id: T1102, domain: D11, label: Meditation & contemplation, definition: "Disciplined inward attention", terms: [dhyāna, zazen, hesychia]}
-  - {id: T1103, domain: D11, label: Ritual & sacrifice, definition: "Prescribed acts toward the sacred", terms: [yajña, korban]}
-  - {id: T1104, domain: D11, label: Initiation, definition: "Entering a new state or community", terms: [dīkṣā, baptism]}
-  - {id: T1105, domain: D11, label: Self-cultivation, definition: "Gradual shaping of character", terms: [xiushen]}
-  - {id: T1106, domain: D11, label: Magic & invocation, definition: "Compelling or calling powers by rite", terms: [theurgy, goetia]}
-  - {id: T1201, domain: D12, label: Fellowship, definition: "Belonging to a body of believers", terms: [saṅgha, ummah, ekklēsia]}
-  - {id: T1202, domain: D12, label: Loyalty, definition: "Faithfulness to lord, kin or cause", terms: [chū, fides]}
-  - {id: T1203, domain: D12, label: Hospitality, definition: "Duties to guests and strangers", terms: [xenia, ḍiyāfa]}
-  - {id: T1204, domain: D12, label: Friendship, definition: "Bonds of mutual good will", terms: [philia]}
-  - {id: T1205, domain: D12, label: Covenant & oath, definition: "Binding promises, human or divine", terms: [berit, ʿahd]}
+  - id: T0101
+    domain: D01
+    label: "Courage"
+    definition: "Facing danger, pain or loss for what is right."
+    include: "Bravery in battle, martyrdom, standing firm under threat, praise or command of fearlessness."
+    exclude: "Endurance of long hardship without a specific danger (T0105); loyalty to a lord (T1202)."
+    terms: [andreia, yūki]
+  - id: T0102
+    domain: D01
+    label: "Self-discipline"
+    definition: "Governing appetite, impulse and the senses."
+    include: "Restraint of food, drink, sex, anger or speech by choice; control of the senses."
+    exclude: "Prescribed fasts or food laws (topics P01, P02); renouncing the world altogether (T1101); handling emotions as such (T0203)."
+    terms: [sōphrosynē, dama]
+  - id: T0103
+    domain: D01
+    label: "Truthfulness"
+    definition: "Honest speech and acting as one speaks."
+    include: "Praise of truth-telling, keeping one's word, sincerity, condemnation of hypocrisy."
+    exclude: "Truth as knowledge of reality (T0204); specific rules on lying or false witness (topics P43, P28)."
+    terms: [satya, xin]
+  - id: T0104
+    domain: D01
+    label: "Humility"
+    definition: "Absence of pride; a modest view of oneself."
+    include: "Lowliness, warnings against pride or boasting, the humble raised and the proud brought low."
+    exclude: "Submission to an authority (T0503); poverty as a condition (T0604)."
+    terms: [tawāḍuʿ, qian]
+  - id: T0105
+    domain: D01
+    label: "Perseverance"
+    definition: "Enduring hardship steadily toward a goal."
+    include: "Patience under trial, persistence in practice, not giving up."
+    exclude: "Facing a specific danger (T0101); the meaning of suffering itself (T0904)."
+    terms: [ṣabr, vīrya]
+  - id: T0106
+    domain: D01
+    label: "Honor"
+    definition: "Living up to one's name, word and standing."
+    include: "Reputation, shame and disgrace, the warrior's code, keeping face, dying rather than being dishonored."
+    exclude: "Keeping promises in general (T0103) or formal oaths (T1205); rank as a social fact (T0602)."
+    terms: [meiyo, timē]
+  - id: T0201
+    domain: D02
+    label: "Attention & mindfulness"
+    definition: "Watching one's own mind, body and acts."
+    include: "Mindfulness, vigilance, guarding the heart, self-examination."
+    exclude: "Formal sitting practice (T1102); knowing ultimate truth (T0204)."
+    terms: [sati, murāqaba]
+  - id: T0202
+    domain: D02
+    label: "Desire & attachment"
+    definition: "Craving and clinging treated as a problem."
+    include: "Thirst, lust, greed and attachment as a cause of bondage; letting go of desire."
+    exclude: "Sexual desire discussed for its own sake (T0704); wealth as a social issue (T0604)."
+    terms: [taṇhā, nafs]
+  - id: T0203
+    domain: D02
+    label: "Mastery of emotion"
+    definition: "Handling anger, fear, grief and other passions."
+    include: "Calming anger, overcoming fear or sorrow, freedom from passions."
+    exclude: "A settled state of peace as the goal (T0206); craving as such (T0202)."
+    terms: [apatheia, krodha]
+  - id: T0204
+    domain: D02
+    label: "Knowledge & ignorance"
+    definition: "Seeing truly versus being deluded."
+    include: "Ignorance as bondage, illusion, discernment, insight into how things are."
+    exclude: "Practical wisdom and good judgement (T1001); revealed truth (T1003)."
+    terms: [avidyā, gnōsis]
+  - id: T0205
+    domain: D02
+    label: "Self & ego"
+    definition: "What the self is, or is not."
+    include: "Soul, ātman, no-self, ego, the true self beyond the body or mind."
+    exclude: "Pride (T0104); the fate of the soul after death (T0902)."
+    terms: [ātman, anattā]
+  - id: T0206
+    domain: D02
+    label: "Inner peace"
+    definition: "A settled, untroubled mind."
+    include: "Tranquillity, equanimity, peace of heart as a state or goal."
+    exclude: "The method of calming specific passions (T0203); final liberation (T0302)."
+    terms: [ataraxia, śānti]
+  - id: T0301
+    domain: D03
+    label: "Ultimate reality"
+    definition: "The divine or absolute ground of all things."
+    include: "Nature and attributes of God, Brahman, the Tao, the One; statements of what ultimate reality is."
+    exclude: "How the world was made (T0801); the order running through it (T0802); divine guidance of events (T0306)."
+    terms: [Brahman, Tao, Ein Sof]
+  - id: T0302
+    domain: D03
+    label: "Liberation & salvation"
+    definition: "Release from bondage, sin or the cycle of rebirth."
+    include: "Salvation, mokṣa, nirvāṇa, redemption, being saved or set free."
+    exclude: "Forgiveness by another person (T0405); what happens after death in general (T0902)."
+    terms: [mokṣa, nirvāṇa, sōtēria]
+  - id: T0303
+    domain: D03
+    label: "Faith & grace"
+    definition: "Trust in the divine, and its unearned gift."
+    include: "Belief, faith versus works, grace, divine favor not earned."
+    exclude: "Acts of worship (T0304); events steered by God (T0306)."
+    terms: [pistis, īmān, prasāda]
+  - id: T0304
+    domain: D03
+    label: "Devotion & prayer"
+    definition: "Loving or reverent address to the divine."
+    include: "Praise, worship, hymns, petition, bhakti, remembrance of God."
+    exclude: "The form or rules of prayer (topic P36); offerings and rites (T1103)."
+    terms: [bhakti, ṣalāt, dhikr]
+  - id: T0305
+    domain: D03
+    label: "Mystical union"
+    definition: "Merging with, or dissolving into, the divine."
+    include: "Union, annihilation of the self in God, samādhi, the soul's marriage to God."
+    exclude: "Meditation as a practice (T1102); what words cannot express (T1004)."
+    terms: [fanāʾ, samādhi]
+  - id: T0306
+    domain: D03
+    label: "Providence"
+    definition: "Divine will governing events."
+    include: "God's plan, predestination by God, divine reward of history, signs and judgments in events."
+    exclude: "Impersonal fate or the question of choice (T0903); deeds returning by law (T0505)."
+    terms: [qadar, pronoia]
+  - id: T0401
+    domain: D04
+    label: "Compassion & mercy"
+    definition: "Care for, and relief of, others' suffering."
+    include: "Mercy, pity, kindness, love of neighbor, tender treatment of the weak."
+    exclude: "Giving goods or money (T0403); not harming (T0402); pardoning a wrong (T0405)."
+    terms: [karuṇā, raḥma, ren]
+  - id: T0402
+    domain: D04
+    label: "Non-harm"
+    definition: "Refraining from injuring living beings."
+    include: "Ahiṃsā, sparing life, harmlessness as a principle."
+    exclude: "Specific rules on killing people or animals (topics P24, P40); just war (T0603)."
+    terms: [ahiṃsā]
+  - id: T0403
+    domain: D04
+    label: "Generosity & charity"
+    definition: "Giving to those in need."
+    include: "Charity, open-handedness, praise of the giver, duties to the poor."
+    exclude: "Fixed alms rules (topic P22); hospitality to guests (T1203)."
+    terms: [dāna, zakāt, tzedakah]
+  - id: T0404
+    domain: D04
+    label: "Reciprocity"
+    definition: "Treating others as one would be treated."
+    include: "The golden rule and its variants, mutual obligation, measure for measure between people."
+    exclude: "Divine payback (T0505); fairness in courts or trade (T0607)."
+    terms: [shu, golden rule]
+  - id: T0405
+    domain: D04
+    label: "Forgiveness"
+    definition: "Releasing a claim against a wrongdoer."
+    include: "Pardon between people or from God, not taking revenge, forgiving debts as mercy."
+    exclude: "The wrongdoer's turning back (T0506); release of debts as law (topic P19)."
+    terms: [kṣamā, maghfira]
+  - id: T0406
+    domain: D04
+    label: "Purity & pollution"
+    definition: "Ritual and moral cleanness and defilement."
+    include: "Clean and unclean, pollution by contact, purification, inner purity of heart."
+    exclude: "Specific washing rules (topic P05) or food rules (topic P01) when cleanness is not discussed."
+    terms: [ṭahāra, śauca, tohorah]
+  - id: T0501
+    domain: D05
+    label: "Divine command"
+    definition: "Law issued by a deity."
+    include: "Commandments, statutes given by God, the authority of sacred law."
+    exclude: "Duties tied to one's role (T0502); law made by rulers (T0503)."
+    terms: [mitzvah, sharīʿa]
+  - id: T0502
+    domain: D05
+    label: "Duty & role"
+    definition: "Obligations that come with one's station in life."
+    include: "Dharma of caste, age or role; duties of king, wife, son, warrior; proper conduct (li)."
+    exclude: "The ranking itself (T0602); duties of children to parents (T0702)."
+    terms: [dharma, li]
+  - id: T0503
+    domain: D05
+    label: "Authority & obedience"
+    definition: "Who may command whom, and the duty to obey."
+    include: "Obedience to God, king, master, husband or teacher; rebellion; legitimate command."
+    exclude: "How a ruler should rule (T0601); slavery (T0605)."
+    terms: []
+  - id: T0504
+    domain: D05
+    label: "Sin & transgression"
+    definition: "Breaking divine or cosmic law."
+    include: "Sin, transgression, evil deeds, guilt, lists of sins."
+    exclude: "The punishment that follows (T0505); turning back (T0506)."
+    terms: [ḥeṭ, pāpa, hamartia]
+  - id: T0505
+    domain: D05
+    label: "Retribution & consequence"
+    definition: "Deeds returning to the doer."
+    include: "Karma, reward and punishment, retaliation, judgment of deeds, 'as you sow'."
+    exclude: "God steering history (T0306); legal punishments (topic P26) when no principle is stated."
+    terms: [karma, lex talionis]
+  - id: T0506
+    domain: D05
+    label: "Repentance & atonement"
+    definition: "Turning back from wrong and making amends."
+    include: "Repentance, confession, atonement, penance, expiation."
+    exclude: "Forgiveness granted by the wronged (T0405); sacrifices without an atoning purpose (T1103)."
+    terms: [teshuvah, tawba, prāyaścitta]
+  - id: T0601
+    domain: D06
+    label: "Good rulership"
+    definition: "The virtues and duties of rulers."
+    include: "Advice to kings, the just ruler, governing by virtue, tyranny condemned."
+    exclude: "Obedience owed to rulers (T0503); justice in general (T0607)."
+    terms: [rājadharma, de]
+  - id: T0602
+    domain: D06
+    label: "Hierarchy & rank"
+    definition: "Fixed social orders and what grounds them."
+    include: "Caste, class, noble and base, the divine origin of ranks."
+    exclude: "The duties of each rank (T0502); slavery (T0605); men and women (T0703)."
+    terms: [varṇa]
+  - id: T0603
+    domain: D06
+    label: "War & violence"
+    definition: "When force is right or wrong."
+    include: "Holy or just war, conquest, violence condemned or sanctioned, the warrior's role."
+    exclude: "Rules of conduct in war (topic P25); courage in battle (T0101)."
+    terms: [jihād, just war]
+  - id: T0604
+    domain: D06
+    label: "Wealth & poverty"
+    definition: "The moral weight of having and lacking."
+    include: "Riches as danger or blessing, the poor favored, greed in society."
+    exclude: "Giving to the poor (T0403); personal craving (T0202); property rules (topic P18)."
+    terms: [artha]
+  - id: T0605
+    domain: D06
+    label: "Servitude"
+    definition: "Slavery and bonded status."
+    include: "The standing of slaves and servants and how they are treated; slavery as an image only when the passage dwells on it."
+    exclude: "Rules for buying or freeing slaves (topic P23) when status is not discussed."
+    terms: []
+  - id: T0606
+    domain: D06
+    label: "The outsider"
+    definition: "The stranger, foreigner, unbeliever or enemy."
+    include: "How a text regards those outside the group: kindness to the stranger, hostility, impurity of outsiders."
+    exclude: "Hospitality as a duty (T1203); war (T0603)."
+    terms: [ger, mleccha, barbaros]
+  - id: T0607
+    domain: D06
+    label: "Justice & fairness"
+    definition: "Giving each their due."
+    include: "Fairness, righteousness as justice, impartial judgement, rights of the oppressed."
+    exclude: "Court procedure (topic P29); the just ruler (T0601); divine payback (T0505)."
+    terms: [ṣedeq, ʿadl, dikaiosynē]
+  - id: T0701
+    domain: D07
+    label: "Marriage"
+    definition: "Marriage: the bond, its purpose and its terms."
+    include: "Husband and wife duties, the meaning of marriage, marriage as sacred or as contract."
+    exclude: "The wedding ceremony (topic P09); divorce (topic P10); gender roles outside marriage (T0703)."
+    terms: []
+  - id: T0702
+    domain: D07
+    label: "Filial duty"
+    definition: "Children's obligations to parents and elders."
+    include: "Honor of father and mother, filial piety, care for aged parents."
+    exclude: "Duties to ancestors after death (T0705); raising children (T0706)."
+    terms: [xiao]
+  - id: T0703
+    domain: D07
+    label: "Gender roles"
+    definition: "What men and women should be and do."
+    include: "Roles, rights and limits by gender; the nature of women or men; women's standing."
+    exclude: "Marriage as a bond (T0701); sexual conduct (T0704)."
+    terms: [strīdharma]
+  - id: T0704
+    domain: D07
+    label: "Sexuality"
+    definition: "The place of sexual desire and conduct."
+    include: "Sex as good, dangerous, sacred or polluting; chastity; erotic love."
+    exclude: "Specific sexual rules (topics P12–P16); craving in general (T0202)."
+    terms: [kāma]
+  - id: T0705
+    domain: D07
+    label: "Ancestors & lineage"
+    definition: "Duties to forebears and the meaning of descent."
+    include: "Ancestor rites, lineage, genealogy as identity, continuing the line."
+    exclude: "Duties to living parents (T0702); bare genealogy lists with no comment (no theme)."
+    terms: [pitṛ]
+  - id: T0706
+    domain: D07
+    label: "Children & upbringing"
+    definition: "Raising and teaching the young."
+    include: "Discipline of children, education, the child's nature."
+    exclude: "Birth and naming rites (topic P07); teacher and disciple (T1002)."
+    terms: []
+  - id: T0801
+    domain: D08
+    label: "Creation"
+    definition: "How the world came to be."
+    include: "Creation accounts, cosmogony, the first beings, emanation."
+    exclude: "The nature of the creator (T0301); the ongoing order of the world (T0802)."
+    terms: [cosmogony]
+  - id: T0802
+    domain: D08
+    label: "Cosmic order"
+    definition: "A law or pattern running through all things."
+    include: "Tao, Logos, ṛta, maʿat; the world as ordered; natural law."
+    exclude: "The divine ground itself (T0301); balance of opposites (T0806)."
+    terms: [Tao, Logos, ṛta, maʿat]
+  - id: T0803
+    domain: D08
+    label: "Impermanence & cycles"
+    definition: "All things change, pass and return."
+    include: "Impermanence, cycles of nature, the passing of all things."
+    exclude: "Personal death (T0901); world ages (T0905)."
+    terms: [anicca, wuchang]
+  - id: T0804
+    domain: D08
+    label: "Animals & creatures"
+    definition: "The standing and kinship of animals."
+    include: "Animals' souls, worth, speech or kinship with humans; animals as symbols when the text reflects on them."
+    exclude: "Rules about eating, sacrificing, working or harming animals (topics P37–P42) when standing is not discussed."
+    terms: []
+  - id: T0805
+    domain: D08
+    label: "Stewardship"
+    definition: "Dominion over, or care for, the natural world."
+    include: "Humans ruling or tending the earth, land, trees and water; waste and care."
+    exclude: "Animals specifically (T0804); creation (T0801)."
+    terms: []
+  - id: T0806
+    domain: D08
+    label: "Balance & harmony"
+    definition: "Opposites held in proportion."
+    include: "Yin and yang, the middle way, harmony, moderation as balance."
+    exclude: "Self-restraint (T0102); cosmic law (T0802)."
+    terms: [yin-yang, he]
+  - id: T0901
+    domain: D09
+    label: "Mortality"
+    definition: "Awareness that one will die."
+    include: "Reflection on death, the brevity of life, preparing to die."
+    exclude: "What follows death (T0902); funeral rules (topic P11)."
+    terms: [memento mori]
+  - id: T0902
+    domain: D09
+    label: "Afterlife & rebirth"
+    definition: "What follows death."
+    include: "Heaven, hell, rebirth, judgment of the dead, the underworld, resurrection."
+    exclude: "Final liberation from rebirth (T0302); the end of the world (T0905)."
+    terms: [saṃsāra, Duat, olam ha-ba]
+  - id: T0903
+    domain: D09
+    label: "Fate & free will"
+    definition: "What is fixed and what is chosen."
+    include: "Fate, destiny, wyrd, free will, whether one could do otherwise."
+    exclude: "God's purposeful guidance (T0306); karma as payback (T0505)."
+    terms: [moira, wyrd, qadar]
+  - id: T0904
+    domain: D09
+    label: "Suffering"
+    definition: "Suffering: its cause, purpose or end."
+    include: "Why the good suffer, dukkha, suffering as test or teacher, theodicy."
+    exclude: "Enduring hardship (T0105); grief as an emotion to manage (T0203)."
+    terms: [dukkha, theodicy]
+  - id: T0905
+    domain: D09
+    label: "Time & the ages"
+    definition: "World ages, endings and renewal."
+    include: "Yugas, apocalypse, the last days, golden ages, cosmic cycles of time."
+    exclude: "Personal afterlife (T0902); impermanence in general (T0803)."
+    terms: [yuga, eschaton]
+  - id: T0906
+    domain: D09
+    label: "Purpose of life"
+    definition: "What a human life is for."
+    include: "The goals of life, telos, what makes a life good or worthwhile."
+    exclude: "Final liberation as the goal (T0302) when the passage is only about liberation."
+    terms: [puruṣārtha, telos]
+  - id: T1001
+    domain: D10
+    label: "Wisdom"
+    definition: "Practical and deep understanding of how to live."
+    include: "Praise of wisdom, the wise and the foolish, sayings on prudence."
+    exclude: "Insight into ultimate truth versus illusion (T0204); revealed truth (T1003)."
+    terms: [prajñā, sophia, ḥokhmah]
+  - id: T1002
+    domain: D10
+    label: "Teacher & disciple"
+    definition: "Passing on a way from teacher to student."
+    include: "The guru, master or rabbi; discipleship; how to learn; respect for the teacher."
+    exclude: "Raising children (T0706); initiation rites (T1104)."
+    terms: [guru, rabbi, shaykh]
+  - id: T1003
+    domain: D10
+    label: "Revelation & scripture"
+    definition: "Truth given from beyond."
+    include: "Revelation, inspiration, the authority or origin of scripture, prophets as messengers."
+    exclude: "Divine commands themselves (T0501); predictions of the future (no theme unless the source of the prophecy is the point)."
+    terms: [śruti, waḥy]
+  - id: T1004
+    domain: D10
+    label: "Paradox & the ineffable"
+    definition: "What words cannot hold."
+    include: "The ineffable, negative theology, paradox, 'the Tao that can be told'."
+    exclude: "Silence as conduct (T1005); mystical union (T0305)."
+    terms: [apophasis]
+  - id: T1005
+    domain: D10
+    label: "Speech & silence"
+    definition: "Right and wrong use of words."
+    include: "Guarding the tongue, silence, gentle speech, the power of words."
+    exclude: "Lying, cursing, vows or slander as specific acts (topics P43–P46); truthfulness as a virtue (T0103)."
+    terms: [mauna, right speech]
+  - id: T1006
+    domain: D10
+    label: "Simplicity & non-striving"
+    definition: "Acting without forcing; the plain and uncarved."
+    include: "Wu wei, simplicity, contentment with little, yielding like water."
+    exclude: "Leaving the world (T1101); humility (T0104)."
+    terms: [pu, wu wei]
+  - id: T1101
+    domain: D11
+    label: "Renunciation"
+    definition: "Leaving worldly goods and ties."
+    include: "Asceticism, monastic life, giving up home and possessions, detachment from the world."
+    exclude: "Celibacy as a rule (topic P16); restraint within worldly life (T0102)."
+    terms: [sannyāsa, zuhd]
+  - id: T1102
+    domain: D11
+    label: "Meditation & contemplation"
+    definition: "Disciplined inward attention as a practice."
+    include: "Meditation, contemplation, concentration methods, stillness."
+    exclude: "Everyday mindfulness (T0201); the state reached (T0305, T0206)."
+    terms: [dhyāna, zazen, hesychia]
+  - id: T1103
+    domain: D11
+    label: "Ritual & sacrifice"
+    definition: "Prescribed acts directed toward the sacred."
+    include: "Rites, sacrifice, ceremonies and their meaning."
+    exclude: "Animal sacrifice details (topic P38); offerings (topic P30) when the meaning of ritual is not discussed."
+    terms: [yajña, korban]
+  - id: T1104
+    domain: D11
+    label: "Initiation"
+    definition: "Entering a new state or community by rite."
+    include: "Initiation, baptism, ordination, rites of passage into a group or path."
+    exclude: "Coming-of-age rules (topic P08); ordination of priests (topic P33)."
+    terms: [dīkṣā, baptism]
+  - id: T1105
+    domain: D11
+    label: "Self-cultivation"
+    definition: "Gradual shaping of one's character."
+    include: "Self-improvement, cultivating virtue step by step, moral training."
+    exclude: "Meditation technique (T1102); teacher and disciple (T1002)."
+    terms: [xiushen]
+  - id: T1106
+    domain: D11
+    label: "Magic & invocation"
+    definition: "Compelling or calling powers by rite."
+    include: "Spells, invocation of spirits, theurgy, charms, divination by ritual."
+    exclude: "Prayer as petition (T0304); worship rites (T1103)."
+    terms: [theurgy, goetia]
+  - id: T1201
+    domain: D12
+    label: "Fellowship"
+    definition: "Belonging to a body of believers."
+    include: "The saṅgha, ummah or church; communal life; unity of the faithful."
+    exclude: "Friendship between individuals (T1204); the outsider (T0606)."
+    terms: [saṅgha, ummah, ekklēsia]
+  - id: T1202
+    domain: D12
+    label: "Loyalty"
+    definition: "Faithfulness to a lord, kin or cause."
+    include: "Loyalty, betrayal condemned, fealty, standing by one's people."
+    exclude: "Honor (T0106); obedience (T0503)."
+    terms: [chū, fides]
+  - id: T1203
+    domain: D12
+    label: "Hospitality"
+    definition: "Duties to guests and strangers in one's home."
+    include: "Welcoming guests, the sacred guest, refusing hospitality as a crime."
+    exclude: "Charity to the poor (T0403); attitudes to foreigners in general (T0606)."
+    terms: [xenia, ḍiyāfa]
+  - id: T1204
+    domain: D12
+    label: "Friendship"
+    definition: "Bonds of mutual good will between individuals."
+    include: "Friendship, choosing friends, the true and false friend."
+    exclude: "Community of believers (T1201); loyalty to a lord (T1202)."
+    terms: [philia]
+  - id: T1205
+    domain: D12
+    label: "Covenant & oath"
+    definition: "Binding promises, human or divine."
+    include: "Covenants between God and people, treaties, sworn bonds and their breaking."
+    exclude: "Oaths in court (topic P28); vows to God (topic P45) when the binding bond is not the point."
+    terms: [berit, ʿahd]

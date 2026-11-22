@@ -29,4 +29,4 @@ The corpus and outputs live in Google Drive (Wisdom Graph folder), not in this r
 
 ## License
 
-To be decided (checklist item 0.07). Until then, all rights reserved by the maintainer.
+To be decided (checklist item P0-07). Until then, all rights reserved by the maintainer.

@@ -48,10 +48,10 @@ The live copy is the "Project checklist" sheet in Google Drive → Wisdom Graph 
 
 ## 2 Pilot
 
-- [ ] **P2-01** Build ledger and chunk runner · Claude *(In progress)*
-    - Done when: Runner resumes after Ctrl+C without redoing jobs · Built for Claude sync + batch (pipeline/); tested with a fake client; first live run pending
-- [ ] **P2-02** Build prompt assembler and verifier V1 · Claude *(In progress)*
-    - Done when: Same card + input gives identical prompt hash; V1 rejects bad spans · Built with S1-S4 cards and schemas; tested with a fake client; first live run pending
+- [x] **P2-01** Build ledger and chunk runner · Claude
+    - Done when: Runner resumes after Ctrl+C without redoing jobs · Live on Haiku 5.5: 6 pilot books
+- [x] **P2-02** Build prompt assembler and verifier V1 · Claude
+    - Done when: Same card + input gives identical prompt hash; V1 rejects bad spans · S1 0.2.1
 - [ ] **P2-03** Install llama-server and pin 2 candidate models · Joseph
     - Done when: models.lock has hashes; wg doctor passes
 - [ ] **P2-04** Run bake-off on 6 pilot books · Joseph

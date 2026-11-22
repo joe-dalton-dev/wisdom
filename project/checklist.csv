@@ -1,11 +1,11 @@
 ID,Phase,Task,Owner,Status,Done when,Notes
 P0-01,0 Setup,Create Google Drive folder structure,Claude,Done,Wisdom Graph folder with 00–05 and 99 exists,Created 2026-11-22
 P0-02,0 Setup,Write onboarding guides and architecture summary,Claude,Done,START HERE + 4 role guides in Drive and repo,Created 2026-11-22
-P0-03,0 Setup,Connect GitHub to Claude,Joseph,Not started,Claude can create repos in your account,claude.ai Settings > Connectors > GitHub
-P0-04,0 Setup,Push skeleton to github.com/joe-dalton-dev/wisdom,Claude,Blocked,Repo exists with the skeleton on main,Waits for P0-03
+P0-03,0 Setup,Connect GitHub to Claude,Joseph,Done,Claude can create repos in your account,Connected 2026-11-22
+P0-04,0 Setup,Push skeleton to github.com/joe-dalton-dev/wisdom,Claude,Done,Repo exists with the skeleton on main,Pushed 2026-11-22
 P0-05,0 Setup,Protect main branch and enable Discussions,Joseph,Not started,PRs required on main; Discussions categories Introductions and Codebook exist,
 P0-06,0 Setup,Answer the 8 open decisions in the plan,Joseph,Not started,Every row in Decisions needed has an answer,
-P0-07,0 Setup,Choose licenses for code and output data,Joseph,Not started,LICENSE files in repo,Suggested: MIT for code; CC BY 4.0 for data
+P0-07,0 Setup,Choose license for output data (code is Apache 2.0),Joseph,In progress,Data license recorded in README,Code: Apache 2.0 chosen. Suggested for data: CC BY 4.0
 P0-08,0 Setup,Decide where Argilla runs,Joseph,Not started,Argilla reachable by reviewers,Options: your PC or a Hugging Face Space
 P0-09,0 Setup,Share classification_taxonomy.json and the 20 quote-project themes,Joseph,Not started,Both files attached in chat or in Drive 01,
 P0-10,0 Setup,Merge taxonomy into codebook v1,Claude,Not started,codebook/*.yaml merged and reviewed,Needs P0-09

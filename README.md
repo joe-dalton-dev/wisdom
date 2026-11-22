@@ -1,6 +1,6 @@
 # Wisdom Graph
 
-Sentence-level, chapter-level and book-level metadata for about 1,900 public-domain religious and philosophical texts, built to show where traditions agree and where they differ.
+Sentence-level, chapter-level and book-level metadata for about 1,900 public-domain religious and philosophical texts, built to show where traditions agree and where they differ. It starts with religious texts; philosophy follows. The corpus lives in Google Drive, so Drive access is needed to run anything.
 
 **New here? Read [START-HERE.md](START-HERE.md).**
 
@@ -29,4 +29,4 @@ The corpus and outputs live in Google Drive (Wisdom Graph folder), not in this r
 
 ## License
 
-To be decided (checklist item P0-07). Until then, all rights reserved by the maintainer.
+Code: Apache License 2.0 (see `LICENSE`). Output data: license to be decided (checklist item P0-07).

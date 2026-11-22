@@ -8,16 +8,16 @@ The live copy is the "Project checklist" sheet in Google Drive → Wisdom Graph 
     - Done when: Wisdom Graph folder with 00–05 and 99 exists · Created 2026-11-22
 - [x] **P0-02** Write onboarding guides and architecture summary · Claude
     - Done when: START HERE + 4 role guides in Drive and repo · Created 2026-11-22
-- [ ] **P0-03** Connect GitHub to Claude · Joseph
-    - Done when: Claude can create repos in your account · claude.ai Settings > Connectors > GitHub
-- [ ] **P0-04** Push skeleton to github.com/joe-dalton-dev/wisdom · Claude *(Blocked)*
-    - Done when: Repo exists with the skeleton on main · Waits for P0-03
+- [x] **P0-03** Connect GitHub to Claude · Joseph
+    - Done when: Claude can create repos in your account · Connected 2026-11-22
+- [x] **P0-04** Push skeleton to github.com/joe-dalton-dev/wisdom · Claude
+    - Done when: Repo exists with the skeleton on main · Pushed 2026-11-22
 - [ ] **P0-05** Protect main branch and enable Discussions · Joseph
     - Done when: PRs required on main; Discussions categories Introductions and Codebook exist
 - [ ] **P0-06** Answer the 8 open decisions in the plan · Joseph
     - Done when: Every row in Decisions needed has an answer
-- [ ] **P0-07** Choose licenses for code and output data · Joseph
-    - Done when: LICENSE files in repo · Suggested: MIT for code; CC BY 4.0 for data
+- [ ] **P0-07** Choose license for output data (code is Apache 2.0) · Joseph *(In progress)*
+    - Done when: Data license recorded in README · Code: Apache 2.0 chosen. Suggested for data: CC BY 4.0
 - [ ] **P0-08** Decide where Argilla runs · Joseph
     - Done when: Argilla reachable by reviewers · Options: your PC or a Hugging Face Space
 - [ ] **P0-09** Share classification_taxonomy.json and the 20 quote-project themes · Joseph

@@ -6,7 +6,9 @@ Steps (each is a CLI command, see __main__.py):
   gold-adjudicate  find disagreements, send them to A1 (Opus), blind to which model said what
   gold-finalize    agreed + adjudicated labels -> gold_S2.jsonl, gold_S3.jsonl per book
   gold-sample      50 random gold items as a CSV for a human sanity check
-  score            Haiku's labels against the gold set
+  gold-split       freeze a dev/test split of the gold windows (IDs committed to project/gold_split.json)
+  gold-haiku       run the current S2/S3 cards (Haiku) on the gold test windows
+  score            Haiku's labels against the gold set, optionally on one split
 """
 from __future__ import annotations
 
@@ -23,6 +25,8 @@ REF_MODELS = [("claude-opus-5-5", "medium"), ("claude-sonnet-5-5", "medium")]
 GOLD_AGENTS = ["S2", "S3"]
 DISPUTE_FILES = {"A1T": "disputes_A1T.jsonl", "A1N": "disputes_A1N.jsonl"}
 SEED = 7
+SPLIT_FILE = pathlib.Path(__file__).resolve().parent.parent / "project" / "gold_split.json"
+TEST_SHARE = 1 / 3
 
 
 def _jsonl(path: pathlib.Path) -> list[dict]:
@@ -67,6 +71,42 @@ def select(cfg: dict, per_book: int = 50) -> dict:
         out[b] = {"windows": len(picked), "sentences": sum(len(wins[i]["targets"]) for i in picked)}
     (g / "selection.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
     return out
+
+
+# ---------- dev/test split ----------
+def make_split(cfg: dict, force: bool = False) -> dict:
+    """Deterministic split by hashed window id: a third of each book's gold windows go to test.
+
+    Dev windows may be read and quoted in cards; test windows are only ever scored."""
+    if SPLIT_FILE.exists() and not force:
+        raise SystemExit(f"{SPLIT_FILE} already exists; the split is frozen. Use --force only to rebuild it on purpose.")
+    g, out = gold_dir(cfg), {"seed": SEED, "test_share": round(TEST_SHARE, 3), "books": {}}
+    for book in cfg["books"]:
+        b = book["id"]
+        ids = [w["id"] for w in _jsonl(g / b / "windows_sentence.jsonl")]
+        ranked = sorted(ids, key=lambda i: hashlib.sha256(f"{SEED}-split-{i}".encode()).hexdigest())
+        n_test = round(len(ids) * TEST_SHARE)
+        test = set(ranked[:n_test])
+        out["books"][b] = {"dev": [i for i in ids if i not in test], "test": [i for i in ids if i in test]}
+    SPLIT_FILE.parent.mkdir(parents=True, exist_ok=True)
+    SPLIT_FILE.write_text(json.dumps(out, indent=1), encoding="utf-8")
+    return {b: {k: len(v) for k, v in d.items()} for b, d in out["books"].items()}
+
+
+def split_units(cfg: dict, book: str, split: str) -> set | None:
+    """Sentence ids in one split of a book's gold windows; None means no filter."""
+    if not split:
+        return None
+    if not SPLIT_FILE.exists():
+        raise SystemExit("No gold split yet; run `python -m pipeline gold-split` first.")
+    keep = set(json.loads(SPLIT_FILE.read_text(encoding="utf-8"))["books"][book][split])
+    return {t["id"] for w in _jsonl(gold_dir(cfg) / book / "windows_sentence.jsonl") if w["id"] in keep
+            for t in w["targets"]}
+
+
+def test_windows(cfg: dict, book: str) -> list[dict]:
+    keep = set(json.loads(SPLIT_FILE.read_text(encoding="utf-8"))["books"][book]["test"])
+    return [w for w in _jsonl(gold_dir(cfg) / book / "windows_sentence.jsonl") if w["id"] in keep]
 
 
 # ---------- compare and build disputes ----------
@@ -216,8 +256,12 @@ def _prf(tp, fp, fn):
             "tp": tp, "fp": fp, "fn": fn}
 
 
-def score(cfg: dict, agent: str, against: str = "") -> dict:
-    """Score a model's labels on the gold sentences. against='' -> the pilot (Haiku) outputs."""
+def score(cfg: dict, agent: str, against: str = "", split: str = "", source: str = "pilot") -> dict:
+    """Score labels on the gold sentences.
+
+    against: a reference model's gold outputs (out_{agent}@{model}.jsonl in the gold folder).
+    source='pilot': Haiku's outputs from the pilot run; source='gold': Haiku outputs written in the gold
+    folder by gold-haiku (the current cards). split: '', 'dev' or 'test'."""
     g, main = gold_dir(cfg), pathlib.Path(cfg["out_dir"])
     cb = Codebook()
     labels = {t["id"]: t["label"] for t in cb.themes["themes"]} | {t["id"]: t["label"] for t in cb.topics["topics"]}
@@ -227,10 +271,16 @@ def score(cfg: dict, agent: str, against: str = "") -> dict:
     for book in cfg["books"]:
         b = book["id"]
         gold = _latest(g / b / f"gold_{agent}.jsonl")
-        pred_path = (g / b / f"out_{agent}@{against}.jsonl") if against else (main / b / f"out_{agent}.jsonl")
+        if against:
+            pred_path = g / b / f"out_{agent}@{against}.jsonl"
+        else:
+            pred_path = (g / b if source == "gold" else main / b) / f"out_{agent}.jsonl"
         pred = _latest(pred_path)
+        keep = split_units(cfg, b, split)
         bc = collections.Counter()
         for uid, gr in gold.items():
+            if keep is not None and uid not in keep:
+                continue
             pr = pred.get(uid)
             if pr is None:
                 bc["unlabelled"] += 1
@@ -258,8 +308,8 @@ def score(cfg: dict, agent: str, against: str = "") -> dict:
                 bc["count_exact"] += len(gr.get("norms", [])) == len(pr.get("norms", []))
         by_book[b] = bc
         tot += bc
-    res = {"agent": agent, "model": against or "pilot (card model)", "sentences": tot["sentences"],
-           "unlabelled": tot["unlabelled"]}
+    res = {"agent": agent, "model": against or f"card model ({source} outputs)", "split": split or "all",
+           "sentences": tot["sentences"], "unlabelled": tot["unlabelled"]}
     if agent == "S2":
         res["themes"] = _prf(tot["themes_tp"], tot["themes_fp"], tot["themes_fn"])
         res["topics"] = _prf(tot["topics_tp"], tot["topics_fp"], tot["topics_fn"])
@@ -272,5 +322,6 @@ def score(cfg: dict, agent: str, against: str = "") -> dict:
         res["has_norm"] = _prf(tot["has_tp"], tot["has_fp"], tot["has_fn"])
         res["norm_count_exact"] = round(tot["count_exact"] / tot["sentences"], 3) if tot["sentences"] else 0
         res["by_book_norm_f1"] = {b: _prf(c["norm_tp"], c["norm_fp"], c["norm_fn"])["f1"] for b, c in by_book.items()}
-    (g / f"score_{agent}{'@' + against if against else ''}.json").write_text(json.dumps(res, indent=2), encoding="utf-8")
+    tag = ("@" + against if against else ("" if source == "pilot" else "@" + source)) + (f".{split}" if split else "")
+    (g / f"score_{agent}{tag}.json").write_text(json.dumps(res, indent=2), encoding="utf-8")
     return res

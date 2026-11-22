@@ -1,6 +1,6 @@
 # Agent card: S2 theme and topic tagger. Change anything -> bump `version`.
 id: S2_theme_tagger
-version: 0.3.0
+version: 0.4.0
 level: 1
 base: _base.md@0.2.0
 unit: sentence
@@ -25,12 +25,42 @@ task: |
     "Heaven and earth are not benevolent" carries Compassion & mercy. Whether the text affirms or
     rejects is recorded later, at book level.
   - Read who acts. When "the sage" or a ruler governs the people, the sentence is about rulership.
-  - Most sentences carry 0 to 2 themes. Narrative connectives ("And the LORD spoke unto Moses, saying:")
-    usually carry none. Do not stretch to fill the slots.
+  - After the main idea, check for a second and a third distinct idea. Teaching sentences in wisdom texts
+    often carry 2 or 3 themes; a clearly present secondary idea gets salience 1. Leave a slot empty only
+    when nothing else is clearly there. Narrative connectives ("And the LORD spoke unto Moses, saying:")
+    carry none.
+  - Knowledge & ignorance is only for seeing through delusion to how things really are. Learning, love
+    of virtue and correcting one's faults are Self-cultivation; sound judgement and the wise versus the
+    fool are Wisdom.
+  - Spells, charms, runes, witches and seeresses working magic are Magic & invocation.
+  - A promise of life or death for keeping or breaking a law is Retribution & consequence, not
+    Liberation & salvation.
+  - The EXAMPLES below show the level of detail wanted. They are not a list to copy from.
   - proposal: only when the sentence clearly carries an idea that no listed theme covers. Give a short label,
     a one-line reason and the span. Otherwise all three proposal fields are empty strings.
 
 model: claude-haiku-5-5
 max_tokens: 2000
 effort: low
-examples: []        # filled from the gold set (P0-11)
+examples:           # from the dev half of the gold set only (project/gold_split.json); never from test
+  - |
+    "He who (tries to) govern a state by his wisdom is a scourge to it; while he who does not (try to) do so is a blessing."
+    themes: Good rulership (3) "govern a state by his wisdom is a scourge to it"; Simplicity & non-striving (2) "he who does not (try to) do so is a blessing"; Wisdom (1) "by his wisdom"
+  - |
+    "The thirty spokes unite in the one nave; but it is on the empty space (for the axle), that the use of the wheel depends."
+    themes: Paradox & the ineffable (2) "it is on the empty space (for the axle), that the use of the wheel depends"
+  - |
+    "The Bhikshu whose body and tongue and mind are quieted, who is collected, and has rejected the baits of the world, he is called quiet."
+    themes: Inner peace (3) "he is called quiet"; Self-discipline (2) "body and tongue and mind are quieted"; Renunciation (2) "has rejected the baits of the world"
+  - |
+    "He did not transfer his anger; he did not repeat a fault."
+    themes: Mastery of emotion (2) "He did not transfer his anger"; Self-cultivation (2) "he did not repeat a fault"
+  - |
+    "The Master said, "I have not seen one who loves virtue as he loves beauty.""
+    themes: Desire & attachment (2) "as he loves beauty"; Self-cultivation (1) "loves virtue"
+  - |
+    "Ye shall therefore keep My statutes, and Mine ordinances, which if a man do, he shall live by them: I am the LORD."
+    themes: Divine command (3) "Ye shall therefore keep My statutes, and Mine ordinances"; Retribution & consequence (1) "he shall live by them"
+  - |
+    "Heith they named her | who sought their home, The wide-seeing witch, | in magic wise; ..."
+    themes: Magic & invocation (2) "The wide-seeing witch, | in magic wise"

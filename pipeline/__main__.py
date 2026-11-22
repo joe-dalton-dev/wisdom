@@ -14,7 +14,9 @@ Gold set (silver standard: Opus + Sonnet label, Opus adjudicates; see pipeline/g
   gold-collect     fetch finished gold batches (if you ran without --wait)
   gold-finalize    write gold_S2 / gold_S3 per book
   gold-sample      50 gold items as a CSV for a quick human sanity check
-  score            score the pilot labels (Haiku) against the gold set: --agent S2 or S3
+  gold-split       freeze a dev/test split of the gold windows (once; IDs go in project/gold_split.json)
+  gold-haiku       run the current S2/S3 cards (Haiku) on the gold test windows
+  score            score Haiku against the gold set: --agent S2|S3, --split dev|test, --source pilot|gold
 
 Examples (smoke test: one book, themes only, first 10 windows, results in a minute):
   python -m pipeline split
@@ -50,7 +52,7 @@ def main(argv=None):
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("command", choices=["split", "estimate", "run", "collect", "status", "report", "gold-select",
                                         "gold-label", "gold-adjudicate", "gold-collect", "gold-finalize",
-                                        "gold-sample", "score"])
+                                        "gold-sample", "gold-split", "gold-haiku", "score"])
     ap.add_argument("--config", default="config/pilot.yaml")
     ap.add_argument("--book", action="append", help="book id; repeat for several; default all")
     ap.add_argument("--agent", action="append", choices=list(AGENTS), help="S1-S4; repeat; default all four")
@@ -61,6 +63,10 @@ def main(argv=None):
                     help="hard stop: total spend recorded in the ledger may not pass this (default 2.00)")
     ap.add_argument("--wait", action="store_true", help="batch mode: wait for batches to finish and collect")
     ap.add_argument("--yes", action="store_true", help="skip the confirmation prompt")
+    ap.add_argument("--split", choices=["dev", "test"], default="", help="score: only this half of the gold set")
+    ap.add_argument("--source", choices=["pilot", "gold"], default="pilot",
+                    help="score: pilot = Haiku outputs from the pilot run; gold = outputs of gold-haiku")
+    ap.add_argument("--force", action="store_true", help="gold-split: rebuild an existing split")
     a = ap.parse_args(argv)
 
     cfg = load_cfg(a.config)
@@ -153,11 +159,16 @@ def gold_command(a, cfg, books):
     if a.command == "gold-sample":
         print("Wrote", gold.sample(cfg), "- mark anything that looks wrong and send it back.")
         return
+    if a.command == "gold-split":
+        for b, m in gold.make_split(cfg, force=a.force).items():
+            print(f"{b:<18} dev {m['dev']:>3}   test {m['test']:>3}")
+        print(f"Wrote {gold.SPLIT_FILE} - commit it; don't rebuild it.")
+        return
     if a.command == "score":
         for ag in (a.agent or ["S2", "S3"]):
             if ag not in ("S2", "S3"):
                 continue
-            r = gold.score(cfg, ag)
+            r = gold.score(cfg, ag, split=a.split, source=a.source)
             print(json.dumps(r, indent=2, ensure_ascii=False))
         return
     runner = Runner(gcfg)
@@ -169,6 +180,11 @@ def gold_command(a, cfg, books):
         for model, effort in gold.REF_MODELS:
             jobs += runner.plan(gold.GOLD_AGENTS, books, None, model=model, effort=effort)
         send(runner, jobs, a, gold.windows_for(cfg))
+        return
+    if a.command == "gold-haiku":
+        ags = [x for x in (a.agent or gold.GOLD_AGENTS) if x in gold.GOLD_AGENTS]
+        items = [(ag, b, w) for ag in ags for b in books for w in gold.test_windows(cfg, b)]
+        send(runner, runner.plan_windows(items), a, gold.windows_for(cfg))
         return
     if a.command == "gold-adjudicate":
         for b, s in gold.disputes(cfg).items():

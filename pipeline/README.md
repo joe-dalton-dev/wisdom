@@ -52,6 +52,16 @@ python -m pipeline gold-sample        # 50 items in data/pilot/gold/sanity_sampl
 python -m pipeline score              # Haiku's S2 and S3 against the gold set
 ```
 
+Improving the cards without fooling ourselves:
+
+```
+python -m pipeline gold-split                                  # once; frozen in project/gold_split.json
+python -m pipeline score --split dev                           # look at errors on dev only
+python -m pipeline gold-haiku --mode batch --wait --max-usd 12 # current cards on the 102 test windows
+python -m pipeline score --split test --source pilot           # old cards (pilot outputs)
+python -m pipeline score --split test --source gold            # new cards
+```
+
 ## Outputs (in `data/pilot/<book>/`, never committed)
 
 | File | Holds |

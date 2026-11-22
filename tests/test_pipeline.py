@@ -201,6 +201,26 @@ class PipelineTest(unittest.TestCase):
         self.assertEqual(sc["sentences"] + sc["unlabelled"], sel["sample"]["sentences"])
         self.assertGreater(sc["themes"]["f1"], 0)
         self.assertIn("has_norm", gold.score(self.cfg, "S3"))
+        # Dev/test split, then the current cards (Haiku) on the test windows only.
+        orig = gold.SPLIT_FILE
+        gold.SPLIT_FILE = self.tmp / "gold_split.json"
+        try:
+            sp = gold.make_split(self.cfg)["sample"]
+            self.assertEqual((sp["dev"], sp["test"]), (1, 1))
+            with self.assertRaises(SystemExit):
+                gold.make_split(self.cfg)  # frozen
+            tw = gold.test_windows(self.cfg, "sample")
+            items = [(ag, "sample", w) for ag in gold.GOLD_AGENTS for w in tw]
+            g.run_sync(g.plan_windows(items), max_usd=1.0, workers=1)
+            self.assertTrue((out / "out_S2.jsonl").exists())
+            t = gold.score(self.cfg, "S2", split="test", source="gold")
+            d = gold.score(self.cfg, "S2", split="dev")
+            self.assertEqual(t["sentences"], len(tw[0]["targets"]))
+            self.assertEqual(t["split"], "test")
+            self.assertEqual(t["sentences"] + d["sentences"] + d["unlabelled"] + t["unlabelled"],
+                             sel["sample"]["sentences"])
+        finally:
+            gold.SPLIT_FILE = orig
         # Spend is shared: the main runner sees the gold ledger's spend too.
         both = Runner({**self.cfg, "spend_ledgers": [str(self.tmp / "out/gold/ledger.sqlite")]}, client=client)
         self.assertAlmostEqual(both.spent(), main.ledger.spent() + g.ledger.spent(), places=6)

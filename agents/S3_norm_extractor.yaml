@@ -1,6 +1,6 @@
 # Agent card: S3 norm extractor. Change anything -> bump `version`.
 id: S3_norm_extractor
-version: 0.2.0
+version: 0.3.0
 level: 1
 base: _base.md@0.2.0
 unit: sentence
@@ -12,8 +12,21 @@ labels: [norm_modality, topics]
 task: |
   For each TARGET sentence, list the norms it states: rules about what someone must, must not, may,
   should, or need not do. Most sentences state none; return an empty `norms` list for them.
-  - Only norms the sentence itself states. A story in which someone does something is not a norm.
-    Advice given as a general way to live ("The wise man does not grieve") counts as a recommendation.
+  - Only norms the sentence itself states. A story in which someone does something is not a norm,
+    including the past-tense account of a rite ("And Aaron and his sons laid their hands upon ...").
+  - A recommendation is the text holding up a way of acting as good or bad for people in general,
+    with or without "should". It counts when the sentence
+    (a) portrays an ideal or a failed type of person: the wise man, the superior man, the true Brahmana,
+        "the soul which is not moved" -> recommend what that person does;
+    (b) ties conduct to its result: "Angry speech is painful" -> avoid angry speech; "Those who are ever
+        watchful ... their passions will come to an end" -> be watchful;
+    (c) wishes or judges: "If we could renounce our sageness ... it would be better", "The firm, the
+        enduring, the simple and the modest are near to virtue".
+    It does not count for: one person's own past act or habit told as a story or self-report ("I do not
+    grumble against men"); a remark on what is hard or what others praise; a question or request; a
+    description of the world, the gods or the cosmos with no conduct held up.
+  - A direct command to a hearer ("gird thee to the fight") is an obligation or prohibition, not a
+    recommendation.
   - modality: obligation (must), prohibition (must not), permission (may), recommendation (should / is good),
     exemption (need not / is excused).
   - action: what is required, forbidden or allowed, in a few plain words ("eat the fat", "lie with a beast").
@@ -24,6 +37,9 @@ task: |
   - topic: the topic id the action falls under, or "none".
   - span: the words of the target that state the norm, copied exactly.
   One sentence can hold several norms; list each.
+  - One norm per action. "take away its crop ... and cast it beside the altar" is two obligations;
+    "rend it by the wings, but shall not divide it asunder" is an obligation and a prohibition.
+    Passive rules count: "the bullock shall be killed before the LORD" is an obligation.
   - Every instruction counts, including each step of a ritual procedure: "he shall flay the
     burnt-offering" is an obligation even though it sits inside a longer rite.
   - condition and sanction are copied word for word from the target, as short as possible
@@ -33,4 +49,22 @@ task: |
 model: claude-haiku-5-5
 max_tokens: 2500
 effort: low
-examples: []        # filled from the gold set (P0-11)
+examples:           # from the dev half of the gold set only (project/gold_split.json); never from test
+  - |
+    "And the fire upon the altar shall be kept burning thereby, it shall not go out; and the priest shall kindle wood on it every morning; ..."
+    norms: obligation "keep the altar fire burning"; prohibition "let the altar fire go out"; obligation "kindle wood on the altar every morning" (addressee: the priest)
+  - |
+    "And the bullock of the sin-offering was brought; and Aaron and his sons laid their hands upon the head of the bullock of the sin-offering."
+    norms: none (a past-tense account of what was done)
+  - |
+    "Those who are ever watchful, who study day and night, and who strive after Nirvâna, their passions will come to an end."
+    norms: recommendation "be ever watchful"; recommendation "study day and night"; recommendation "strive after Nirvana"
+  - |
+    "He is not distressed by men's not knowing him." (of the superior man)
+    norms: recommendation "not be distressed by others not knowing him" (addressee: the superior man)
+  - |
+    "People praise earnestness; thoughtlessness is always blamed."
+    norms: none (reports what others praise)
+  - |
+    "So minded, gird thee to the fight, for so Thou shalt not sin!"
+    norms: obligation "go to the fight" (addressee: Arjuna)

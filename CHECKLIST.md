@@ -20,8 +20,8 @@ The live copy is the Claude sheet [Wisdom Graph — Phase 0 status](https://clau
     - Done when: LICENSE in repo; data policy in README · Code Apache 2.0; data unpublished, all rights reserved (2026-11-22)
 - [x] **P0-08** Decide where Argilla runs · Joseph
     - Done when: Decision recorded in docs/decisions.md · Local PC in Docker; Tailscale for reviewers (2026-11-22)
-- [ ] **P0-09** Share classification_taxonomy.json and the 20 quote-project themes · Joseph *(Skipped)*
-    - Done when: Both files attached in chat or in Drive 01 · Using the 72-theme draft instead (2026-11-22); the learning loop adds themes later
+- [x] **P0-09** Set the starting theme list · Joseph
+    - Done when: Starting list agreed · Codebook has 72 themes and 46 topics; well beyond the 20 quote-project themes; the learning loop adds more (2026-11-22)
 - [ ] **P0-10** Merge taxonomy into codebook v1 · Claude *(Skipped)*
     - Done when: codebook/*.yaml merged and reviewed · Not needed: the draft codebook is the starting list
 - [ ] **P0-11** Write definitions and 3+3 examples per label · Joseph + Claude *(In progress)*

@@ -28,3 +28,9 @@ A record of decisions that shape the system. Change one only by adding a new dat
 ## 2026-11-22 · Starting theme list
 
 - The 72-theme draft in `codebook/themes.yaml` is the starting list. The older 84-theme `classification_taxonomy.json` and the 20 quote-project themes are not merged in; themes missing from the draft enter later through the learning loop, accepting that some labels get re-run.
+
+## 2026-11-22 · Pilot pipeline
+
+- Level 1 agents S1-S4 run on Claude Haiku 5.5 for the pilot, through `pipeline/` (sync or Message Batches), with Claude's JSON-schema output mode. Label lists are enums in the schema, so the API itself refuses invented labels; V1 still checks spans and IDs.
+- Pilot books come from the local `corpus-clean`. Leviticus uses the JPS 1917 pages (`bib/jps`), not KJV: the KJV pages in `corpus-clean` lost verse numbers and linked words (Lev 19:9-10 drops "the poor and the stranger").
+- Pilot size: 6 books, 5,544 sentences, 4,307 calls for all four agents; estimated about $1 in batch mode.

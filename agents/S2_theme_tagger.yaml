@@ -1,37 +1,28 @@
-# Agent card: S2 theme and topic tagger (TEMPLATE - draft, not yet tested)
-# Every field below is pinned. Change anything -> bump `version`, run the regression test,
-# add a CHANGELOG entry, and release a new cards-vX.Y tag.
-
+# Agent card: S2 theme and topic tagger. Change anything -> bump `version`.
 id: S2_theme_tagger
-version: 0.1.0
+version: 0.2.0
 level: 1
-base: _base.md@0.1.0
-
-task: >
-  For each TARGET sentence, choose up to 3 themes and up to 3 topics from CANDIDATES
-  that the sentence itself expresses, each with salience 0-3 and an evidence span.
-  Use CONTEXT only to understand the targets. If no candidate fits a target that
-  clearly carries a theme, use the proposal slot.
-
-inputs:
-  - targets           # list of {unit_id, text}, normally 5
-  - context_before    # up to 4 sentences, read-only
-  - context_after     # up to 2 sentences, read-only
-  - candidates        # up to 8 themes + up to 8 topics from triage (T2), with definitions
-
+base: _base.md@0.2.0
+unit: sentence
+windows: windows_sentence.jsonl      # 5 target sentences, 4 before and 2 after as context
 output_schema: schemas/S2_output.schema.json
-codebook: codebook/themes.yaml@0.1.0, codebook/topics.yaml@0.1.0   # only candidate entries are inserted
-examples: examples/S2/v0/   # fixed set, fixed order (to be created from the gold set)
+codebook_version: themes@0.1.0+topics@0.1.0
+labels: [themes, topics]             # the full theme and topic lists, with definitions, go in the prompt
 
-model: TBD                   # filled from agents/models.lock after the pilot bake-off
-server: llama-server@TBD
-params:
-  temperature: 0
-  top_p: 1
-  seed: 7
-  max_tokens: 600
-retries: 2                   # schema failures only; then route to V2
+task: |
+  For each TARGET sentence, choose up to 3 THEMES and up to 3 TOPICS that the sentence itself expresses.
+  - A theme is what the sentence means (Compassion, Cosmic order). A topic is what it is literally about
+    (Fasting, Animals at work). A sentence can have themes without topics and the reverse.
+  - Follow each label's definition and its include and exclude rules. When an exclude rule names another
+    label, use that one instead.
+  - salience: 0 = mentioned in passing, 1 = present, 2 = central to the sentence, 3 = the point of the passage.
+  - span: the few words of the target that carry the label, copied exactly.
+  - Most sentences carry 0 to 2 themes. Narrative connectives ("And the LORD spoke unto Moses, saying:")
+    usually carry none. Do not stretch to fill the slots.
+  - proposal: only when the sentence clearly carries an idea that no listed theme covers. Give a short label,
+    a one-line reason and the span. Otherwise all three proposal fields are empty strings.
 
-gold_score:
-  test_f1: null              # filled by the pilot
-  measured: null
+model: claude-haiku-5-5
+max_tokens: 2000
+effort: low
+examples: []        # filled from the gold set (P0-11)

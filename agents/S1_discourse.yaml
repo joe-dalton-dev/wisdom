@@ -1,0 +1,29 @@
+# Agent card: S1 discourse and voice. Change anything -> bump `version`.
+id: S1_discourse
+version: 0.1.0
+level: 1
+base: _base.md@0.2.0
+unit: paragraph                      # labels paragraphs; their sentences inherit the labels
+windows: windows_paragraph.jsonl     # 5 target paragraphs, 1 paragraph of context before
+output_schema: schemas/S1_output.schema.json
+codebook_version: facets@0.1.0
+labels: [speech_act, force]
+
+task: |
+  For each TARGET paragraph, record how it speaks:
+  - speech_act: what kind of utterance it is.
+      narration = telling events; command = an order to someone present in the story;
+      teaching = explaining how things are or how to live; prayer_hymn = addressed to or praising the divine;
+      dialogue = an exchange between characters; parable = an illustrative story or image;
+      list_genealogy = a list of names, descendants or items; law = a general rule meant to bind a group;
+      prophecy = a prediction or vision of what will come.
+  - force: prescriptive (tells the reader or a group what to do), descriptive (states what is),
+      condemned (presents a practice as wrong), hypothetical (if/suppose case).
+  - speaker: who speaks, as the text names them (e.g. "the LORD", "Krishna", "The Master"); empty for the narrator.
+  - addressee: who is spoken to, as the text names them (e.g. "Moses", "Arjuna", "the children of Israel"); empty if no one in particular.
+  A paragraph that mixes kinds gets the kind of its main clause.
+
+model: claude-haiku-5-5
+max_tokens: 1200
+effort: low
+examples: []        # filled from the gold set (P0-11)

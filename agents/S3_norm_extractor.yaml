@@ -1,0 +1,31 @@
+# Agent card: S3 norm extractor. Change anything -> bump `version`.
+id: S3_norm_extractor
+version: 0.1.0
+level: 1
+base: _base.md@0.2.0
+unit: sentence
+windows: windows_sentence.jsonl
+output_schema: schemas/S3_output.schema.json
+codebook_version: facets@0.1.0+topics@0.1.0
+labels: [norm_modality, topics]
+
+task: |
+  For each TARGET sentence, list the norms it states: rules about what someone must, must not, may,
+  should, or need not do. Most sentences state none; return an empty `norms` list for them.
+  - Only norms the sentence itself states. A story in which someone does something is not a norm.
+    Advice given as a general way to live ("The wise man does not grieve") counts as a recommendation.
+  - modality: obligation (must), prohibition (must not), permission (may), recommendation (should / is good),
+    exemption (need not / is excused).
+  - action: what is required, forbidden or allowed, in a few plain words ("eat the fat", "lie with a beast").
+  - addressee: who the rule binds as the text names them ("the children of Israel", "the priest", "a bhikshu").
+  - target: who or what the action is done to ("the stranger", "the ox"); empty if none.
+  - condition: the circumstance in which it applies, copied from the text; empty if unconditional.
+  - sanction: the stated consequence or penalty, copied from the text; empty if none.
+  - topic: the topic id the action falls under, or "none".
+  - span: the words of the target that state the norm, copied exactly.
+  One sentence can hold several norms; list each.
+
+model: claude-haiku-5-5
+max_tokens: 2500
+effort: low
+examples: []        # filled from the gold set (P0-11)

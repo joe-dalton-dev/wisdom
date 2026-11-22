@@ -1,0 +1,66 @@
+# Pilot configuration: the 6 books of the phase 2 bake-off.
+# Copy to config/pilot.yaml (gitignored) and set corpus_root to your local corpus-clean folder.
+# Paths inside `files` are relative to corpus_root; {03..28} expands to 03, 04, ... 28.
+
+corpus_root: "C:/Users/joseph dalton/Documents/ClaudeMemory/SacredTexts/corpus-clean"
+out_dir: ./data/pilot            # sentences, windows, outputs and the ledger land here (gitignored)
+
+# How each book is cut up. All rules are deterministic; no model touches the text.
+#   chapters: file        -> each file is one chapter
+#   chapters: number_line -> a line holding only a number starts a new chapter
+#   units:    number_line -> a line holding only a number starts a new verse (KJV style)
+#   units:    numbered    -> a line starting "12. " starts a new verse or stanza
+#   units:    none        -> paragraphs are found from line lengths and end punctuation
+#   start_at: regex       -> skip everything in a file before the first matching line (editor's intro)
+#   drop:     regexes     -> lines to remove (running heads, colophons)
+#   title_line: true      -> the first content line of each file is the chapter title
+books:
+  - id: daodejing
+    title: Tao Te Ching (tr. James Legge, SBE 39)
+    tradition: tao
+    files: [tao/taote.txt]
+    chapters: number_line
+    units: none
+    drop: ['^\(Sacred Books of the East']
+
+  - id: dhammapada
+    title: The Dhammapada (tr. F. Max Müller, SBE 10)
+    tradition: bud
+    files: ["bud/sbe10/sbe10{03..28}.txt"]
+    chapters: file
+    units: numbered
+    drop: ['^Sacred Books of the East, Vol\. 10', '^CHAPTER [IVXLC]+\.?$', '^[A-Z][A-Z ()\-,.]+$']
+
+  - id: bhagavad_gita
+    title: The Bhagavad Gita (tr. Edwin Arnold, The Song Celestial)
+    tradition: hin
+    files: ["hin/gita/bg{01..18}.txt"]
+    chapters: file
+    units: none
+    title_line: true
+    drop: ['^HERE ENDETH', '^BHAGAVAD-GITA,?$', '^Entitled "', '^Or "The Book']
+
+  # JPS 1917, not KJV: the KJV pages in corpus-clean lost verse numbers and linked words
+  # (e.g. Lev 19:9-10 drops "the poor and the stranger"). The JPS pages are intact.
+  - id: leviticus
+    title: Leviticus (JPS Tanakh 1917)
+    tradition: bib
+    files: ["bib/jps/lev{001..027}.txt"]
+    chapters: file
+    units: number_line
+
+  - id: analects
+    title: Confucian Analects (tr. James Legge)
+    tradition: cfu
+    files: [cfu/conf1.txt]
+    chapters: number_line
+    units: none
+    drop: ['^translated by James Legge']
+
+  - id: poetic_edda_gods
+    title: The Poetic Edda, Lays of the Gods (tr. Henry Adams Bellows)
+    tradition: neu
+    files: ["neu/poe/poe{03..16}.txt"]
+    chapters: file
+    units: numbered
+    start_at: '^1[.,] '        # Vafthruthnismol's first stanza reads "1, " in this edition

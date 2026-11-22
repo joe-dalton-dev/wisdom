@@ -1,0 +1,27 @@
+# Agent card: S4 entity and pronoun resolver. Change anything -> bump `version`.
+id: S4_entities
+version: 0.1.0
+level: 1
+base: _base.md@0.2.0
+unit: sentence
+windows: windows_sentence.jsonl
+output_schema: schemas/S4_output.schema.json
+codebook_version: facets@0.1.0
+labels: [social_category]
+
+task: |
+  For each TARGET sentence, list the beings and places it mentions, including pronouns that refer to them.
+  - span: the mention as written ("he", "the LORD", "the stranger"), copied exactly.
+  - type: deity, person, group, place, animal, object or other.
+  - referent: who or what it refers to. For pronouns and epithets, resolve them from the context
+    ("he" -> "Aaron", "the Blessed One" -> "the Buddha"). Leave empty if it cannot be resolved.
+  - social_category: if the mention belongs to one of the listed social categories, give it; otherwise "none".
+  - role: if it has a social category, whether it is the agent (does the action), the target (has the
+    action done to it) or the subject (is talked about); otherwise "none".
+  Skip abstract nouns and generic words ("all things", "heaven" as sky). Keep each sentence's list short:
+  the people, groups, deities, animals and places that matter to the sentence.
+
+model: claude-haiku-5-5
+max_tokens: 2500
+effort: low
+examples: []        # filled from the gold set (P0-11)

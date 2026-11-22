@@ -42,3 +42,15 @@ test sentence appears in either card.
   false positives there, tighten, and spend test once more. Test errors are not read.
 - 16 of 204 calls came back partial; re-running `gold-haiku` retries them.
 - The test half is small (about 180 gold norms), so differences under about 0.03 are noise.
+
+## S3 0.4.0 (from dev only)
+S3 0.3.0 on dev: precision 0.61, recall 0.77, F1 0.68 (old card 0.74 / 0.64 / 0.685). 128 of 182 false
+norms were on sentences with no gold norm: praise of ideal people ("him I call a Brahmana"), moral claims
+about how things are, the speaker's own vows, Lokasenna taunts, descriptions of gods' halls. The rest came
+from splitting lists of qualities ("slow in speech and earnest in conduct") and declared statuses ("he
+shall be unclean"), plus exact duplicates.
+
+0.4.0 narrows recommendation to sentences that steer the reader (should, let him, it is better, a
+judgement, a choice tied to its result, a maxim about what the superior man does), says "when unsure,
+no norm", keeps procedure steps separate but lists of qualities as one norm, and drops statuses. The
+verifier now removes duplicate norms. Next: check 0.4.0 on dev, then one more test run.

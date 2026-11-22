@@ -117,6 +117,16 @@ def verify(agent_short: str, window: dict, reply_text: str, enums: dict) -> dict
             if prop.get("label"):
                 check_span(prop.get("span"), "proposal")
         elif kind == "S3":
+            # The same norm listed twice (same modality and action): keep one rather than count it twice.
+            uniq, seen_norms = [], set()
+            for n in rec.get("norms", []):
+                k = (str(n.get("modality")).lower(), _norm(n.get("action") or ""))
+                if k not in seen_norms:
+                    seen_norms.add(k)
+                    uniq.append(n)
+            if len(uniq) < len(rec.get("norms", [])):
+                rec["norms"] = uniq
+                rec["_deduped"] = True
             for n in rec.get("norms", []):
                 n["modality"] = check_enum(n.get("modality"), "$NORM_MODALITY", "modality")
                 n["topic"] = check_enum(n.get("topic"), "$TOPIC_IDS_OR_NONE", "topic")

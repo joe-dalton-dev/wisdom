@@ -32,8 +32,8 @@ The live copy is the "Project checklist" sheet in Google Drive → Wisdom Graph 
     - Done when: Restricted folder holds every non-PD edition
 - [ ] **P0-14** Upload manifest with SHA-256 per book · Joseph + Claude *(Deferred)*
     - Done when: 02 Corpus/manifests has books.csv with hashes · Deferred until the first runner joins; script ready in tools/make_manifest.py
-- [ ] **P0-15** Install Argilla on your PC (Docker) · Joseph
-    - Done when: http://localhost:6900 login works with your own password · Steps in the Maintainer guide; about 30 min
+- [x] **P0-15** Install Argilla on your PC (Docker) · Joseph
+    - Done when: http://localhost:6900 login works with your own password · Installed and login validated 2026-11-22
 
 ## 1 Gold set
 

@@ -28,3 +28,7 @@ A record of decisions that shape the system. Change one only by adding a new dat
 ## 2026-11-22 · Starting theme list
 
 - The 72-theme draft in `codebook/themes.yaml` is the starting list. The older 84-theme `classification_taxonomy.json` and the 20 quote-project themes are not merged in; themes missing from the draft enter later through the learning loop, accepting that some labels get re-run.
+
+## 2026-11-22 · Phase 2 API budget
+
+- Phase 2 testing may use the Claude API (Haiku 5.5 in the bake-off against Gemma 4 26B, Sonnet for GEPA reflection) up to a hard limit of **$20**, set as a spend limit in the Claude Console. Whether Haiku runs the full level 1 is decided after the pilot, from its measured accuracy and cost per book.

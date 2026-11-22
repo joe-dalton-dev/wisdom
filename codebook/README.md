@@ -8,7 +8,7 @@ One versioned list of every label agents may use. Agents pick only from here; an
 | `topics.yaml` | 46 topics in 8 groups | What a passage is literally about (Fasting, Marriage) |
 | `facets.yaml` | 7 closed value lists | Attributes such as speech act, force, stance |
 
-**Status: v0.1.0 draft.** It must be merged with the existing 12-domain / 84-theme framework and the 20 quote-project themes, and every core label needs include/exclude rules plus 3 positive and 3 negative examples, before phase 0 closes.
+**Status: v0.1.0 draft.** This 72-theme, 46-topic list is the starting list. Every label now has a definition and include/exclude rules for review; 3 positive and 3 negative examples per label are added from the corpus before phase 0 closes.
 
 ## How labels change
 

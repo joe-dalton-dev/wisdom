@@ -12,12 +12,12 @@ The live copy is the "Project checklist" sheet in Google Drive → Wisdom Graph 
     - Done when: Claude can create repos in your account · Connected 2026-11-22
 - [x] **P0-04** Push skeleton to github.com/joe-dalton-dev/wisdom · Claude
     - Done when: Repo exists with the skeleton on main · Pushed 2026-11-22
-- [ ] **P0-05** Protect main branch and enable Discussions · Joseph
-    - Done when: PRs required on main; Discussions categories Introductions and Codebook exist
-- [ ] **P0-06** Answer the 8 open decisions in the plan · Joseph
-    - Done when: Every row in Decisions needed has an answer
-- [ ] **P0-07** Choose license for output data (code is Apache 2.0) · Joseph *(In progress)*
-    - Done when: Data license recorded in README · Code: Apache 2.0 chosen. Suggested for data: CC BY 4.0
+- [x] **P0-05** Protect main branch and enable Discussions · Joseph
+    - Done when: PRs required on main; Discussions categories Introductions and Codebook exist · Repo public; Protect main ruleset active; Discussions on (2026-11-22)
+- [x] **P0-06** Answer the 8 open decisions in the plan · Joseph
+    - Done when: Every row in Decisions needed has an answer · All 8 answered 2026-11-22; see docs/decisions.md
+- [x] **P0-07** Decide licensing for code and data · Joseph
+    - Done when: LICENSE in repo; data policy in README · Code Apache 2.0; data unpublished, all rights reserved (2026-11-22)
 - [ ] **P0-08** Decide where Argilla runs · Joseph
     - Done when: Argilla reachable by reviewers · Options: your PC or a Hugging Face Space
 - [ ] **P0-09** Share classification_taxonomy.json and the 20 quote-project themes · Joseph

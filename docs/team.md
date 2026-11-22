@@ -7,11 +7,11 @@ The maintainer approves anything that changes what the system believes: labels, 
 | Role | GitHub | Google Drive | Argilla |
 | --- | --- | --- | --- |
 | Maintainer | Admin | Owner of the Wisdom Graph folder | Owner |
-| Developer | Write (branches and PRs; `main` is protected) | Viewer on 00–02, 04 | None |
+| Developer | Write (branches and PRs; `main` accepts pull requests only) | Viewer on 00–02 | None |
 | Tradition reviewer | Triage (issues, discussions) | Viewer on 00, 01, 05 | Annotator, own workspace |
-| Compute runner | Triage | Viewer on 00–02; contributor on 03 Outputs/incoming | None |
+| Compute runner | Triage | Viewer on 00–02; contributor on `03 Outputs/incoming` only, shared directly | None |
 
-Nobody except the maintainer gets access to `02 Corpus/restricted (do not share)`, which does not inherit the parent folder's sharing.
+Three folders do not inherit the project folder's sharing and stay private to the maintainer: `02 Corpus/restricted (do not share)`, `03 Outputs (private)` and `04 Reports (private)`. Analysis data is never published. Runners get upload access to `03 Outputs/incoming` only, shared to them directly.
 
 ## The five workflows
 

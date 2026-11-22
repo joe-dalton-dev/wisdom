@@ -17,7 +17,7 @@ Wisdom Graph reads about 1,900 public-domain religious and philosophical books, 
 
 | What | Where |
 | --- | --- |
-| Code, agent cards, codebook, schemas, these guides | GitHub repo [joe-dalton-dev/wisdom](https://github.com/joe-dalton-dev/wisdom) (private for now; ask Joseph for access) |
+| Code, agent cards, codebook, schemas, these guides, [decisions](docs/decisions.md) | GitHub repo [joe-dalton-dev/wisdom](https://github.com/joe-dalton-dev/wisdom) (public; anyone can read it, contributors work through pull requests) |
 | Questions and discussion | GitHub Discussions in the repo |
 | Proposing a new theme, topic or tradition term | GitHub issue → "Propose a label" form |
 | Corpus texts (one file per book) | Google Drive → Wisdom Graph → 02 Corpus → public-domain |

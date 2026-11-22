@@ -43,7 +43,12 @@ def verify(agent_short: str, window: dict, reply_text: str, enums: dict) -> dict
     context_ids = {c["id"] for c in window["context_before"] + window["context_after"]}
     lower = {k: {v.lower(): v for v in vals} for k, vals in enums.items()}
     seen = set()
-    for rec in records:
+    target_order = [t["id"] for t in window["targets"]]
+    for pos, rec in enumerate(records):
+        # A blank unit_id in an otherwise complete reply is matched by position (seen once in the smoke test).
+        if not rec.get("unit_id") and len(records) == len(target_order):
+            rec["unit_id"] = target_order[pos]
+            rec["_unit_id_from_position"] = True
         problems = []
         uid = rec.get("unit_id")
         if uid in context_ids:
@@ -84,12 +89,15 @@ def verify(agent_short: str, window: dict, reply_text: str, enums: dict) -> dict
                     rec.setdefault("_dropped_salience0", []).extend(lab.get("id") for lab in dropped)
                 if len(labels) > MAX_LABELS:
                     problems.append(f"{len(labels)} {kind}, max {MAX_LABELS}")
-                ids = []
+                best: dict = {}
                 for lab in labels:
                     lab["id"] = check_enum(lab.get("id"), key, kind[:-1])
-                    if lab["id"] in ids:
-                        problems.append(f"repeated {kind[:-1]} {lab['id']}")
-                    ids.append(lab["id"])
+                    # The same label listed twice: keep the higher salience rather than reject the record.
+                    if lab["id"] not in best or (lab.get("salience") or 0) > (best[lab["id"]].get("salience") or 0):
+                        best[lab["id"]] = lab
+                if len(best) < len(labels):
+                    labels = list(best.values())
+                    rec[kind] = labels
                     if not isinstance(lab.get("salience"), int) or not 0 <= lab["salience"] <= 3:
                         problems.append(f"salience out of range: {lab.get('salience')!r}")
                     check_span(lab.get("span"), kind[:-1])

@@ -54,3 +54,21 @@ shall be unclean"), plus exact duplicates.
 judgement, a choice tied to its result, a maxim about what the superior man does), says "when unsure,
 no norm", keeps procedure steps separate but lists of qualities as one norm, and drops statuses. The
 verifier now removes duplicate norms. Next: check 0.4.0 on dev, then one more test run.
+
+## S3 0.4.0 on dev, and why S3 tuning stops here
+Same 899 dev sentences, duplicates removed for all:
+
+| card | precision | recall | modality F1 | has-norm F1 |
+|---|---|---|---|---|
+| 0.2.0 (pilot) | 0.735 | 0.636 | 0.682 | 0.767 |
+| 0.3.0 | 0.613 | 0.762 | 0.679 | 0.762 |
+| 0.4.0 | 0.727 | 0.634 | 0.677 | 0.784 |
+
+Three different cards land on the same F1, even on the half they were written from. The reference
+models explain it: on dev, Opus and Sonnet agree on norm modality at F1 0.93 in Leviticus but only
+0.65 in the five wisdom books (Edda 0.50). Implicit recommendations have no stable boundary, so the
+gold set itself is noisy there and Haiku (about 0.55) sits close to that ceiling.
+
+Decision: keep S3 0.4.0 (same score, clearer rules, duplicate removal), spend no more test runs on it,
+and treat recommendations outside law codes as low-confidence in later levels. Explicit norms (Leviticus
+0.87) are reliable.

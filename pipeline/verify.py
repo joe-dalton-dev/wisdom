@@ -11,12 +11,19 @@ import re
 MAX_LABELS = 3
 
 
+_QUOTES = str.maketrans({"’": "'", "‘": "'", "“": '"', "”": '"', "—": "-", "–": "-"})
+
+
 def _norm(s: str) -> str:
-    return re.sub(r"\s+", " ", s).strip().lower()
+    """Lower case, no punctuation, single spaces. Also drops the '|' caesura marks of the Edda
+    translation, which the model leaves out of spans (171 of 250 Edda span rejections in the pilot)."""
+    s = s.translate(_QUOTES).replace("|", " ").lower()
+    s = re.sub(r"[^\w' ]+", " ", s)
+    return re.sub(r"\s+", " ", s).strip()
 
 
 def span_ok(span: str, text: str) -> bool:
-    """Exact substring, or the same after collapsing whitespace and case (models sometimes re-space)."""
+    """The span's words, in order, appear in the target. Punctuation, case and spacing are ignored."""
     return not span or span in text or _norm(span) in _norm(text)
 
 
@@ -88,8 +95,10 @@ def verify(agent_short: str, window: dict, reply_text: str, enums: dict) -> dict
                     labels = [lab for lab in labels if lab.get("salience") != 0]
                     rec[kind] = labels
                     rec.setdefault("_dropped_salience0", []).extend(lab.get("id") for lab in dropped)
-                if len(labels) > MAX_LABELS:
-                    problems.append(f"{len(labels)} {kind}, max {MAX_LABELS}")
+                if len(labels) > MAX_LABELS:  # keep the most salient three rather than reject the record
+                    labels = sorted(labels, key=lambda lab: -(lab.get("salience") or 0))[:MAX_LABELS]
+                    rec[kind] = labels
+                    rec["_trimmed"] = True
                 best: dict = {}
                 for lab in labels:
                     lab["id"] = check_enum(lab.get("id"), key, kind[:-1])

@@ -23,7 +23,7 @@ Wisdom Graph reads about 1,900 public-domain religious and philosophical books, 
 | Corpus (plain text, zipped) | [Google Drive → Wisdom Corpus → corpus-clean.zip](https://drive.google.com/drive/folders/1NgoZKQOwmgWHijhpxnSQ1Cakp3o0zajo) |
 | Submitting results | Google Drive → 03 Outputs → incoming, plus a GitHub issue "Submit results" |
 | Daily progress reports | Google Drive → 04 Reports |
-| Project checklist | Google Drive → 00 Start here → Project checklist (also `CHECKLIST.md` here) |
+| Project checklist | [Wisdom Graph — Phase 0 status](https://claude.ai/artifact/9JucZmoVQVncnq38Y65Grv) (Claude sheet; `CHECKLIST.md` here mirrors it) |
 | The full plan | "Wisdom Corpus — Multi-Level Semantic Analysis Plan" (ask Joseph for the link); summary in [docs/architecture.md](docs/architecture.md) |
 
 ## 3. Five rules for everyone

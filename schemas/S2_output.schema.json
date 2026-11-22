@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "wisdom-graph/S2_output/0.1.0",
+  "$id": "wisdom/S2_output/0.1.0",
   "title": "S2 theme and topic tagger output (draft)",
   "type": "object",
   "required": ["records"],

@@ -10,7 +10,7 @@ The live copy is the "Project checklist" sheet in Google Drive → Wisdom Graph 
     - Done when: START HERE + 4 role guides in Drive and repo · Created 2026-11-22
 - [ ] **P0-03** Connect GitHub to Claude · Joseph
     - Done when: Claude can create repos in your account · claude.ai Settings > Connectors > GitHub
-- [ ] **P0-04** Create private wisdom-graph repo and push skeleton · Claude *(Blocked)*
+- [ ] **P0-04** Push skeleton to github.com/joe-dalton-dev/wisdom · Claude *(Blocked)*
     - Done when: Repo exists with the skeleton on main · Waits for P0-03
 - [ ] **P0-05** Protect main branch and enable Discussions · Joseph
     - Done when: PRs required on main; Discussions categories Introductions and Codebook exist

@@ -29,7 +29,9 @@ A bundle is accepted when CI passes (schema, hashes, verbatim spans), its card v
 
 1. Upload `SacredTexts/corpus-books` public-domain files to `02 Corpus/public-domain`, one folder per tradition, using the Google Drive desktop app.
 2. Put non-public-domain editions in `02 Corpus/restricted (do not share)`.
-3. Upload `_books.csv` plus a SHA-256 per file to `02 Corpus/manifests`.
+3. Build the manifest on your PC and upload it to `02 Corpus/manifests`:
+   `python tools/make_manifest.py build "C:/Users/joseph dalton/Documents/ClaudeMemory/SacredTexts/corpus-books" books_manifest.csv`
+   Runners check their download with `python tools/make_manifest.py check <their copy> books_manifest.csv`.
 4. Later, add one zip per tier so runners download one file instead of hundreds.
 
 ## Argilla on your PC (review tool)

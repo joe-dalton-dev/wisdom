@@ -40,7 +40,8 @@ def verify(agent_short: str, window: dict, reply_text: str, enums: dict) -> dict
         return out
 
     texts = {t["id"]: t["text"] for t in window["targets"]}
-    context_ids = {c["id"] for c in window["context_before"] + window["context_after"]}
+    context_ids = {c["id"] for c in window["context_before"] + window["context_after"]
+                   + window.get("chapter_opening", [])}
     lower = {k: {v.lower(): v for v in vals} for k, vals in enums.items()}
     seen = set()
     target_order = [t["id"] for t in window["targets"]]

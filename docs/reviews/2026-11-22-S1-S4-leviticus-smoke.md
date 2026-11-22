@@ -14,3 +14,9 @@ Also found: JPS chapter headings ("LEVITICUS CHAPTER 2") were being treated as t
 **Fixes:** S1 0.2.0 (speaker carries over through a speech, 3 paragraphs of context instead of 1, conditional law is prescriptive, speech frames are narration); S3 0.2.0 (every ritual step is a norm, conditions copied word for word or left empty); S4 0.2.0 (literal social categories only, spans must be in the target); Leviticus config drops chapter headings.
 
 **Next:** re-split Leviticus and re-run the same 10 windows with the new cards.
+
+## Re-run with S1 0.2.0, S3 0.2.0, S4 0.2.0 ($0.019, 37 windows, 35 done, 2 partial)
+
+- **S3 fixed:** every condition now copied word for word (0 rejections, was 4); ritual steps such as "he shall flay the burnt-offering" are now norms. 64 norms in 43 sentences.
+- **S4 fixed:** no more "children" for the children of Israel or "men" for "any man"; social categories are now priests and sacrificial animals, as they should be. Still pulls "the LORD" from context twice; the verifier rejects those and they are retried.
+- **S1 improved, not fixed:** conditional law is now prescriptive and the speech frame is narration. The speaker carries over only while the opening is in view: windows that start deep inside a speech (1:6-1:17, chapter 3 start) still have no speaker. Fix in S1 0.2.1: each paragraph window now also carries the chapter's first two paragraphs as CHAPTER OPENING context.

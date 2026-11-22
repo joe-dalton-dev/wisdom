@@ -256,8 +256,12 @@ def split_book(book: dict, corpus_root: pathlib.Path) -> dict:
             "sentences": [asdict(s) for s in sentences], "stats": stats}
 
 
-def windows(units: list[dict], per: int, before: int, after: int, kind: str) -> list[dict]:
-    """Cut units (sentences or paragraphs) into windows of `per` targets, never crossing a chapter."""
+def windows(units: list[dict], per: int, before: int, after: int, kind: str,
+            with_opening: bool = False) -> list[dict]:
+    """Cut units (sentences or paragraphs) into windows of `per` targets, never crossing a chapter.
+
+    with_opening: also give each window the chapter's first two units when they are not already in view, so
+    a speaker introduced at the top of a chapter ("And the LORD spoke unto Moses") is never lost."""
     out = []
     by_ch: dict[int, list[dict]] = {}
     for u in units:
@@ -265,8 +269,11 @@ def windows(units: list[dict], per: int, before: int, after: int, kind: str) -> 
     for ch, us in by_ch.items():
         for w_no, i in enumerate(range(0, len(us), per), start=1):
             tg = us[i:i + per]
+            opening = [{"id": u["id"], "text": u["text"]} for u in us[:min(2, max(0, i - before))]] \
+                if with_opening else []
             out.append({
                 "id": f"{tg[0]['book']}.{ch:03d}.{kind}{w_no:03d}",
+                "chapter_opening": opening,
                 "book": tg[0]["book"], "chapter": ch, "kind": kind,
                 "targets": [{"id": u["id"], "text": u["text"]} for u in tg],
                 "context_before": [{"id": u["id"], "text": u["text"]} for u in us[max(0, i - before):i]],
@@ -297,7 +304,7 @@ def run_split(cfg: dict, only: str | None = None) -> list[dict]:
         write_jsonl(d / "windows_sentence.jsonl",
                     windows(res["sentences"], TARGETS_PER_WINDOW, CONTEXT_BEFORE, CONTEXT_AFTER, "w"))
         write_jsonl(d / "windows_paragraph.jsonl",
-                    windows(res["paragraphs"], PARAS_PER_WINDOW, 3, 0, "pw"))
+                    windows(res["paragraphs"], PARAS_PER_WINDOW, 3, 0, "pw", with_opening=True))
         meta = {"book": book["id"], "title": book["title"], "tradition": book["tradition"],
                 "split_version": SPLIT_VERSION, "chapters": len(res["chapters"]),
                 "paragraphs": len(res["paragraphs"]), "sentences": len(res["sentences"]),

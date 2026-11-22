@@ -116,7 +116,8 @@ class Agent:
     def user_message(window: dict) -> str:
         def block(title, items):
             return f"{title}:\n" + ("\n".join(f"[{i['id']}] {i['text']}" for i in items) if items else "(none)")
-        return "\n\n".join([block("CONTEXT BEFORE", window["context_before"]),
+        opening = [block("CHAPTER OPENING (context)", window["chapter_opening"])] if window.get("chapter_opening") else []
+        return "\n\n".join(opening + [block("CONTEXT BEFORE", window["context_before"]),
                             block("TARGETS", window["targets"]),
                             block("CONTEXT AFTER", window["context_after"])])
 

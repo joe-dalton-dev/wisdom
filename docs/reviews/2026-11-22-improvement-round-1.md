@@ -27,5 +27,18 @@ test sentence appears in either card.
 - S3 0.3.0: a three-part definition of recommendation and what doesn't count; one norm per action;
   past-tense rites are no norm; direct commands are obligations; 6 dev examples.
 
-## Result on test
-(fill in after `gold-haiku`)
+## Result on test (Haiku, $0.04)
+
+| | old cards | new cards |
+|---|---|---|
+| Themes F1 (P / R) | 0.523 (0.56 / 0.49) | **0.568** (0.54 / 0.60) |
+| Topics F1 | 0.578 | 0.577 |
+| Norm modality F1 (P / R) | 0.697 (0.72 / 0.68) | 0.672 (0.60 / 0.77) |
+| Has-norm F1 | 0.820 | 0.806 |
+
+- S2 0.4.0 is kept: recall up 11 points for a 2-point precision loss.
+- S3 0.3.0 overshot: false norms nearly doubled (48 -> 92), worst in the Gita (0.35 -> 0.27) and the
+  Edda (0.55 -> 0.33). The recommendation definition is too wide. Next: run S3 0.3.0 on dev, find the
+  false positives there, tighten, and spend test once more. Test errors are not read.
+- 16 of 204 calls came back partial; re-running `gold-haiku` retries them.
+- The test half is small (about 180 gold norms), so differences under about 0.03 are noise.

@@ -104,8 +104,8 @@ def split_units(cfg: dict, book: str, split: str) -> set | None:
             for t in w["targets"]}
 
 
-def test_windows(cfg: dict, book: str) -> list[dict]:
-    keep = set(json.loads(SPLIT_FILE.read_text(encoding="utf-8"))["books"][book]["test"])
+def test_windows(cfg: dict, book: str, split: str = "test") -> list[dict]:
+    keep = set(json.loads(SPLIT_FILE.read_text(encoding="utf-8"))["books"][book][split])
     return [w for w in _jsonl(gold_dir(cfg) / book / "windows_sentence.jsonl") if w["id"] in keep]
 
 

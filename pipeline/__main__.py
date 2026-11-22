@@ -15,7 +15,7 @@ Gold set (silver standard: Opus + Sonnet label, Opus adjudicates; see pipeline/g
   gold-finalize    write gold_S2 / gold_S3 per book
   gold-sample      50 gold items as a CSV for a quick human sanity check
   gold-split       freeze a dev/test split of the gold windows (once; IDs go in project/gold_split.json)
-  gold-haiku       run the current S2/S3 cards (Haiku) on the gold test windows
+  gold-haiku       run the current S2/S3 cards (Haiku) on the gold test windows (--split dev for dev)
   score            score Haiku against the gold set: --agent S2|S3, --split dev|test, --source pilot|gold
 
 Examples (smoke test: one book, themes only, first 10 windows, results in a minute):
@@ -63,7 +63,7 @@ def main(argv=None):
                     help="hard stop: total spend recorded in the ledger may not pass this (default 2.00)")
     ap.add_argument("--wait", action="store_true", help="batch mode: wait for batches to finish and collect")
     ap.add_argument("--yes", action="store_true", help="skip the confirmation prompt")
-    ap.add_argument("--split", choices=["dev", "test"], default="", help="score: only this half of the gold set")
+    ap.add_argument("--split", choices=["dev", "test"], default="", help="score: only this half of the gold set; gold-haiku: which half to run (default test)")
     ap.add_argument("--source", choices=["pilot", "gold"], default="pilot",
                     help="score: pilot = Haiku outputs from the pilot run; gold = outputs of gold-haiku")
     ap.add_argument("--force", action="store_true", help="gold-split: rebuild an existing split")
@@ -183,7 +183,7 @@ def gold_command(a, cfg, books):
         return
     if a.command == "gold-haiku":
         ags = [x for x in (a.agent or gold.GOLD_AGENTS) if x in gold.GOLD_AGENTS]
-        items = [(ag, b, w) for ag in ags for b in books for w in gold.test_windows(cfg, b)]
+        items = [(ag, b, w) for ag in ags for b in books for w in gold.test_windows(cfg, b, a.split or "test")]
         send(runner, runner.plan_windows(items), a, gold.windows_for(cfg))
         return
     if a.command == "gold-adjudicate":

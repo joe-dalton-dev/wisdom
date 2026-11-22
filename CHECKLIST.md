@@ -30,8 +30,8 @@ The live copy is the "Project checklist" sheet in Google Drive → Wisdom Graph 
     - Done when: One folder per tradition in 02 Corpus/public-domain · Use Google Drive desktop app
 - [ ] **P0-13** Move non-public-domain editions to restricted · Joseph
     - Done when: Restricted folder holds every non-PD edition
-- [ ] **P0-14** Upload manifest with SHA-256 per book · Joseph + Claude
-    - Done when: 02 Corpus/manifests has books.csv with hashes
+- [ ] **P0-14** Upload manifest with SHA-256 per book · Joseph + Claude *(Deferred)*
+    - Done when: 02 Corpus/manifests has books.csv with hashes · Deferred until the first runner joins; script ready in tools/make_manifest.py
 - [ ] **P0-15** Install Argilla on your PC (Docker) · Joseph
     - Done when: http://localhost:6900 login works with your own password · Steps in the Maintainer guide; about 30 min
 

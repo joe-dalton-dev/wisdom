@@ -17,6 +17,6 @@ A record of decisions that shape the system. Change one only by adding a new dat
 
 ## 2026-11-22 · Repository
 
-- Code license: Apache 2.0.
+- Method is public by choice: code, agent cards, prompts, codebook, schemas and docs, under Apache 2.0.
 - Data: not published at all. Outputs stay in private Drive folders (`03 Outputs (private)`, `04 Reports (private)`, which do not inherit sharing); no data license is granted. All rights reserved.
 - Repository is public. `main` is protected by the "Protect main" ruleset: pull requests only, the `validate` check must pass, no force pushes, no deletion.

@@ -29,5 +29,5 @@ The corpus and outputs live in Google Drive (Wisdom Graph folder), not in this r
 
 ## License
 
-- Code: Apache License 2.0 (`LICENSE`).
-- Data (codebook content, labels, output records, analyses, reports): not published and not licensed for any use. All rights reserved by the maintainer.
+- Method (code, agent cards, prompts, codebook, schemas, docs): public, Apache License 2.0 (`LICENSE`).
+- Data (gold-set labels, review annotations, output records, analyses, reports): not published and not licensed for any use. All rights reserved by the maintainer. Access is granted per person in Google Drive.

@@ -54,8 +54,8 @@ The live copy is the "Project checklist" sheet in Google Drive → Wisdom Graph 
     - Done when: Same card + input gives identical prompt hash; V1 rejects bad spans
 - [ ] **P2-03** Install llama-server and pin 2 candidate models · Joseph
     - Done when: models.lock has hashes; wg doctor passes
-- [ ] **P2-10** Create Claude API key and set a $20 spend limit · Joseph
-    - Done when: Key stored outside the repo; Console limit set to $20 · Covers all Phase 2 API testing
+- [x] **P2-10** Create Claude API key and set a $20 spend limit · Joseph
+    - Done when: Key stored outside the repo; Console limit set to $20 · Haiku 5.5 test call works (2026-11-22). Use python -m pip; pip.exe is blocked
 - [ ] **P2-04** Run bake-off on 6 pilot books · Joseph
     - Done when: Scores for Gemma 4 26B vs Claude Haiku 5.5 on 6 pilot books plus real cost per book · 2–3 nights; API spend within the $20 Phase 2 limit
 - [ ] **P2-05** Tune prompts with DSPy GEPA · Developer

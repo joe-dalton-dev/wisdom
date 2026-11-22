@@ -28,8 +28,8 @@ The live copy is the Claude sheet [Wisdom Graph — Phase 0 status](https://clau
     - Done when: Every core label has a definition and examples · Definitions and include/exclude rules approved 2026-11-22; examples need the .txt corpus
 - [x] **P0-12** Upload the corpus to Drive · Joseph
     - Done when: Corpus is in Drive · corpus-clean.zip (plain .txt) in the Wisdom Corpus folder; chosen over the HTML mirror because it is easier to read (2026-11-22)
-- [ ] **P0-13** Move non-public-domain editions to restricted · Joseph *(Waiting)*
-    - Done when: Restricted folder holds every non-PD edition · Open question: does any edition in corpus-clean need to stay restricted?
+- [x] **P0-13** Decide who may access the corpus · Joseph
+    - Done when: Access policy decided · Joseph handles corpus access himself; no restricted-folder sorting needed (2026-11-22)
 - [ ] **P0-14** Upload manifest with SHA-256 per book · Joseph + Claude *(Deferred)*
     - Done when: 02 Corpus/manifests has books.csv with hashes · Deferred until the first runner joins; script ready in tools/make_manifest.py
 - [x] **P0-15** Install Argilla on your PC (Docker) · Joseph

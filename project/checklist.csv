@@ -11,7 +11,7 @@ P0-09,0 Setup,Set the starting theme list,Joseph,Done,Starting list agreed,Codeb
 P0-10,0 Setup,Merge the theme list into the codebook,Claude,Done,codebook/*.yaml merged and reviewed,72 themes and 46 topics approved and merged in PRs #8 and #9 (2026-11-22)
 P0-11,0 Setup,Write definitions and 3+3 examples per label,Joseph + Claude,In progress,Every core label has a definition and examples,Definitions and include/exclude rules approved 2026-11-22; examples need the .txt corpus
 P0-12,0 Setup,Upload the corpus to Drive,Joseph,Done,Corpus is in Drive,corpus-clean.zip (plain .txt) in the Wisdom Corpus folder; chosen over the HTML mirror because it is easier to read (2026-11-22)
-P0-13,0 Setup,Move non-public-domain editions to restricted,Joseph,Waiting,Restricted folder holds every non-PD edition,Open question: does any edition in corpus-clean need to stay restricted?
+P0-13,0 Setup,Decide who may access the corpus,Joseph,Done,Access policy decided,Joseph handles corpus access himself; no restricted-folder sorting needed (2026-11-22)
 P0-14,0 Setup,Upload manifest with SHA-256 per book,Joseph + Claude,Deferred,02 Corpus/manifests has books.csv with hashes,Deferred until the first runner joins; script ready in tools/make_manifest.py
 P0-15,0 Setup,Install Argilla on your PC (Docker),Joseph,Done,http://localhost:6900 login works with your own password,Installed and login validated 2026-11-22
 P1-01,1 Gold set,Select 600 stratified windows,Claude,Not started,600 windows across ~12 traditions and 5 genres,

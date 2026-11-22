@@ -1,7 +1,7 @@
 # Theme registry v0.1.0 (DRAFT). This 72-theme draft is the starting list (decided 2026-11-22);
 # the learning loop adds themes later. IDs are fixed once P0-11 is done.
 # Definitions and include/exclude rules drafted for review (P0-11); 3+3 examples come later.
-version: 0.1.0
+version: 0.1.1
 status: draft
 
 domains:
@@ -87,7 +87,7 @@ themes:
     label: "Knowledge & ignorance"
     definition: "Seeing truly versus being deluded."
     include: "Ignorance as bondage, illusion, discernment, insight into how things are."
-    exclude: "Practical wisdom and good judgement (T1001); revealed truth (T1003)."
+    exclude: "Practical wisdom and good judgement (T1001); revealed truth (T1003); ordinary knowing or not knowing a fact (\"I do not know\"), which is no theme."
     terms: [avidyā, gnōsis]
   - id: T0205
     domain: D02
@@ -233,7 +233,7 @@ themes:
     domain: D06
     label: "Good rulership"
     definition: "The virtues and duties of rulers."
-    include: "Advice to kings, the just ruler, governing by virtue, tyranny condemned."
+    include: "Advice to kings, the just ruler, governing by virtue, tyranny condemned; how a ruler or \"the sage\" should govern the people, and what good or bad government brings about."
     exclude: "Obedience owed to rulers (T0503); justice in general (T0607)."
     terms: [rājadharma, de]
   - id: T0602
@@ -332,7 +332,7 @@ themes:
     label: "Cosmic order"
     definition: "A law or pattern running through all things."
     include: "Tao, Logos, ṛta, maʿat; the world as ordered; natural law."
-    exclude: "The divine ground itself (T0301); balance of opposites (T0806)."
+    exclude: "The divine ground itself (T0301); balance of opposites (T0806); order in society or the state (T0601)."
     terms: [Tao, Logos, ṛta, maʿat]
   - id: T0803
     domain: D08

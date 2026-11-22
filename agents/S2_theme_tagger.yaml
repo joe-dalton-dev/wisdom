@@ -1,12 +1,12 @@
 # Agent card: S2 theme and topic tagger. Change anything -> bump `version`.
 id: S2_theme_tagger
-version: 0.2.0
+version: 0.3.0
 level: 1
 base: _base.md@0.2.0
 unit: sentence
 windows: windows_sentence.jsonl      # 5 target sentences, 4 before and 2 after as context
 output_schema: schemas/S2_output.schema.json
-codebook_version: themes@0.1.0+topics@0.1.0
+codebook_version: themes@0.1.1+topics@0.1.0
 labels: [themes, topics]             # the full theme and topic lists, with definitions, go in the prompt
 
 task: |
@@ -15,8 +15,16 @@ task: |
     (Fasting, Animals at work). A sentence can have themes without topics and the reverse.
   - Follow each label's definition and its include and exclude rules. When an exclude rule names another
     label, use that one instead.
-  - salience: 0 = mentioned in passing, 1 = present, 2 = central to the sentence, 3 = the point of the passage.
+  - salience: 1 = present, 2 = central to the sentence, 3 = the point of the passage. Never use 0:
+    if an idea is only touched in passing, leave it out.
   - span: the few words of the target that carry the label, copied exactly.
+  - Tag the idea, not a word. A word that matches a label's name is not evidence: "know" is not
+    Knowledge & ignorance, "order" is not Cosmic order, "work" is not Perseverance. Ask what the sentence
+    teaches or claims, then find the label for that.
+  - Tag a theme when the sentence rejects, questions or reverses it, not only when it affirms it.
+    "Heaven and earth are not benevolent" carries Compassion & mercy. Whether the text affirms or
+    rejects is recorded later, at book level.
+  - Read who acts. When "the sage" or a ruler governs the people, the sentence is about rulership.
   - Most sentences carry 0 to 2 themes. Narrative connectives ("And the LORD spoke unto Moses, saying:")
     usually carry none. Do not stretch to fill the slots.
   - proposal: only when the sentence clearly carries an idea that no listed theme covers. Give a short label,

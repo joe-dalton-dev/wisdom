@@ -76,6 +76,12 @@ def verify(agent_short: str, window: dict, reply_text: str, enums: dict) -> dict
         elif agent_short == "S2":
             for kind, key in (("themes", "$THEME_IDS"), ("topics", "$TOPIC_IDS")):
                 labels = rec.get(kind, [])
+                # Salience 0 ("in passing") proved to be noise in the first review; drop those labels.
+                dropped = [lab for lab in labels if lab.get("salience") == 0]
+                if dropped:
+                    labels = [lab for lab in labels if lab.get("salience") != 0]
+                    rec[kind] = labels
+                    rec.setdefault("_dropped_salience0", []).extend(lab.get("id") for lab in dropped)
                 if len(labels) > MAX_LABELS:
                     problems.append(f"{len(labels)} {kind}, max {MAX_LABELS}")
                 ids = []

@@ -28,3 +28,16 @@ A record of decisions that shape the system. Change one only by adding a new dat
 ## 2026-11-22 · Starting theme list
 
 - The 72-theme draft in `codebook/themes.yaml` is the starting list. The older 84-theme `classification_taxonomy.json` and the 20 quote-project themes are not merged in; themes missing from the draft enter later through the learning loop, accepting that some labels get re-run.
+
+## 2026-11-22 · Pilot pipeline
+
+- Level 1 agents S1-S4 run on Claude Haiku 5.5 for the pilot, through `pipeline/` (sync or Message Batches), with Claude's JSON-schema output mode. Label lists are enums in the schema, so the API itself refuses invented labels; V1 still checks spans and IDs.
+- Pilot books come from the local `corpus-clean`. Leviticus uses the JPS 1917 pages (`bib/jps`), not KJV: the KJV pages in `corpus-clean` lost verse numbers and linked words (Lev 19:9-10 drops "the poor and the stranger").
+- Pilot size: 6 books, 5,544 sentences, 4,307 calls for all four agents; estimated about $1 in batch mode.
+
+## 2026-11-22 · Gold set without an expert annotator
+
+- The maintainer cannot judge labels across all traditions, so the gold set is a **silver standard**: Claude Opus 5.5 and Claude Sonnet 5.5 label the same windows independently with the same cards and codebook; where they agree the label is the reference; where they disagree an Opus adjudicator (A1, blind to which model said what, order balanced) decides among their labels.
+- Scope: 300 windows (50 per pilot book, about 1,400 sentences), agents S2 (themes, topics) and S3 (norms) only. Estimated $10-12, inside the $20 Phase 2 limit.
+- The maintainer sanity-checks 50 random gold items for obvious errors. Tradition experts review samples later (stage 2).
+- Known limit: this measures agreement with the strongest available models, not scholarly truth, and all three are Claude models. A local model from another family (Gemma or gpt-oss) will re-label a sample to check for shared blind spots. For Leviticus, the traditional list of commandments (Maimonides' 613, mapped to verses) will be used as an independent check on S3.

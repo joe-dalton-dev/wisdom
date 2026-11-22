@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "wisdom/S4_output/0.1.0",
+  "title": "S4 entities and pronouns",
+  "description": "Placeholders like $THEME_IDS are replaced with codebook values when the prompt is assembled. Numeric limits are enforced by the verifier (V1), not the API.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "unit_id",
+          "mentions",
+          "confidence"
+        ],
+        "properties": {
+          "unit_id": {
+            "type": "string"
+          },
+          "mentions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "span",
+                "type",
+                "referent",
+                "social_category",
+                "role"
+              ],
+              "properties": {
+                "span": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "deity",
+                    "person",
+                    "group",
+                    "place",
+                    "animal",
+                    "object",
+                    "other"
+                  ]
+                },
+                "referent": {
+                  "type": "string",
+                  "description": "Who or what the mention refers to; for pronouns, the resolved name"
+                },
+                "social_category": {
+                  "type": "string",
+                  "enum": "$SOCIAL_CATEGORY_OR_NONE"
+                },
+                "role": {
+                  "type": "string",
+                  "enum": "$ROLE_OR_NONE"
+                }
+              }
+            }
+          },
+          "confidence": {
+            "type": "number",
+            "description": "0 to 1"
+          }
+        }
+      }
+    }
+  }
+}

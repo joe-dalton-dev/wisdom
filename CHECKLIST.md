@@ -37,21 +37,21 @@ The live copy is the "Project checklist" sheet in Google Drive → Wisdom Graph 
 
 ## 1 Gold set
 
-- [ ] **P1-01** Select 600 stratified windows · Claude
-    - Done when: 600 windows across ~12 traditions and 5 genres
-- [ ] **P1-02** Draft gold labels with Claude Batch API · Claude
-    - Done when: Draft labels loaded into Argilla · Within the €50 cap
-- [ ] **P1-03** Review the 600 gold items · Joseph + reviewers
-    - Done when: All 600 reviewed · 6–8 h
-- [ ] **P1-04** Freeze 400 dev / 200 test split · Claude
-    - Done when: Split committed; test set locked
+- [x] **P1-01** Select 300 stratified windows · Claude
+    - Done when: 50 windows from each of the 6 pilot books (about 1400 sentences) · 1371 sentences selected (2026-11-22)
+- [x] **P1-02** Label with Opus 5.5 and Sonnet 5.5; Opus adjudicates disagreements · Joseph
+    - Done when: gold_S2 and gold_S3 written for all 6 books · Agreement 56% themes / 86% norms; 387 windows adjudicated; $9.59
+- [ ] **P1-03** Sanity-check 50 gold items · Joseph
+    - Done when: sanity_sample.csv marked and sent back · About 30 min; tradition experts review samples later (stage 2)
+- [ ] **P1-04** Score Haiku against the gold set and freeze a dev/test split · Claude *(In progress)*
+    - Done when: Scores for S2 and S3 recorded; test windows locked · Haiku themes F1 0.54 / norms F1 0.69 (Leviticus 0.87); split not yet frozen
 
 ## 2 Pilot
 
-- [ ] **P2-01** Build ledger and chunk runner · Developer
-    - Done when: Runner resumes after Ctrl+C without redoing jobs
-- [ ] **P2-02** Build prompt assembler and verifier V1 · Developer
-    - Done when: Same card + input gives identical prompt hash; V1 rejects bad spans
+- [x] **P2-01** Build ledger and chunk runner · Claude
+    - Done when: Runner resumes after Ctrl+C without redoing jobs · Live on Haiku 5.5: 6 pilot books
+- [x] **P2-02** Build prompt assembler and verifier V1 · Claude
+    - Done when: Same card + input gives identical prompt hash; V1 rejects bad spans · S1 0.2.1
 - [ ] **P2-03** Install llama-server and pin 2 candidate models · Joseph
     - Done when: models.lock has hashes; wg doctor passes
 - [ ] **P2-04** Run bake-off on 6 pilot books · Joseph

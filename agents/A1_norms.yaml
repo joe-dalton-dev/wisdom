@@ -1,0 +1,27 @@
+# Agent card: A1 adjudicator for norms (gold set only). Change anything -> bump `version`.
+id: A1_norms
+version: 0.1.0
+level: 1
+base: _base.md@0.2.0
+unit: sentence
+output_schema: schemas/A1N_output.schema.json
+codebook_version: facets@0.1.0+topics@0.1.0
+labels: [norm_modality, topics]
+
+task: |
+  Two careful annotators listed the norms in each TARGET sentence and disagreed. Their lists are under
+  CANDIDATES. Write the correct list of norms for each target.
+  - A norm is a rule about what someone must, must not, may, should, or need not do, stated by the sentence
+    itself. A story in which someone acts is not a norm. Every instruction counts, including each step of a
+    ritual. General advice on how to live is a recommendation.
+  - Merge entries that describe the same rule; keep entries that one annotator missed if the sentence
+    states them; drop entries the sentence does not state. An empty list is correct when there is no norm.
+  - modality: obligation, prohibition, permission, recommendation or exemption.
+  - action, addressee, target: a few plain words. condition and sanction: copied word for word from the
+    target, or empty. topic: a topic id or "none". span: the words of the target that state the norm.
+  - reason: one plain line saying what you kept, merged or dropped and why.
+
+model: claude-opus-5-5
+max_tokens: 4000
+effort: medium
+examples: []

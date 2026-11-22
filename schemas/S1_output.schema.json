@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "wisdom/S1_output/0.1.0",
+  "title": "S1 discourse and voice",
+  "description": "Placeholders like $THEME_IDS are replaced with codebook values when the prompt is assembled. Numeric limits are enforced by the verifier (V1), not the API.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "unit_id",
+          "speech_act",
+          "force",
+          "speaker",
+          "addressee",
+          "confidence"
+        ],
+        "properties": {
+          "unit_id": {
+            "type": "string"
+          },
+          "speech_act": {
+            "type": "string",
+            "enum": "$SPEECH_ACT"
+          },
+          "force": {
+            "type": "string",
+            "enum": "$FORCE"
+          },
+          "speaker": {
+            "type": "string",
+            "description": "Who speaks the paragraph, as named in the text; empty if the narrator"
+          },
+          "addressee": {
+            "type": "string",
+            "description": "Who is addressed; empty if no one in particular"
+          },
+          "confidence": {
+            "type": "number",
+            "description": "0 to 1"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+# Agent card: A1 adjudicator for themes and topics (gold set only). Change anything -> bump `version`.
+id: A1_themes
+version: 0.1.0
+level: 1
+base: _base.md@0.2.0
+unit: sentence
+output_schema: schemas/A1T_output.schema.json
+codebook_version: themes@0.1.1+topics@0.1.0
+labels: [themes, topics]
+
+task: |
+  Two careful annotators labelled each TARGET sentence with themes and topics from the lists below, and
+  disagreed. Their labels are under CANDIDATES. Decide the correct labels for each target.
+  - Choose only from the labels the annotators proposed for that target. You may keep labels from either
+    annotator, keep both sets, or drop labels that the sentence does not support.
+  - Apply each label's definition and its include and exclude rules strictly. Tag the idea, not a word.
+    Tag a theme even when the sentence rejects it. Never use salience 0.
+  - salience: 1 = present, 2 = central to the sentence, 3 = the point of the passage.
+  - span: the few words of the target that carry the label, copied exactly from the target.
+  - reason: one plain line, e.g. "Kept Good rulership: the sage governs the people; dropped Knowledge:
+    'know' is used in passing."
+
+model: claude-opus-5-5
+max_tokens: 3000
+effort: medium
+examples: []

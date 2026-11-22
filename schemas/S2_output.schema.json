@@ -1,53 +1,107 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "wisdom/S2_output/0.1.0",
-  "title": "S2 theme and topic tagger output (draft)",
+  "$id": "wisdom/S2_output/0.2.0",
+  "title": "S2 theme and topic tagger",
+  "description": "Placeholders like $THEME_IDS are replaced with codebook values when the prompt is assembled. Numeric limits are enforced by the verifier (V1), not the API.",
   "type": "object",
-  "required": ["records"],
   "additionalProperties": false,
+  "required": [
+    "records"
+  ],
   "properties": {
     "records": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["unit_id", "themes", "topics", "confidence"],
         "additionalProperties": false,
+        "required": [
+          "unit_id",
+          "themes",
+          "topics",
+          "proposal",
+          "confidence"
+        ],
         "properties": {
-          "unit_id": { "type": "string" },
+          "unit_id": {
+            "type": "string"
+          },
           "themes": {
             "type": "array",
-            "maxItems": 3,
-            "items": { "$ref": "#/$defs/label" }
+            "description": "At most 3",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "salience",
+                "span"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "enum": "$THEME_IDS"
+                },
+                "salience": {
+                  "type": "integer",
+                  "description": "0 to 3"
+                },
+                "span": {
+                  "type": "string"
+                }
+              }
+            }
           },
           "topics": {
             "type": "array",
-            "maxItems": 3,
-            "items": { "$ref": "#/$defs/label" }
-          },
-          "proposal": {
-            "type": ["object", "null"],
-            "required": ["label", "reason", "span"],
-            "additionalProperties": false,
-            "properties": {
-              "label": { "type": "string", "maxLength": 60 },
-              "reason": { "type": "string", "maxLength": 200 },
-              "span": { "type": "string" }
+            "description": "At most 3",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "salience",
+                "span"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "enum": "$TOPIC_IDS"
+                },
+                "salience": {
+                  "type": "integer",
+                  "description": "0 to 3"
+                },
+                "span": {
+                  "type": "string"
+                }
+              }
             }
           },
-          "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+          "proposal": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "label",
+              "reason",
+              "span"
+            ],
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "span": {
+                "type": "string"
+              }
+            }
+          },
+          "confidence": {
+            "type": "number",
+            "description": "0 to 1"
+          }
         }
-      }
-    }
-  },
-  "$defs": {
-    "label": {
-      "type": "object",
-      "required": ["id", "salience", "span"],
-      "additionalProperties": false,
-      "properties": {
-        "id": { "type": "string" },
-        "salience": { "type": "integer", "minimum": 0, "maximum": 3 },
-        "span": { "type": "string" }
       }
     }
   }

@@ -1,0 +1,83 @@
+# Agent card: S3 norm extractor. Change anything -> bump `version`.
+id: S3_norm_extractor
+version: 0.4.0
+level: 1
+base: _base.md@0.2.0
+unit: sentence
+windows: windows_sentence.jsonl
+output_schema: schemas/S3_output.schema.json
+codebook_version: facets@0.1.0+topics@0.1.0
+labels: [norm_modality, topics]
+
+task: |
+  For each TARGET sentence, list the norms it states: rules about what someone must, must not, may,
+  should, or need not do. Most sentences state none; return an empty `norms` list for them.
+  - Only norms the sentence itself states. A story in which someone does something is not a norm,
+    including the past-tense account of a rite ("And Aaron and his sons laid their hands upon ...").
+  - A recommendation needs the sentence to steer the reader toward or away from a way of acting:
+    "should", "let him", "it is good / better", a judgement ("is near to virtue", "as wrong as"), or a
+    choice tied to its result ("Angry speech is painful", "If we could renounce ... it would be better").
+    A maxim about what the wise man or the superior man does counts ("The superior man wishes to be
+    slow in his speech").
+    It does not count for:
+      - praise or description of an ideal person or of the devoted ("him I call indeed a Brahmana",
+        "even the gods envy those who ...", "mine own, the true of heart");
+      - a claim about how things are, even a moral one ("From affection comes grief");
+      - the speaker's own past act, habit or vow ("Not one blow will I strike"), one named person's
+        conduct ("he loved to learn"), or what others praise;
+      - taunts and threats aimed at one person in a quarrel; questions; descriptions of gods, halls
+        or the cosmos.
+    When unsure, return no norm.
+  - A direct command to a hearer ("gird thee to the fight") is an obligation or prohibition, not a
+    recommendation.
+  - modality: obligation (must), prohibition (must not), permission (may), recommendation (should / is good),
+    exemption (need not / is excused).
+  - action: what is required, forbidden or allowed, in a few plain words ("eat the fat", "lie with a beast").
+  - addressee: who the rule binds as the text names them ("the children of Israel", "the priest", "a bhikshu").
+  - target: who or what the action is done to ("the stranger", "the ox"); empty if none.
+  - condition: the circumstance in which it applies, copied from the text; empty if unconditional.
+  - sanction: the stated consequence or penalty, copied from the text; empty if none.
+  - topic: the topic id the action falls under, or "none".
+  - span: the words of the target that state the norm, copied exactly.
+  One sentence can hold several norms; list each.
+  - Separate steps of a procedure are separate norms: "take away its crop ... and cast it beside the
+    altar" is two obligations; "rend it by the wings, but shall not divide it asunder" is an obligation
+    and a prohibition. Passive rules count: "the bullock shall be killed before the LORD".
+  - But a list of qualities, or two verbs for one act, is one norm: "be slow in speech and earnest in
+    conduct", "keep My statutes, and do them", "speak wisely or be still".
+  - A declared status is not a norm: "he shall be unclean until the even" states a condition; the
+    actions it leads to ("he shall dwell alone") are the norms.
+  - Every instruction counts, including each step of a ritual procedure: "he shall flay the
+    burnt-offering" is an obligation even though it sits inside a longer rite.
+  - condition and sanction are copied word for word from the target, as short as possible
+    ("If his offering be of the flock"). Never rephrase them. If the condition is only implied, or sits
+    in a context sentence, leave the field empty.
+
+model: claude-haiku-5-5
+max_tokens: 2500
+effort: low
+examples:           # from the dev half of the gold set only (project/gold_split.json); never from test
+  - |
+    "And the fire upon the altar shall be kept burning thereby, it shall not go out; and the priest shall kindle wood on it every morning; ..."
+    norms: obligation "keep the altar fire burning"; prohibition "let the altar fire go out"; obligation "kindle wood on the altar every morning" (addressee: the priest)
+  - |
+    "And the bullock of the sin-offering was brought; and Aaron and his sons laid their hands upon the head of the bullock of the sin-offering."
+    norms: none (a past-tense account of what was done)
+  - |
+    "Those who are ever watchful, who study day and night, and who strive after Nirvâna, their passions will come to an end."
+    norms: recommendation "be ever watchful"; recommendation "study day and night"; recommendation "strive after Nirvana"
+  - |
+    "He is not distressed by men's not knowing him." (of the superior man)
+    norms: recommendation "not be distressed by others not knowing him" (addressee: the superior man)
+  - |
+    "He who is thoughtful, blameless, settled, dutiful, without passions, and who has attained the highest end, him I call indeed a Brâhmana."
+    norms: none (praise of an ideal person)
+  - |
+    "The Master said, "The superior man wishes to be slow in his speech and earnest in his conduct.""
+    norms: recommendation "be slow in speech and earnest in conduct" (one norm)
+  - |
+    "People praise earnestness; thoughtlessness is always blamed."
+    norms: none (reports what others praise)
+  - |
+    "So minded, gird thee to the fight, for so Thou shalt not sin!"
+    norms: obligation "go to the fight" (addressee: Arjuna)

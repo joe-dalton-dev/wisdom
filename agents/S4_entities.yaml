@@ -1,6 +1,6 @@
 # Agent card: S4 entity and pronoun resolver. Change anything -> bump `version`.
 id: S4_entities
-version: 0.1.0
+version: 0.2.0
 level: 1
 base: _base.md@0.2.0
 unit: sentence
@@ -18,6 +18,10 @@ task: |
   - social_category: if the mention belongs to one of the listed social categories, give it; otherwise "none".
   - role: if it has a social category, whether it is the agent (does the action), the target (has the
     action done to it) or the subject (is talked about); otherwise "none".
+  - Social categories must be meant literally. "The children of Israel" and "the sons of Aaron" name a people
+    or a family line: social_category "none", not children. A generic "man", "any one" or "whoever" means
+    any person: "none", not men. Use women or men only when the text speaks of one sex in particular.
+  - Every span must appear in the target sentence itself. Do not list beings that appear only in context.
   Skip abstract nouns and generic words ("all things", "heaven" as sky). Keep each sentence's list short:
   the people, groups, deities, animals and places that matter to the sentence.
 

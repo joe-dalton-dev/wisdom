@@ -297,7 +297,7 @@ def run_split(cfg: dict, only: str | None = None) -> list[dict]:
         write_jsonl(d / "windows_sentence.jsonl",
                     windows(res["sentences"], TARGETS_PER_WINDOW, CONTEXT_BEFORE, CONTEXT_AFTER, "w"))
         write_jsonl(d / "windows_paragraph.jsonl",
-                    windows(res["paragraphs"], PARAS_PER_WINDOW, 1, 0, "pw"))
+                    windows(res["paragraphs"], PARAS_PER_WINDOW, 3, 0, "pw"))
         meta = {"book": book["id"], "title": book["title"], "tradition": book["tradition"],
                 "split_version": SPLIT_VERSION, "chapters": len(res["chapters"]),
                 "paragraphs": len(res["paragraphs"]), "sentences": len(res["sentences"]),

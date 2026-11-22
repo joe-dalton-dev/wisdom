@@ -1,6 +1,6 @@
 # Agent card: S3 norm extractor. Change anything -> bump `version`.
 id: S3_norm_extractor
-version: 0.1.0
+version: 0.2.0
 level: 1
 base: _base.md@0.2.0
 unit: sentence
@@ -24,6 +24,11 @@ task: |
   - topic: the topic id the action falls under, or "none".
   - span: the words of the target that state the norm, copied exactly.
   One sentence can hold several norms; list each.
+  - Every instruction counts, including each step of a ritual procedure: "he shall flay the
+    burnt-offering" is an obligation even though it sits inside a longer rite.
+  - condition and sanction are copied word for word from the target, as short as possible
+    ("If his offering be of the flock"). Never rephrase them. If the condition is only implied, or sits
+    in a context sentence, leave the field empty.
 
 model: claude-haiku-5-5
 max_tokens: 2500

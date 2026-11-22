@@ -1,10 +1,10 @@
 # Agent card: S1 discourse and voice. Change anything -> bump `version`.
 id: S1_discourse
-version: 0.1.0
+version: 0.2.0
 level: 1
 base: _base.md@0.2.0
 unit: paragraph                      # labels paragraphs; their sentences inherit the labels
-windows: windows_paragraph.jsonl     # 5 target paragraphs, 1 paragraph of context before
+windows: windows_paragraph.jsonl     # 5 target paragraphs, 3 paragraphs of context before
 output_schema: schemas/S1_output.schema.json
 codebook_version: facets@0.1.0
 labels: [speech_act, force]
@@ -22,6 +22,13 @@ task: |
   - speaker: who speaks, as the text names them (e.g. "the LORD", "Krishna", "The Master"); empty for the narrator.
   - addressee: who is spoken to, as the text names them (e.g. "Moses", "Arjuna", "the children of Israel"); empty if no one in particular.
   A paragraph that mixes kinds gets the kind of its main clause.
+  - A speech framed by "X spoke unto Y, saying:" is narration; the instructions that follow are what X says.
+  - Conditional law ("If his offering be of the flock, he shall offer...") is law and prescriptive.
+    Use hypothetical only for a supposed case that sets no rule ("Suppose a man were to say...").
+  - Speakers carry over. When the CONTEXT shows someone speaking and the target continues that speech,
+    keep the same speaker and addressee, even if the target does not repeat them.
+    Example: after "And the LORD spoke unto Moses, saying: Speak unto the children of Israel", the
+    instructions that follow have speaker "the LORD" and addressee "the children of Israel".
 
 model: claude-haiku-5-5
 max_tokens: 1200

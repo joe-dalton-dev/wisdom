@@ -48,6 +48,7 @@ books:
     files: ["bib/jps/lev{001..027}.txt"]
     chapters: file
     units: number_line
+    drop: ['(?i)^leviticus chapter \d+$']
 
   - id: analects
     title: Confucian Analects (tr. James Legge)

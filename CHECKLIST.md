@@ -24,8 +24,8 @@ The live copy is the "Project checklist" sheet in Google Drive → Wisdom Graph 
     - Done when: Both files attached in chat or in Drive 01 · Using the 72-theme draft instead (2026-11-22); the learning loop adds themes later
 - [ ] **P0-10** Merge taxonomy into codebook v1 · Claude *(Skipped)*
     - Done when: codebook/*.yaml merged and reviewed · Not needed: the draft codebook is the starting list
-- [ ] **P0-11** Write definitions and 3+3 examples per label · Joseph + Claude
-    - Done when: Every core label has a definition and examples · 2–3 h of your time
+- [ ] **P0-11** Write definitions and 3+3 examples per label · Joseph + Claude *(In progress)*
+    - Done when: Every core label has a definition and examples · Definitions and include/exclude rules approved 2026-11-22; examples need the .txt corpus
 - [ ] **P0-12** Upload public-domain corpus-books to Drive · Joseph
     - Done when: One folder per tradition in 02 Corpus/public-domain · Use Google Drive desktop app
 - [ ] **P0-13** Move non-public-domain editions to restricted · Joseph

@@ -21,7 +21,7 @@ P1-04,1 Gold set,Freeze 400 dev / 200 test split,Claude,Not started,Split commit
 P2-01,2 Pilot,Build ledger and chunk runner,Developer,Not started,Runner resumes after Ctrl+C without redoing jobs,
 P2-02,2 Pilot,Build prompt assembler and verifier V1,Developer,Not started,Same card + input gives identical prompt hash; V1 rejects bad spans,
 P2-03,2 Pilot,Install llama-server and pin 2 candidate models,Joseph,Not started,models.lock has hashes; wg doctor passes,
-P2-10,2 Pilot,Create Claude API key and set a $20 spend limit,Joseph,Done,Key stored outside the repo; Console limit set to $20,Haiku 5.5 test call works (2026-11-22). Use python -m pip; pip.exe is blocked
+P2-10,2 Pilot,Create Claude API key and set a $20 spend limit,Joseph,Done,Key stored outside the repo; Console limit set to $20,Haiku 5.5 test call works; $20 limit set in the Console (2026-11-22)
 P2-04,2 Pilot,Run bake-off on 6 pilot books,Joseph,Not started,Scores for Gemma 4 26B vs Claude Haiku 5.5 on 6 pilot books plus real cost per book,2–3 nights; API spend within the $20 Phase 2 limit
 P2-05,2 Pilot,Tune prompts with DSPy GEPA,Developer,Not started,Tuned cards beat baseline on dev set,GEPA reflection calls count toward the $20 Phase 2 limit
 P2-06,2 Pilot,Gate review: targets met and 36 records spot-checked,Joseph,Not started,Ship targets met on test set,Tag cards-v1.0

@@ -18,5 +18,5 @@ A record of decisions that shape the system. Change one only by adding a new dat
 ## 2026-11-22 · Repository
 
 - Code license: Apache 2.0.
-- Data license: CC BY-NC 4.0 (`LICENSE-DATA.md`). Perseus-derived records stay CC BY-SA 4.0 because their source requires it.
+- Data: not published at all. Outputs stay in private Drive folders; no data license is granted. All rights reserved.
 - Repository is public. `main` is protected by the "Protect main" ruleset: pull requests only, the `validate` check must pass, no force pushes, no deletion.

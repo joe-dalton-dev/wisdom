@@ -18,4 +18,4 @@ Workflows and access levels are in [docs/team.md](docs/team.md).
 
 ## Licensing of contributions
 
-Code you contribute is licensed under Apache 2.0. Data you contribute (labels, reviews, results) is licensed under CC BY-NC 4.0, and the maintainer may also use it under other terms. See `LICENSE-DATA.md`.
+Code you contribute is licensed under Apache 2.0. Data you contribute or produce for the project (labels, reviews, run results) belongs to the project maintainer, is confidential, and is not published. Don't keep, share or reuse copies after you submit them.

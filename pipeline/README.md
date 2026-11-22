@@ -39,6 +39,19 @@ python -m pipeline report
 - `--max-usd` (default 2.00) is a hard stop on total recorded spend. The Console's $20 workspace limit is the second line of defence.
 - `python -m pipeline status` shows windows done, rejected and spend per book and agent.
 
+## Gold set (silver standard)
+
+Opus 5.5 and Sonnet 5.5 label 50 windows per book with S2 and S3; Opus adjudicates where they disagree. Everything goes to `data/pilot/gold/` with its own ledger; spend counts toward the same cap.
+
+```
+python -m pipeline gold-select
+python -m pipeline gold-label --mode batch --wait --max-usd 19
+python -m pipeline gold-adjudicate --mode batch --wait --max-usd 19
+python -m pipeline gold-finalize
+python -m pipeline gold-sample        # 50 items in data/pilot/gold/sanity_sample.csv for a quick check
+python -m pipeline score              # Haiku's S2 and S3 against the gold set
+```
+
 ## Outputs (in `data/pilot/<book>/`, never committed)
 
 | File | Holds |
@@ -57,4 +70,4 @@ Uses a fake Claude client; needs no API key or corpus.
 
 ## Not built yet
 
-T1/T2 (embeddings, triage), V2 judge, the gold set and scoring, Gemma 4 for the bake-off, levels 2–4.
+T1/T2 (embeddings, triage), V2 judge, Gemma 4 for the bake-off, levels 2–4.

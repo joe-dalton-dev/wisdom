@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "wisdom/A1N_output/0.1.0",
+  "title": "A1 adjudicator for norms",
+  "description": "Placeholders like $THEME_IDS are replaced with codebook values when the prompt is assembled. Numeric limits are enforced by the verifier (V1), not the API.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "unit_id",
+          "norms",
+          "reason",
+          "confidence"
+        ],
+        "properties": {
+          "unit_id": {
+            "type": "string"
+          },
+          "norms": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "modality",
+                "action",
+                "addressee",
+                "target",
+                "condition",
+                "sanction",
+                "topic",
+                "span"
+              ],
+              "properties": {
+                "modality": {
+                  "type": "string",
+                  "enum": "$NORM_MODALITY"
+                },
+                "action": {
+                  "type": "string",
+                  "description": "What is required, forbidden or allowed, in a few words"
+                },
+                "addressee": {
+                  "type": "string",
+                  "description": "Who the rule binds; empty if unstated"
+                },
+                "target": {
+                  "type": "string",
+                  "description": "Who or what the action is done to; empty if none"
+                },
+                "condition": {
+                  "type": "string",
+                  "description": "When the rule applies, copied from the text; empty if unconditional"
+                },
+                "sanction": {
+                  "type": "string",
+                  "description": "Stated consequence or penalty, copied from the text; empty if none"
+                },
+                "topic": {
+                  "type": "string",
+                  "enum": "$TOPIC_IDS_OR_NONE"
+                },
+                "span": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "confidence": {
+            "type": "number",
+            "description": "0 to 1"
+          },
+          "reason": {
+            "type": "string",
+            "description": "One line: what was kept, merged or dropped and why"
+          }
+        }
+      }
+    }
+  }
+}

@@ -7,6 +7,15 @@
   status    jobs and spend so far, per book and agent
   report    write report.csv per book: each sentence with its labels
 
+Gold set (silver standard: Opus + Sonnet label, Opus adjudicates; see pipeline/gold.py):
+  gold-select      pick 50 windows per book
+  gold-label       S2 + S3 on them with Opus 5.5 and Sonnet 5.5
+  gold-adjudicate  send disagreements to the A1 adjudicator (Opus 5.5)
+  gold-collect     fetch finished gold batches (if you ran without --wait)
+  gold-finalize    write gold_S2 / gold_S3 per book
+  gold-sample      50 gold items as a CSV for a quick human sanity check
+  score            score the pilot labels (Haiku) against the gold set: --agent S2 or S3
+
 Examples (smoke test: one book, themes only, first 10 windows, results in a minute):
   python -m pipeline split
   python -m pipeline estimate --book daodejing --agent S2 --limit 10 --mode sync
@@ -16,11 +25,13 @@ Examples (smoke test: one book, themes only, first 10 windows, results in a minu
 from __future__ import annotations
 
 import argparse
+import json
 import pathlib
 import sys
 
 import yaml
 
+from . import gold
 from . import report as report_mod
 from .assemble import AGENTS
 from .runner import Runner, book_ids
@@ -37,7 +48,9 @@ def load_cfg(path: str) -> dict:
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="python -m pipeline", description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("command", choices=["split", "estimate", "run", "collect", "status", "report"])
+    ap.add_argument("command", choices=["split", "estimate", "run", "collect", "status", "report", "gold-select",
+                                        "gold-label", "gold-adjudicate", "gold-collect", "gold-finalize",
+                                        "gold-sample", "score"])
     ap.add_argument("--config", default="config/pilot.yaml")
     ap.add_argument("--book", action="append", help="book id; repeat for several; default all")
     ap.add_argument("--agent", action="append", choices=list(AGENTS), help="S1-S4; repeat; default all four")
@@ -51,6 +64,7 @@ def main(argv=None):
     a = ap.parse_args(argv)
 
     cfg = load_cfg(a.config)
+    cfg.setdefault("spend_ledgers", [str(gold.gold_dir(cfg) / "ledger.sqlite")])
     books = book_ids(cfg, a.book)
     agents = a.agent or list(AGENTS)
 
@@ -62,13 +76,16 @@ def main(argv=None):
                   f"{m['sentences']:>5} sentences {m['words']:>6} words  (notes removed: {m['note_lines']} lines){warn}")
         return
 
+    if a.command.startswith("gold-") or a.command == "score":
+        return gold_command(a, cfg, books)
+
     runner = Runner(cfg)
     if a.command == "status":
         print(f"{'book':<18} {'agent':<5} {'status':<9} {'windows':>7} {'accepted':>8} {'rejected':>8} {'missing':>7} {'USD':>8}")
         for r in runner.ledger.summary():
             print(f"{r['book']:<18} {r['agent']:<5} {r['status']:<9} {r['n']:>7} {r['acc'] or 0:>8} "
                   f"{r['rej'] or 0:>8} {r['miss'] or 0:>7} {r['usd'] or 0:>8.4f}")
-        print(f"\nTotal spent: ${runner.ledger.spent():.4f}   Open batches: {len(runner.ledger.open_batches())}")
+        print(f"\nTotal spent: ${runner.spent():.4f}   Open batches: {len(runner.ledger.open_batches())}")
         return
 
     if a.command == "report":
@@ -91,12 +108,17 @@ def main(argv=None):
         return
 
     jobs = runner.plan(agents, books, a.limit)
+    send(runner, jobs, a)
+
+
+def send(runner, jobs, a, windows_for=None):
+    """Estimate, check the cap, confirm, then run sync or batch."""
     est = runner.estimate(jobs, a.mode)
-    spent = runner.ledger.spent()
+    spent = runner.spent()
     print(f"{est['calls']} calls pending ({a.mode} mode). Estimated cost ${est['usd']:.3f} "
           + "(" + ", ".join(f"{k} ${v:.3f}" for k, v in sorted(est["by_agent"].items())) + ")")
     print(f"Spent so far: ${spent:.4f}. Cap for this run: ${a.max_usd:.2f}.")
-    if a.command == "estimate" or not jobs:
+    if a.command in ("estimate",) or not jobs:
         return
     if spent + est["usd"] > a.max_usd:
         sys.exit(f"Stopped: spent + estimate (${spent + est['usd']:.3f}) is over --max-usd ${a.max_usd:.2f}. "
@@ -110,10 +132,51 @@ def main(argv=None):
         ids = runner.submit_batches(jobs)
         print(f"Submitted {len(ids)} batch(es): {', '.join(ids)}")
         if a.wait:
-            print(runner.collect(wait=True))
+            print(runner.collect(wait=True, windows_for=windows_for))
         else:
-            print("Run `python -m pipeline collect` later (or now with --wait) to fetch results.")
-    print(f"Spent so far: ${runner.ledger.spent():.4f}")
+            cmd = "gold-collect" if windows_for else "collect"
+            print(f"Run `python -m pipeline {cmd} --wait` later to fetch results.")
+    print(f"Spent so far: ${runner.spent():.4f}")
+
+
+def gold_command(a, cfg, books):
+    gcfg = gold.gold_cfg(cfg)
+    if a.command == "gold-select":
+        for b, m in gold.select(cfg).items():
+            print(f"{b:<18} {m['windows']:>3} windows {m['sentences']:>4} sentences")
+        return
+    if a.command == "gold-finalize":
+        for b, m in gold.finalize(cfg).items():
+            print(f"{b:<18} " + "   ".join(f"{k}: {v['agreed']} agreed, {v['adjudicated']} adjudicated, "
+                                          f"{v['unresolved']} unresolved" for k, v in m.items()))
+        return
+    if a.command == "gold-sample":
+        print("Wrote", gold.sample(cfg), "- mark anything that looks wrong and send it back.")
+        return
+    if a.command == "score":
+        for ag in (a.agent or ["S2", "S3"]):
+            if ag not in ("S2", "S3"):
+                continue
+            r = gold.score(cfg, ag)
+            print(json.dumps(r, indent=2, ensure_ascii=False))
+        return
+    runner = Runner(gcfg)
+    if a.command == "gold-collect":
+        print(runner.collect(wait=a.wait, windows_for=gold.windows_for(cfg)))
+        return
+    if a.command == "gold-label":
+        jobs = []
+        for model, effort in gold.REF_MODELS:
+            jobs += runner.plan(gold.GOLD_AGENTS, books, None, model=model, effort=effort)
+        send(runner, jobs, a, gold.windows_for(cfg))
+        return
+    if a.command == "gold-adjudicate":
+        for b, s in gold.disputes(cfg).items():
+            print(f"{b:<18} {s}")
+        wf = gold.windows_for(cfg)
+        items = [(adj, b, w) for adj in gold.DISPUTE_FILES for b in books for w in wf(adj, b).values()]
+        send(runner, runner.plan_windows(items), a, wf)
+        return
 
 
 if __name__ == "__main__":

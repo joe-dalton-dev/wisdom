@@ -12,7 +12,7 @@ import tempfile
 import types
 import unittest
 
-from pipeline import report
+from pipeline import gold, report
 from pipeline.runner import Runner
 from pipeline.split import run_split, split_sentences
 
@@ -43,8 +43,18 @@ def _targets(user: str) -> list[tuple[str, str]]:
     return re.findall(r"^\[([^\]]+)\] (.*)$", block, re.M)
 
 
-def fake_reply(system: str, user: str, break_one: bool) -> str:
+def fake_reply(system: str, user: str, break_one: bool, model: str = "") -> str:
     recs = []
+    if "A1_themes" in system or "A1_norms" in system:
+        assert "CANDIDATES:" in user and "Annotator 1:" in user
+        for uid, text in _targets(user):
+            if "A1_themes" in system:
+                recs.append({"unit_id": uid, "themes": [{"id": "T0501", "salience": 2, "span": " ".join(text.split()[:2])},
+                                                        {"id": "T1205", "salience": 1, "span": text.split()[0]}],
+                             "topics": [], "reason": "kept divine command", "confidence": 0.8})
+            else:
+                recs.append({"unit_id": uid, "norms": [], "reason": "no rule stated", "confidence": 0.7})
+        return json.dumps({"records": recs})
     for i, (uid, text) in enumerate(_targets(user)):
         words = " ".join(text.split()[:3])
         if "S1_discourse" in system:
@@ -52,7 +62,8 @@ def fake_reply(system: str, user: str, break_one: bool) -> str:
                          "addressee": "Moses", "confidence": 0.8})
         elif "S2_theme_tagger" in system:
             span = "words that are not there" if (break_one and i == 1) else words
-            recs.append({"unit_id": uid, "themes": [{"id": "T0501", "salience": 2, "span": span}],
+            tid = "T0607" if (model == "claude-sonnet-5-5" and i % 2) else "T0501"  # sonnet disagrees on odd targets
+            recs.append({"unit_id": uid, "themes": [{"id": tid, "salience": 2, "span": span}],
                          "topics": [], "proposal": {"label": "", "reason": "", "span": ""}, "confidence": 0.7})
         elif "S3_norm_extractor" in system:
             norms = [{"modality": "prohibition", "action": "steal", "addressee": "Israel", "target": "",
@@ -77,7 +88,7 @@ class FakeClient:
 
     def _message(self, params, break_one):
         self.calls += 1
-        text = fake_reply(params["system"][0]["text"], params["messages"][0]["content"], break_one)
+        text = fake_reply(params["system"][0]["text"], params["messages"][0]["content"], break_one, params["model"])
         usage = types.SimpleNamespace(input_tokens=300, output_tokens=200, cache_read_input_tokens=2000,
                                       cache_creation_input_tokens=0)
         return types.SimpleNamespace(id=f"msg_{self.calls}", model=params["model"], stop_reason="end_turn",
@@ -153,6 +164,46 @@ class PipelineTest(unittest.TestCase):
         csv_text = (self.tmp / "out/sample/report.csv").read_text(encoding="utf-8-sig")
         self.assertIn("law", csv_text)  # enum case normalised: "Law" -> "law"
         self.assertGreater(r.ledger.spent(), 0)
+
+    def test_gold_flow(self):
+        run_split(self.cfg)
+        client = FakeClient()
+        main = Runner(self.cfg, client=client)
+        main.run_sync(main.plan(["S2", "S3"], ["sample"], None), max_usd=1.0, workers=1)
+        sel = gold.select(self.cfg, per_book=2)
+        self.assertEqual(sel["sample"]["windows"], 2)
+        g = Runner(gold.gold_cfg(self.cfg), client=client)
+        jobs = []
+        for model, effort in gold.REF_MODELS:
+            jobs += g.plan(gold.GOLD_AGENTS, ["sample"], None, model=model, effort=effort)
+        self.assertEqual(len(jobs), 8)  # 2 windows x 2 agents x 2 models
+        self.assertEqual(jobs[0]["window"]["id"], jobs[4]["window"]["id"])
+        g.submit_batches(jobs)
+        g.collect(wait=True, poll_seconds=0, windows_for=gold.windows_for(self.cfg))
+        out = self.tmp / "out/gold/sample"
+        self.assertTrue((out / "out_S2@claude-opus-5-5.jsonl").exists())
+        self.assertTrue((out / "out_S2@claude-sonnet-5-5.jsonl").exists())
+        stats = gold.disputes(self.cfg)["sample"]
+        self.assertGreater(stats["S2_disputed"], 0)
+        self.assertGreater(stats["S2_agreed"], 0)
+        wf = gold.windows_for(self.cfg)
+        items = [(adj, "sample", w) for adj in gold.DISPUTE_FILES for w in wf(adj, "sample").values()]
+        g.run_sync(g.plan_windows(items), max_usd=1.0, workers=1)
+        fin = gold.finalize(self.cfg)["sample"]
+        self.assertEqual(fin["S2"]["unresolved"], 0)
+        self.assertEqual(fin["S2"]["agreed"] + fin["S2"]["adjudicated"], sel["sample"]["sentences"])
+        gs2 = [json.loads(x) for x in (out / "gold_S2.jsonl").read_text().splitlines()]
+        adj = [r for r in gs2 if r["_gold"] == "adjudicated"]
+        # T1205 was proposed by neither annotator, so finalize removes it
+        self.assertTrue(adj and all(t["id"] != "T1205" for r in adj for t in r["themes"]))
+        self.assertTrue(gold.sample(self.cfg, n=5).endswith("sanity_sample.csv"))
+        sc = gold.score(self.cfg, "S2")
+        self.assertEqual(sc["sentences"] + sc["unlabelled"], sel["sample"]["sentences"])
+        self.assertGreater(sc["themes"]["f1"], 0)
+        self.assertIn("has_norm", gold.score(self.cfg, "S3"))
+        # Spend is shared: the main runner sees the gold ledger's spend too.
+        both = Runner({**self.cfg, "spend_ledgers": [str(self.tmp / "out/gold/ledger.sqlite")]}, client=client)
+        self.assertAlmostEqual(both.spent(), main.ledger.spent() + g.ledger.spent(), places=6)
 
     def test_spend_cap(self):
         run_split(self.cfg)

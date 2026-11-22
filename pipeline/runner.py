@@ -17,7 +17,8 @@ from .ledger import Ledger
 from .verify import verify
 
 # Rough output tokens per target unit, used only for estimates before a run.
-EST_OUT_PER_UNIT = {"S1": 60, "S2": 90, "S3": 70, "S4": 130}
+EST_OUT_PER_UNIT = {"S1": 60, "S2": 90, "S3": 70, "S4": 130, "A1T": 150, "A1N": 180}
+EFFORT_OUT_FACTOR = {"low": 1.0, "medium": 2.0, "high": 3.0}  # thinking adds output tokens
 BATCH_CHUNK = 5000
 
 
@@ -51,7 +52,9 @@ class Runner:
         self.cfg = cfg
         self.out = pathlib.Path(cfg["out_dir"])
         self.out.mkdir(parents=True, exist_ok=True)
-        self.ledger = Ledger(self.out / "ledger.sqlite")
+        self.ledger = Ledger(pathlib.Path(cfg.get("ledger") or self.out / "ledger.sqlite"))
+        # Other ledgers whose spend counts toward the same cap (the gold set has its own ledger).
+        self.spend_ledgers = [Ledger(p) for p in cfg.get("spend_ledgers", []) if pathlib.Path(p).exists()]
         self.codebook = Codebook()
         self.enums = self.codebook.enums()
         self.prices = load_prices()
@@ -65,10 +68,17 @@ class Runner:
             self._client = anthropic.Anthropic(max_retries=4)
         return self._client
 
-    def agent(self, short: str) -> Agent:
-        if short not in self._agents:
-            self._agents[short] = Agent(short, self.codebook)
-        return self._agents[short]
+    def agent(self, short: str, model: str | None = None, effort: str | None = None) -> Agent:
+        key = (short, model or "", effort or "")
+        if key not in self._agents:
+            self._agents[key] = Agent(short, self.codebook, model=model, effort=effort)
+        return self._agents[key]
+
+    def ag(self, job: dict) -> Agent:
+        return self.agent(job["agent"], job.get("model"), job.get("effort"))
+
+    def spent(self) -> float:
+        return self.ledger.spent() + sum(lg.spent() for lg in self.spend_ledgers)
 
     # ---------- planning ----------
     def windows(self, book: str, agent: Agent, limit: int | None = None) -> list[dict]:
@@ -78,34 +88,42 @@ class Runner:
         rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
         return rows[:limit] if limit else rows
 
-    def plan(self, agents: list[str], books: list[str], limit: int | None) -> list[dict]:
-        jobs = []
+    def plan(self, agents: list[str], books: list[str], limit: int | None,
+             model: str | None = None, effort: str | None = None) -> list[dict]:
+        items = []
         for a in agents:
-            ag = self.agent(a)
-            for b in books:
-                for w in self.windows(b, ag, limit):
-                    key = ag.job_key(w)
-                    self.ledger.ensure(key, custom_id(a, key), a, ag.version_tag, b, w["id"],
-                                       ag.prompt_hash(w), ag.model)
-                    if self.ledger.runnable(key):
-                        jobs.append({"key": key, "agent": a, "book": b, "window": w})
+            ag = self.agent(a, model, effort)
+            items += [(a, b, w) for b in books for w in self.windows(b, ag, limit)]
+        return self.plan_windows(items, model, effort)
+
+    def plan_windows(self, items: list[tuple], model: str | None = None, effort: str | None = None) -> list[dict]:
+        """items: (agent_short, book, window). Registers jobs in the ledger, returns the runnable ones."""
+        jobs = []
+        for a, b, w in items:
+            ag = self.agent(a, model, effort)
+            key = ag.job_key(w)
+            self.ledger.ensure(key, custom_id(a, key), a, ag.version_tag, b, w["id"], ag.prompt_hash(w), ag.model)
+            if self.ledger.runnable(key):
+                jobs.append({"key": key, "agent": a, "book": b, "window": w, "model": model, "effort": effort})
         self.ledger.commit()
         return jobs
 
     def estimate(self, jobs: list[dict], mode: str) -> dict:
         usd, calls, by_agent = 0.0, 0, {}
         for j in jobs:
-            ag = self.agent(j["agent"])
+            ag = self.ag(j)
             sys_tok = len(ag.system) // 4
             user_tok = len(ag.user_message(j["window"])) // 4 + 50
-            out_tok = EST_OUT_PER_UNIT[j["agent"]] * len(j["window"]["targets"]) + 40
+            out_tok = int((EST_OUT_PER_UNIT[j["agent"]] * len(j["window"]["targets"]) + 40)
+                          * EFFORT_OUT_FACTOR.get(ag.card.get("effort") or "low", 1.0))
             # Assume half the calls read the cached system prompt and half write it (batches don't
             # guarantee cache hits); a pessimistic but simple rule.
             usage = {"input": user_tok, "output": out_tok, "cache_read": sys_tok // 2, "cache_write": sys_tok // 2}
             c = cost_usd(usage, ag.model, mode, self.prices)
             usd += c
             calls += 1
-            by_agent[j["agent"]] = by_agent.get(j["agent"], 0) + c
+            name = j["agent"] + (f"@{ag.variant}" if ag.variant else "")
+            by_agent[name] = by_agent.get(name, 0) + c
         return {"calls": calls, "usd": usd, "by_agent": by_agent}
 
     # ---------- results ----------
@@ -117,7 +135,7 @@ class Runner:
                 f.write(json.dumps(r, ensure_ascii=False) + "\n")
 
     def process(self, job: dict, message, mode: str, batch_id: str | None = None) -> str:
-        ag = self.agent(job["agent"])
+        ag = self.ag(job)
         usage = usage_of(message)
         cost = cost_usd(usage, ag.model, mode, self.prices)
         reply = text_of(message)
@@ -129,11 +147,12 @@ class Runner:
                 "message_id": getattr(message, "id", None), "batch_id": batch_id,
                 "prompt_hash": ag.prompt_hash(job["window"]), "window_id": job["window"]["id"],
                 "mode": mode, "at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
-        self._write(job["book"], f"out_{job['agent']}.jsonl", [{**r, "_prov": prov} for r in res["accepted"]])
+        suffix = f"@{ag.variant}" if ag.variant else ""
+        self._write(job["book"], f"out_{job['agent']}{suffix}.jsonl", [{**r, "_prov": prov} for r in res["accepted"]])
         rej = [{**r, "_prov": prov} for r in res["rejected"]]
         if res["fatal"]:
             rej.append({"fatal": res["fatal"], "reply": reply[:2000], "_prov": prov})
-        self._write(job["book"], f"rejects_{job['agent']}.jsonl", rej)
+        self._write(job["book"], f"rejects_{job['agent']}{suffix}.jsonl", rej)
         status = "done" if not res["missing"] and not res["rejected"] and not res["fatal"] else (
             "partial" if res["accepted"] else "failed")
         self.ledger.record(job["key"], status, usage, cost, len(res["accepted"]), len(res["rejected"]),
@@ -146,7 +165,7 @@ class Runner:
         stopped = False
 
         def call(job):
-            ag = self.agent(job["agent"])
+            ag = self.ag(job)
             try:
                 return job, self.client.messages.create(**ag.request(job["window"])), None
             except Exception as e:  # noqa: BLE001 - API errors are recorded and the run continues
@@ -157,7 +176,7 @@ class Runner:
             futures = set()
             while pending or futures:
                 while pending and len(futures) < workers:
-                    if self.ledger.spent() >= max_usd:
+                    if self.spent() >= max_usd:
                         stopped = True
                         pending = []
                         break
@@ -183,16 +202,16 @@ class Runner:
     # ---------- batch mode ----------
     def submit_batches(self, jobs: list[dict]) -> list[str]:
         ids = []
-        by_agent: dict[str, list[dict]] = {}
+        groups: dict[tuple, list[dict]] = {}
         for j in jobs:
-            by_agent.setdefault(j["agent"], []).append(j)
-        for a, js in by_agent.items():
-            ag = self.agent(a)
+            groups.setdefault((j["agent"], j.get("model") or "", j.get("effort") or ""), []).append(j)
+        for (a, model, effort), js in groups.items():
+            ag = self.agent(a, model or None, effort or None)
             for i in range(0, len(js), BATCH_CHUNK):
                 chunk = js[i:i + BATCH_CHUNK]
                 reqs = [{"custom_id": custom_id(a, j["key"]), "params": ag.request(j["window"])} for j in chunk]
                 batch = self.client.messages.batches.create(requests=reqs)
-                self.ledger.add_batch(batch.id, a, {j["book"] for j in chunk}, len(chunk))
+                self.ledger.add_batch(batch.id, f"{a}|{model}|{effort}", {j["book"] for j in chunk}, len(chunk))
                 for j in chunk:
                     self.ledger.mark_submitted(j["key"], batch.id, "batch")
                 self.ledger.commit()
@@ -202,7 +221,8 @@ class Runner:
     def _window_index(self, book: str, agent: Agent) -> dict:
         return {w["id"]: w for w in self.windows(book, agent)}
 
-    def collect(self, wait: bool = False, poll_seconds: int = 30) -> dict:
+    def collect(self, wait: bool = False, poll_seconds: int = 30, windows_for=None) -> dict:
+        """windows_for(agent_short, book) -> {window_id: window}; defaults to the book's window files."""
         counts: dict[str, int] = {}
         while True:
             open_ = self.ledger.open_batches()
@@ -214,14 +234,17 @@ class Runner:
                 if info.processing_status != "ended":
                     still_running += 1
                     continue
-                ag = self.agent(b["agent"])
-                index = {bk: self._window_index(bk, ag) for bk in b["books"].split(",")}
+                a, model, effort = (b["agent"].split("|") + ["", ""])[:3]
+                ag = self.agent(a, model or None, effort or None)
+                index = {bk: (windows_for(a, bk) if windows_for else self._window_index(bk, ag))
+                         for bk in b["books"].split(",")}
                 for entry in self.client.messages.batches.results(b["batch_id"]):
                     row = self.ledger.by_custom_id(entry.custom_id)
                     if row is None:
                         continue
                     job = {"key": row["job_key"], "agent": row["agent"], "book": row["book"],
-                           "window": index[row["book"]][row["window_id"]]}
+                           "window": index[row["book"]][row["window_id"]], "model": model or None,
+                           "effort": effort or None}
                     if entry.result.type == "succeeded":
                         st = self.process(job, entry.result.message, "batch", b["batch_id"])
                     else:

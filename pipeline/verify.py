@@ -83,10 +83,11 @@ def verify(agent_short: str, window: dict, reply_text: str, enums: dict) -> dict
             if not span_ok(span or "", text):
                 problems.append(f"{field} span not in text: {span!r}"[:200])
 
-        if agent_short == "S1":
+        kind = {"A1T": "S2", "A1N": "S3"}.get(agent_short, agent_short)
+        if kind == "S1":
             rec["speech_act"] = check_enum(rec.get("speech_act"), "$SPEECH_ACT", "speech_act")
             rec["force"] = check_enum(rec.get("force"), "$FORCE", "force")
-        elif agent_short == "S2":
+        elif kind == "S2":
             for kind, key in (("themes", "$THEME_IDS"), ("topics", "$TOPIC_IDS")):
                 labels = rec.get(kind, [])
                 # Salience 0 ("in passing") proved to be noise in the first review; drop those labels.
@@ -115,14 +116,14 @@ def verify(agent_short: str, window: dict, reply_text: str, enums: dict) -> dict
             prop = rec.get("proposal") or {}
             if prop.get("label"):
                 check_span(prop.get("span"), "proposal")
-        elif agent_short == "S3":
+        elif kind == "S3":
             for n in rec.get("norms", []):
                 n["modality"] = check_enum(n.get("modality"), "$NORM_MODALITY", "modality")
                 n["topic"] = check_enum(n.get("topic"), "$TOPIC_IDS_OR_NONE", "topic")
                 check_span(n.get("span"), "norm")
                 for f in ("condition", "sanction"):
                     check_span(n.get(f), f)
-        elif agent_short == "S4":
+        elif kind == "S4":
             for m in rec.get("mentions", []):
                 m["social_category"] = check_enum(m.get("social_category"), "$SOCIAL_CATEGORY_OR_NONE",
                                                   "social_category")

@@ -21,7 +21,8 @@ Every specialist is defined by exactly one card. Every call to it is assembled, 
 | S2 | `S2_theme_tagger.yaml` | Draft 0.2.0, Claude Haiku 5.5 |
 | S3 | `S3_norm_extractor.yaml` | Draft 0.1.0, Claude Haiku 5.5 |
 | S4 | `S4_entities.yaml` | Draft 0.1.0, Claude Haiku 5.5 |
-| T1, T2, V2, A1, C1, B1, X1, X2 | — | To be written |
+| A1 | `A1_themes.yaml`, `A1_norms.yaml` | Draft 0.1.0, Claude Opus 5.5; gold set only |
+| T1, T2, V2, C1, B1, X1, X2 | — | To be written |
 
 Cards have no examples yet; they come from the gold set (P0-11). Run them with `python -m pipeline` (see `pipeline/README.md`).
 

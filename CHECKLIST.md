@@ -37,14 +37,14 @@ The live copy is the "Project checklist" sheet in Google Drive → Wisdom Graph 
 
 ## 1 Gold set
 
-- [ ] **P1-01** Select 600 stratified windows · Claude
-    - Done when: 600 windows across ~12 traditions and 5 genres
-- [ ] **P1-02** Draft gold labels with Claude Batch API · Claude
-    - Done when: Draft labels loaded into Argilla · Within the €50 cap
-- [ ] **P1-03** Review the 600 gold items · Joseph + reviewers
-    - Done when: All 600 reviewed · 6–8 h
-- [ ] **P1-04** Freeze 400 dev / 200 test split · Claude
-    - Done when: Split committed; test set locked
+- [ ] **P1-01** Select 300 stratified windows · Claude
+    - Done when: 50 windows from each of the 6 pilot books (about 1400 sentences) · Code ready: python -m pipeline gold-select
+- [ ] **P1-02** Label with Opus 5.5 and Sonnet 5.5; Opus adjudicates disagreements · Joseph
+    - Done when: gold_S2 and gold_S3 written for all 6 books · About $10-12 of the $20 Phase 2 limit; gold-label then gold-adjudicate then gold-finalize
+- [ ] **P1-03** Sanity-check 50 gold items · Joseph
+    - Done when: sanity_sample.csv marked and sent back · About 30 min; tradition experts review samples later (stage 2)
+- [ ] **P1-04** Score Haiku against the gold set and freeze a dev/test split · Claude
+    - Done when: Scores for S2 and S3 recorded; test windows locked · python -m pipeline score
 
 ## 2 Pilot
 

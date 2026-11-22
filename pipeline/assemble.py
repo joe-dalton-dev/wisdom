@@ -14,6 +14,8 @@ import yaml
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 AGENTS = {"S1": "S1_discourse", "S2": "S2_theme_tagger", "S3": "S3_norm_extractor", "S4": "S4_entities"}
+ADJUDICATORS = {"A1T": "A1_themes", "A1N": "A1_norms"}
+ALL_CARDS = {**AGENTS, **ADJUDICATORS}
 
 
 def sha256(obj) -> str:
@@ -81,9 +83,15 @@ def _fill(node, enums: dict):
 
 
 class Agent:
-    def __init__(self, short: str, codebook: Codebook | None = None, root: pathlib.Path = ROOT):
+    def __init__(self, short: str, codebook: Codebook | None = None, root: pathlib.Path = ROOT,
+                 model: str | None = None, effort: str | None = None):
         self.short = short
-        self.card = yaml.safe_load((root / "agents" / f"{AGENTS[short]}.yaml").read_text(encoding="utf-8"))
+        self.card = yaml.safe_load((root / "agents" / f"{ALL_CARDS[short]}.yaml").read_text(encoding="utf-8"))
+        self.default_model = self.card["model"]
+        if model:  # gold-set runs use the same card on a stronger model
+            self.card["model"] = model
+        if effort:
+            self.card["effort"] = effort
         self.codebook = codebook or Codebook(root)
         base = (root / "agents/_base.md").read_text(encoding="utf-8")
         self.base_text = base.split("-->", 1)[-1].strip()
@@ -102,7 +110,13 @@ class Agent:
 
     @property
     def version_tag(self) -> str:
-        return f"{self.card['id']}@{self.card['version']}"
+        tag = f"{self.card['id']}@{self.card['version']}"
+        return tag if self.model == self.default_model else f"{tag}+{self.model}"
+
+    @property
+    def variant(self) -> str:
+        """'' for the card's own model; the model ID when overridden (used in file names)."""
+        return "" if self.model == self.default_model else self.model
 
     def _system_prompt(self) -> str:
         parts = [self.base_text, f"## Your role: {self.card['id']} (card {self.card['version']})",
@@ -117,9 +131,13 @@ class Agent:
         def block(title, items):
             return f"{title}:\n" + ("\n".join(f"[{i['id']}] {i['text']}" for i in items) if items else "(none)")
         opening = [block("CHAPTER OPENING (context)", window["chapter_opening"])] if window.get("chapter_opening") else []
-        return "\n\n".join(opening + [block("CONTEXT BEFORE", window["context_before"]),
-                            block("TARGETS", window["targets"]),
-                            block("CONTEXT AFTER", window["context_after"])])
+        parts = opening + [block("CONTEXT BEFORE", window["context_before"]),
+                           block("TARGETS", window["targets"]),
+                           block("CONTEXT AFTER", window["context_after"])]
+        if window.get("candidates"):  # adjudication: what the two reference models proposed
+            parts.append("CANDIDATES:\n" + "\n".join(
+                f"[{c['unit_id']}]\n{c['text']}" for c in window["candidates"]))
+        return "\n\n".join(parts)
 
     def request(self, window: dict) -> dict:
         """Messages API parameters for one window. Deterministic for a given card and window."""

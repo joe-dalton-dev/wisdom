@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "wisdom/A1T_output/0.1.0",
+  "title": "A1 adjudicator for themes and topics",
+  "description": "Placeholders like $THEME_IDS are replaced with codebook values when the prompt is assembled. Numeric limits are enforced by the verifier (V1), not the API.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "unit_id",
+          "themes",
+          "topics",
+          "reason",
+          "confidence"
+        ],
+        "properties": {
+          "unit_id": {
+            "type": "string"
+          },
+          "themes": {
+            "type": "array",
+            "description": "At most 3",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "salience",
+                "span"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "enum": "$THEME_IDS"
+                },
+                "salience": {
+                  "type": "integer",
+                  "description": "0 to 3"
+                },
+                "span": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "topics": {
+            "type": "array",
+            "description": "At most 3",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "salience",
+                "span"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "enum": "$TOPIC_IDS"
+                },
+                "salience": {
+                  "type": "integer",
+                  "description": "0 to 3"
+                },
+                "span": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "confidence": {
+            "type": "number",
+            "description": "0 to 1"
+          },
+          "reason": {
+            "type": "string",
+            "description": "One line: why these labels and not the others"
+          }
+        }
+      }
+    }
+  }
+}

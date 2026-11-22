@@ -1,6 +1,6 @@
 # Project checklist
 
-The live copy is the "Project checklist" sheet in Google Drive → Wisdom Graph → 00 Start here. This file is regenerated from `project/checklist.csv`; edit the CSV, not this file.
+The live copy is the Claude sheet [Wisdom Graph — Phase 0 status](https://claude.ai/artifact/9JucZmoVQVncnq38Y65Grv). This file is regenerated from `project/checklist.csv`; edit the CSV, not this file.
 
 ## 0 Setup
 
@@ -20,16 +20,16 @@ The live copy is the "Project checklist" sheet in Google Drive → Wisdom Graph 
     - Done when: LICENSE in repo; data policy in README · Code Apache 2.0; data unpublished, all rights reserved (2026-11-22)
 - [x] **P0-08** Decide where Argilla runs · Joseph
     - Done when: Decision recorded in docs/decisions.md · Local PC in Docker; Tailscale for reviewers (2026-11-22)
-- [ ] **P0-09** Share classification_taxonomy.json and the 20 quote-project themes · Joseph *(Skipped)*
-    - Done when: Both files attached in chat or in Drive 01 · Using the 72-theme draft instead (2026-11-22); the learning loop adds themes later
-- [ ] **P0-10** Merge taxonomy into codebook v1 · Claude *(Skipped)*
-    - Done when: codebook/*.yaml merged and reviewed · Not needed: the draft codebook is the starting list
+- [x] **P0-09** Set the starting theme list · Joseph
+    - Done when: Starting list agreed · Codebook has 72 themes and 46 topics; well beyond the 20 quote-project themes; the learning loop adds more (2026-11-22)
+- [x] **P0-10** Merge the theme list into the codebook · Claude
+    - Done when: codebook/*.yaml merged and reviewed · 72 themes and 46 topics approved and merged in PRs #8 and #9 (2026-11-22)
 - [ ] **P0-11** Write definitions and 3+3 examples per label · Joseph + Claude *(In progress)*
     - Done when: Every core label has a definition and examples · Definitions and include/exclude rules approved 2026-11-22; examples need the .txt corpus
-- [ ] **P0-12** Upload public-domain corpus-books to Drive · Joseph
-    - Done when: One folder per tradition in 02 Corpus/public-domain · Use Google Drive desktop app
-- [ ] **P0-13** Move non-public-domain editions to restricted · Joseph
-    - Done when: Restricted folder holds every non-PD edition
+- [x] **P0-12** Upload the corpus to Drive · Joseph
+    - Done when: Corpus is in Drive · corpus-clean.zip (plain .txt) in the Wisdom Corpus folder; chosen over the HTML mirror because it is easier to read (2026-11-22)
+- [x] **P0-13** Decide who may access the corpus · Joseph
+    - Done when: Access policy decided · Joseph handles corpus access himself; no restricted-folder sorting needed (2026-11-22)
 - [ ] **P0-14** Upload manifest with SHA-256 per book · Joseph + Claude *(Deferred)*
     - Done when: 02 Corpus/manifests has books.csv with hashes · Deferred until the first runner joins; script ready in tools/make_manifest.py
 - [x] **P0-15** Install Argilla on your PC (Docker) · Joseph

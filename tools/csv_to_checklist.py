@@ -13,7 +13,7 @@ with open(src, newline="", encoding="utf-8") as f:
 lines = [
     "# Project checklist",
     "",
-    "The live copy is the \"Project checklist\" sheet in Google Drive → Wisdom Graph → 00 Start here. "
+    "The live copy is the Claude sheet [Wisdom Graph — Phase 0 status](https://claude.ai/artifact/9JucZmoVQVncnq38Y65Grv). "
     "This file is regenerated from `project/checklist.csv`; edit the CSV, not this file.",
     "",
 ]

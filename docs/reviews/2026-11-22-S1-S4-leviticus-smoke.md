@@ -20,3 +20,7 @@ Also found: JPS chapter headings ("LEVITICUS CHAPTER 2") were being treated as t
 - **S3 fixed:** every condition now copied word for word (0 rejections, was 4); ritual steps such as "he shall flay the burnt-offering" are now norms. 64 norms in 43 sentences.
 - **S4 fixed:** no more "children" for the children of Israel or "men" for "any man"; social categories are now priests and sacrificial animals, as they should be. Still pulls "the LORD" from context twice; the verifier rejects those and they are retried.
 - **S1 improved, not fixed:** conditional law is now prescriptive and the speech frame is narration. The speaker carries over only while the opening is in view: windows that start deep inside a speech (1:6-1:17, chapter 3 start) still have no speaker. Fix in S1 0.2.1: each paragraph window now also carries the chapter's first two paragraphs as CHAPTER OPENING context.
+
+## S1 0.2.1 ($0.003)
+
+Chapter 1: every paragraph now has speaker "the LORD" and addressee "the children of Israel". Chapters 2 and 3 open without a speech frame because the speech continues from chapter 1, so their first windows still have no speaker. That is a cross-chapter fact, so it is filled in code: `report.py` carries the last named speaker forward until a narration paragraph, and marks the filled value with `*`.

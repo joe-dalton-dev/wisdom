@@ -19,12 +19,34 @@ def _latest(path: pathlib.Path) -> dict:
     return out
 
 
+SPEECH_ACTS = {"law", "teaching", "command", "prophecy", "prayer_hymn"}
+
+
+def carry_speakers(s1: dict, paragraphs: list[dict]) -> None:
+    """Fill a blank speaker from the last named one, in code, across chapter breaks.
+
+    A speech often runs on past a chapter heading (Leviticus 2 continues the LORD's speech from 1), and
+    S1 only sees its window. A narration paragraph ends the carry-over. Filled values are marked."""
+    last = None
+    for para in paragraphs:
+        r = s1.get(para["id"])
+        if not r:
+            continue
+        if r.get("speech_act") == "narration":
+            last = None
+        elif r.get("speaker"):
+            last = (r["speaker"], r.get("addressee", ""))
+        elif last and r.get("speech_act") in SPEECH_ACTS:
+            r["speaker"], r["addressee"] = last[0] + " *", r.get("addressee") or last[1]
+
+
 def build(out_dir: pathlib.Path, book: str) -> dict:
     d = out_dir / book
     cb = Codebook()
     tl = {t["id"]: t["label"] for t in cb.themes["themes"]} | {t["id"]: t["label"] for t in cb.topics["topics"]}
     sents = [json.loads(line) for line in (d / "sentences.jsonl").read_text(encoding="utf-8").splitlines()]
     s1, s2, s3, s4 = (_latest(d / f"out_S{i}.jsonl") for i in range(1, 5))
+    carry_speakers(s1, [json.loads(line) for line in (d / "paragraphs.jsonl").read_text(encoding="utf-8").splitlines()])
     theme_count, topic_count, norm_count, cat_count = (collections.Counter() for _ in range(4))
     rows = []
     for s in sents:

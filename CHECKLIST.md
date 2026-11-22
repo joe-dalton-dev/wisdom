@@ -16,8 +16,8 @@ The live copy is the "Project checklist" sheet in Google Drive → Wisdom Graph 
     - Done when: PRs required on main; Discussions categories Introductions and Codebook exist · Repo public; Protect main ruleset active; Discussions on (2026-11-22)
 - [x] **P0-06** Answer the 8 open decisions in the plan · Joseph
     - Done when: Every row in Decisions needed has an answer · All 8 answered 2026-11-22; see docs/decisions.md
-- [ ] **P0-07** Choose license for output data (code is Apache 2.0) · Joseph *(In progress)*
-    - Done when: Data license recorded in README · Code: Apache 2.0 chosen. Suggested for data: CC BY 4.0
+- [x] **P0-07** Choose licenses for code and output data · Joseph
+    - Done when: LICENSE and LICENSE-DATA.md in repo · Code Apache 2.0; data CC BY-NC 4.0; Perseus-derived CC BY-SA (2026-11-22)
 - [ ] **P0-08** Decide where Argilla runs · Joseph
     - Done when: Argilla reachable by reviewers · Options: your PC or a Hugging Face Space
 - [ ] **P0-09** Share classification_taxonomy.json and the 20 quote-project themes · Joseph

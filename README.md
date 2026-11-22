@@ -29,4 +29,5 @@ The corpus and outputs live in Google Drive (Wisdom Graph folder), not in this r
 
 ## License
 
-Code: Apache License 2.0 (see `LICENSE`). Output data: license to be decided (checklist item P0-07).
+- Code: Apache License 2.0 (`LICENSE`).
+- Data (codebook, labels, output records, reports): CC BY-NC 4.0 (`LICENSE-DATA.md`). Records derived from Perseus texts are CC BY-SA 4.0, as their source requires.
